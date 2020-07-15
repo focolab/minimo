@@ -1,0 +1,40 @@
+{
+	"name": "FOCOLAB",
+	"version": "1.0.0",
+	"description": "Lab data store app by the Foundations of Cognition lab at UCSF",
+	"engines": {
+		"node": "8.9.1"
+	},
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/focolab/minimo.git"
+	},
+	"keywords": [
+		"foco",
+		"minio",
+		"mongodb"
+	],
+	"author": "Raymond Dunn",
+	"contributors": [
+		"Saul Kato anything@saulkato.com",
+		"Jackson Borchardt jackson.borchardt@gmail.com"
+	],
+	"license": "UNLICENSED",
+	"bugs": {
+		"url": "https://github.com/focolab/minimo/issues"
+	},
+	"homepage": "https://github.com/focolab/minimo",
+	"dependencies": {
+		"body-parser": "^1.14.1",
+		"cookie-session": "^2.0.0-beta.3",
+		"ejs": "^2.5.6",
+		"express": "^4.13.3",
+		"minio": "^7.0.15",
+		"mongodb": "^2.0.43",
+		"xmlhttprequest": "^1.8.0"
+	}
+}

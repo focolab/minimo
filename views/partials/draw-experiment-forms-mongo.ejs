@@ -1,0 +1,118 @@
+
+<script>
+
+	function drawExperimentForms(elem){
+
+		// get value
+		numExprs = elem.value
+
+		// grab metadata forms from locals from locals
+		var docsObject = <%- docs %>;
+
+		// iterate experiments
+		totalhtml = ""
+		for(var expr=0; expr < numExprs; expr++){
+
+			// initialize html to append	
+			totalhtml += "Experiment number " + String(expr + 1) + "<br>"
+
+			// iterate metadata form options
+			for(var i=0; i < docsObject.length; i++){
+
+				// grab obj
+				obj = docsObject[i]
+
+				// get some params
+				name = obj["element name"]
+				type = obj["element type"]
+				prompt = obj["prompt"]
+
+				// initialize html
+				html = ""
+
+				// write label
+				html += "<label class=\"myform\" for=\"" + name + "\">" + prompt + "</label>"
+
+				// based on type, do write different html
+				// if it's a text field
+				if (type == "text"){
+
+					html += "<input class=\"myform\" name=\"" + name + "\" type=\"text\">"
+
+				}
+
+				// if it's a text area
+				else if (type == "textbox"){
+
+					html += "<textarea class=\"myform\" name=\"" + name + "\" rows=\"20\" cols=\"60\"></textarea>"
+
+				}
+
+				// if it's a dropdown
+				else if (type == "dropdown"){
+
+					// grab options
+					options = obj["options"]
+
+					// create select
+					html += "<select class=\"myform\" name=\"" + name + "\">"
+
+					// create the default blank option
+					html += "<option value=\"\"></option>"
+
+					// write options
+					for(var j=0; j < options.length; j++){
+
+						html += "<option value=\"" + options[j] + "\">" + options[j] + "</option>" 
+
+					}
+					
+					html += "</select>"
+
+				}
+
+				totalhtml += html
+
+
+			}
+
+			// append html for between experiments
+			totalhtml += "<br><br><br>"
+
+
+		}
+		
+		// append hidden items
+		// for filelist
+		totalhtml += "<div name=\"hiddenfilelist\" style=\"display:none\"><input name=\"filelist\" id=\"filelist\" type=\"text\"></div>"
+
+		// hidden item for num exprs
+		totalhtml += "<div name=\"hiddennumexprs\" style=\"display:none\"><input name=\"expr num\" type=\"text\" value=\"" + String(numExprs) + "\"></div>"
+
+		// hidden item for username
+		var user = "<%- username %>"
+		totalhtml += "<div name=\"hiddenusername\" style=\"display:none\"><input name=\"username\" type=\"text\" value=\"" + String(user) + "\"></div>"
+
+		// hidden item for date uploaded
+		d = new Date()
+		yyyy = String(d.getFullYear())
+		mm = String(d.getMonth() + 1)
+		dd = String(d.getDate())
+
+		// do padding
+		if (mm.length < 2){
+			mm = "0" + mm
+		}
+		if (dd.length < 2){
+			dd = "0" + dd
+		}
+
+		totalhtml += "<div name=\"hiddendateuploaded\" style=\"display:none\"><input name=\"date uploaded\" type=\"text\" value=\"" + String(yyyy + mm + dd) + "\"></div>"
+
+
+		// add all that html in...
+		document.getElementById('metadata_form').innerHTML = totalhtml
+
+	}
+
+</script>

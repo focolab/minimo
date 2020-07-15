@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+
+        <% include ../partials/head %>
+
+    </head>
+
+    <body>
+
+        <div class="flexbox-container">
+            <div id="header">
+
+                <% include ../partials/header %>
+
+            </div>
+
+            <div id="content" style="flex-grow: 1; border: none; margin: 0; padding: 0;">
+
+                <% var minioBrowserUrl = "http://" + minioEndpoint + ":9000/data"; %>
+                <iframe id="minio-browser" src=<%= minioBrowserUrl %> style="height: 100%; width: 100%;"></iframe>
+
+            </div>
+
+            <footer>
+
+                <% include ../partials/footer %>
+
+            </footer>
+        </div>
+
+    </body>
+</html>

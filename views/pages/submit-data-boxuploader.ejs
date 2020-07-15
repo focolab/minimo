@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+
+	<% include ../partials/head %>
+    <meta charset="utf-8" />
+
+    <title>minimo Content Uploader</title>
+
+    <!-- polyfill.io only loads the polyfills your browser needs -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,Intl"></script>
+
+    <!-- Latest version of the uploader css for your locale -->
+    <link rel="stylesheet" href="https://cdn01.boxcdn.net/platform/elements/6.0.0/en-US/uploader.css" />
+    
+</head>
+
+
+<body>
+
+	<div id="header">
+
+		<% include ../partials/header %>
+
+
+	</div>
+
+    <br><br><br><br><br>
+    <div class="container" style="height:600px;width:600px;position: relative;left: 30px;margin: 0 auto;text-align: center;background-color: #fff;">
+    
+        <!-- based on https://docs.min.io/docs/upload-files-from-browser-using-pre-signed-urls.html and https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory -->
+        <input type="file" id="selector" style="margin-top: 10px;" webkitdirectory multiple>
+
+        <div id="status">No uploads</div>
+
+        <script type="text/javascript">
+            // first iterate through all selected files and invoke a helper function called `retrieveNewURL` to upload them to MinIO
+            // then iterate through all selected files again to populate relevant metadata form fields and upload to MongoDB
+            function upload() {
+                // Get selected files from the input element.
+                var promises = [];
+                var files = document.querySelector("#selector").files;
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    // Retrieve a URL from our server.
+                    promises.push(
+                        retrieveNewURL(file, (file, url, resolve) => {
+                            // Upload the file to the server.
+                            uploadFile(file, url, resolve);
+                    }));
+                }
+                Promise.all(promises).then(() => {
+                    submitMetadataForm();
+                })
+            }
+
+            // `retrieveNewURL` accepts the name of the current file and invokes the `/presigned-url` endpoint to
+            // generate a pre-signed URL for use in uploading that file: 
+            function retrieveNewURL(file, cb) {
+                return new Promise((resolve) => {
+                    fetch(`/presigned-url?name=${file.webkitRelativePath}`).then((response) => {
+                        response.text().then((url) => {
+                            cb(file, url, resolve);
+                        });
+                })
+                }).catch((e) => {
+                    console.error(e);
+                });
+            }
+
+            // ``uploadFile` accepts the current filename and the pre-signed URL. It then uses `Fetch API`
+            // to upload this file to S3 at `play.min.io:9000` using the URL:
+            function uploadFile(file, url, resolve) {
+                if (document.querySelector('#status').innerText === 'No uploads') {
+                    document.querySelector('#status').innerHTML = '';
+                }
+                fetch(url, {
+                    method: 'PUT',
+                    body: file
+                }).then(() => {
+                    // If multiple files are uploaded, append upload status on the next line.
+                    document.querySelector('#status').innerHTML += `<br>Uploaded ${file.webkitRelativePath}.`;
+                    resolve();
+                }).catch((e) => {
+                    console.error(e);
+                });
+            }
+
+            function submitMetadataForm() {
+
+                // Get selected files from the input element.
+                var files = document.querySelector("#selector").files;
+
+                try{
+
+                var fl = '{ "fl" : ['
+
+                // grab file name and parent folder of every file
+                for(i=0; i < files.length;  i++){
+
+                    // holder var
+                    var file = files[i];
+
+                    // continue on undefined
+                    if (typeof(file) == 'undefined'){
+                        continue
+                    }
+
+                    // grab file attributes
+                    var filepath = file.webkitRelativePath
+                    var filesize = file.size
+                    var filename = file.name
+                    var content_created_at = file.lastModified
+
+                    fl = fl + '{"filename":"' + filename + '"'
+                    + ', "filesize":"' + String(filesize) + '"'
+                    + ', "filepath":"' + filepath + '"'
+                    + ', "content_created_at":"' + content_created_at + '"'
+                    + '},'
+
+                }
+
+                // remove the trailing comma (god dammit json)
+                fl = fl.slice(0, fl.length - 1)
+
+                // append the end of the array, including folderID
+                fl = fl + '],',
+                fl = fl + ' "folderID":"' + filepath.split("/")[0] + '",'
+                fl = fl + ' "bucket":"data"}'
+
+                // take the filelist (data from event) and append to form
+                document.getElementById('metadata_form').filelist.value = fl
+                var mdf = document.getElementById('metadata_form');
+
+                // submit the form
+                document.getElementById('metadata_form').submit()
+
+                } catch(e){
+
+                console.log('Error during upload: ' + e)
+
+                }
+                
+            }
+
+        </script>
+    </div> 
+
+    <br><br>
+
+    <div id="metadata_form_label" style="position: relative;left: 30px;margin: 0 auto; width: 500px">
+    
+        <p>
+            Select your data folder (formatted "YYYYMMDD_INITIALS"), fill out the form, and hit upload. The form will submit when data upload is complete.
+        </p>
+
+        <p>
+            Please note that your name and the date are automatically added.
+        </p>
+
+    </div>
+
+    <br><br>
+
+    <% include ../partials/metadata-form-mongo %>
+
+    <button onclick="upload()" style="float: right;">submit</button>
+
+	<footer>
+		
+		<% include ../partials/footer %>
+
+	</footer>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+
+  <script type="text/javascript">
+
+  	function insertText(){
+
+  		// get forms
+  		//var editSelect = document.getElementById("editSelect")
+  		//var deleteSelect = document.getElementById('deleteSelect')
+
+  		// get form information
+  		var docsObject = <%- docs %>;
+  		//var fieldToGrab = "element name"
+
+      // iterate documents
+      totalhtml = ""
+  		i = 0
+  		for(i=0; i < docsObject.length; i++){
+
+  			// get obj
+  			obj = docsObject[i]
+
+        totalhtml += "<div class=\"box\"><div style=\"overflow:auto;\">"
+        //totalhtml += "<p>"
+
+        // get fields from object and append to html object
+        for(var key in obj) {
+
+              if(obj.hasOwnProperty(key)){
+
+                //do something with e.g. req.body[key]
+                var value = obj[key]
+                if (key === "folderID") {
+                  totalhtml += "<strong><u>" + String(key) + "</strong></u>: <a href='http://<%= minioEndpoint %>:9000/data/" + String(value) + "/'>" + String(value) + "</a><br>"
+                } else {
+                  totalhtml += "<strong><u>" + String(key) + "</strong></u>: " + String(value) + "<br>"
+                }
+                //username = obj["username"]
+                //date_uploaded = obj["date uploaded"]
+                //totalhtml += '<br>'
+              }
+        }
+
+  			// increment counter, close box styling
+        //totalhtml += "</p>"
+        totalhtml += "</div></div>"
+        //totalhtml += "</br>"
+
+
+    }
+    document.getElementById('metadata entries').innerHTML = totalhtml
+  }
+
+
+  </script>

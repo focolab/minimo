@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+	<% include ../partials/head %>
+
+</head>
+
+<body onload=insertText()>
+
+	<div id="header">
+
+		<% include ../partials/header %>
+
+	</div>
+
+	<div id="content"><br><br>
+
+		<div class="box">
+			<div style="overflow:auto;">
+				<p>
+					Welcome <%= username%> to the data metadata browser page!
+				</p>
+        <p>
+          Here you can scroll through existing lab metadata entries.
+        </p>
+			</div>
+		</div>
+
+
+		<div id="metadata entries">
+			<div style="overflow:auto;">
+				<p>
+          If you are seeing this, metadata did not populate correctly whoops...
+				</p>
+			</div>
+		</div>
+
+	</div>
+
+	<% include ../partials/draw-metadata-entries-mongo %>
+
+  <footer>
+
+  	<% include ../partials/footer %>
+
+  </footer>
+
+
+</body>
+</html>

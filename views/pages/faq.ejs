@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+	<% include ../partials/head %>
+
+
+</head>
+
+<body>
+
+	<div id="header">
+
+		<% include ../partials/header %>
+
+	</div>
+
+	<div id="content"><br><br>
+
+		<div class="box">
+			<div style="overflow:auto;">
+				<p>
+					Welcome to the minimo FAQ!
+					
+					<br>
+					
+				</p>
+			</div>
+		</div>
+
+		<div class="box">
+			<div style="overflow:auto;">
+				<p>
+					<u>What is this app?</u><br><br>
+					This app grew out of an effort to standardize and simplify raw data storage for FOCO lab members. Above all it is meant as a productivity tool to facilitate storage, retrieval, and sharing of experimental data.
+				</p>
+
+			</div>
+		</div>
+
+		<div class="box">
+			<div style="overflow:auto;">
+				<p>
+					<u>Requirements?</u><br><br>
+					This app is primarily tested on the Firefox and Chrome browsers, so you should use one of them.
+				</p>
+
+			</div>
+		</div>
+
+		<div class="box">
+			<div style="overflow:auto;">
+				<p>
+					<u>What do I do if something goes wrong?</u><br> <br>
+					If something goes wrong, what you have to do depends on what you were doing when you ran into an issue.<br>
+
+					If you clicked anything that says "upload" or "submit" or anything like that, then you need to separately check if the data was only partially uploaded. For example, say you were uploading some raw data and you got an error during the upload. If the upload was successful, then the metadata should have been triggered to upload. So you'll want to check if that got uploaded as well. Same thing if you were editing forms, metadata, or anything. Best air on the side of caution with this. If in doubt, ask us! <br>
+
+					Whatever the case, log out and log back in and try to do it again. If you get an error again, contact us for help debugging. <br> 
+					
+				</p>
+
+			</div>
+		</div>
+
+		<div class="box">
+			<div style="overflow:auto;">
+				<p>
+					<u>How do I use this app?</u><br><br>
+					This app is used to upload raw lab data to a storage server. While doing that, you will fill out metadata fields which are stored and which you can search later. <br>
+
+					Go to "MANAGE DATA," click "SUBMIT," and follow the instructions there. In brief, you will upload a SINGLE folder (with a specific naming convention, YYYMMDD_INITIALS) <br>
+
+					If the data is already on MinIO and you want to associate it with new metadata, go to "MANAGE DATA," click "LINK," select your data's MinIO folder, and fill out the metadata form as usual.
+					
+				</p>
+			</div>
+		</div>
+
+		<div class="box">
+			<div style="overflow:auto;">
+				<p>
+					<u>What if the metadata isn't detailed enough for my experiments?</u><br> <br>
+					
+					I'm glad you asked! You can edit the metadata forms in "MANAGE FORMS". Here you can add new fields or edit existing fields. <br>
+
+					For example say you get a new microscope. You'll want to edit the "apparatus" field and add in a new name for that microscope. Please try to be detailed but succinct and follow the instructions on that part of the app. <br>
+
+					Remember that these forms will be filled out by everyone in the lab. So exercise some careful thought on what you put in. It's a good idea to ask around. And you should rarely be deleting metadata form fields or entries unless they were added by mistake.
+
+				</p>
+
+			</div>
+		</div>
+
+		<div class="box">
+			<div style="overflow:auto;">
+				<p>
+					<u>What kinds of data do I use this app to store?</u><br><br>
+					This app is meant for the cumbersome raw data that we acquire as part of experiments in the lab. These can be neural imaging time series, movies of behavioral data, immunohistochemistry data, electrical recordings, and more. This is meant to be all inclusive for data, but isn't a great place to store PDFs of papers you've read.<br>
+					The majors benefit this app provides are the association of raw data with metadata (which you submit when you upload data) and programmatic access to your data (through the app's MinIO server).
+				</p>
+			</div>
+		</div>
+
+
+	<br><br><br><br><br><br>
+	</div>
+
+
+<footer>
+
+	<% include ../partials/footer %>
+
+</footer>
+
+
+</body>
+</html>

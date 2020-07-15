@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+
+	<% include ../partials/head %>
+
+
+</head>
+
+<body>
+
+	<div id="header">
+
+		<% include ../partials/header %>
+
+	</div>
+
+	<div id="content"><br><br>
+
+		<div class="box">
+			<div style="overflow:auto;">
+				<p>
+					Welcome <%= username%> to the data management page!
+				</p>
+				<p>
+					First, please select what you want to do.
+				</p>
+			</div>
+		</div>
+
+
+		<div class="box">
+			<div style="overflow:auto;">
+				<p>
+					<a href="./submit-data-boxuploader">SUBMIT lab data and metadata.</a>
+				</p>
+			</div>
+		</div>
+
+
+		<div id="create" class="box">
+			<div style="overflow:auto;">
+				<p>
+				<a href="./link-metadata-to-data">LINK existing data with a new metadata entry.</a>
+				</p>
+			</div>
+		</div>
+
+
+
+
+	</div>
+
+
+
+<footer>
+
+	<% include ../partials/footer %>
+
+</footer>
+
+
+</body>
+</html>

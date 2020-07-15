@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+	<% include ../partials/head %>
+
+</head>
+
+<body>
+
+	<div id="header">
+
+		<% include ../partials/header %>
+
+	</div>
+
+	<div id="content"><br><br>
+
+		<div class="box">
+			<div style="overflow:auto;">
+			<p>
+		   		Oh no! Something went wrong. If this keeps happening please let the webdev know.
+			</p>
+			</div>
+		</div>
+
+		<div class="box">
+			<div style="overflow:auto;">
+			
+				<p>
+					Error is: <%= errmsg %>;
+				</p>
+
+			</div>
+		</div>
+
+	</div>
+
+
+<footer>
+
+	<% include ../partials/footer %>
+
+</footer>
+
+</body>
+</html>

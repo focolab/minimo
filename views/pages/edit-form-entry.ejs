@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+	<% include ../partials/head %>
+
+
+</head>
+
+<body onload=insertText()>
+
+	<div id="header">
+
+		<% include ../partials/header %>
+
+	</div>
+
+	<div id="content"><br><br>
+
+		<div class="box">
+			<div style="overflow:auto;">
+				<p>
+					Let's edit our metadata forms! Please don't do this unless it's necessary.
+				</p>
+			</div>
+		</div>
+
+		<!-- Instructions -->
+		<div class="box">
+			<div style="overflow:auto;">
+				<p>
+					Instructions:
+					Fill out the text box below according to the correct format. If it's not formatted right, everything will explode. Hannah I'm looking at you.
+
+					Please have the relevant form text on separate lines according to this format:<br>
+					<b>form name</b> <font size="-1">(what you'll use to search)</font><br>
+					<b>prompt</b> <font size="-1">(what you see when filling out the form) </font><br>
+					<b>type</b> <font size="-1">(either "dropdown", "text", or "textbox" (big text box))</font><br>
+					<b>option 1</b> <font size="-1">(only fill out if you select "dropdown") </font><br>
+					<b>option 2...</b><br>
+					
+					<br>
+					Please note that you cannot update the form name. If you need to do that, delete this form and make a new one.
+				</p>
+			</div>
+		</div>
+
+		<!-- example -->
+		<div class="box" id="textbox">
+			<div style="overflow:auto;">
+
+				<!-- example form -->
+				<form>
+
+					<textarea class="myform" id="exampleTextbox" readonly rows="20" cols="60"></textarea>
+					<script> document.getElementById('exampleTextbox').value = "apparatus\nData acquisition apparatus\ndropdown\nNIC high-speed spinning disk\nParnassus Torsten1.0 confocal\nLCA core spectral confocal\nFLIR blackfly s\nL'Etoile lab injection room GigE\n"</script>
+					<br>
+				
+				</form>
+
+			</div>
+		</div>
+
+		<!-- Text box for editing-->
+		<div class="box" id="textbox">
+			<div style="overflow:auto;">
+
+				<!-- form -->
+				<form action="/edit-form-entry" method="post" id="editForm">
+
+					<label class="myform" for="editFormBox">Fill out your new or edited form here</label>
+					<textarea class="myform" name="editFormBox" id="editFormBox" rows="20" cols="60"></textarea>
+					<br>
+				    
+				    <!-- Hidden text form for uid -->
+				    <div name="hiddenuid" style="display:none">
+				        <input name="uid" id="uid" type="text">
+				    </div>
+				
+				</form>
+
+				<!-- submit button -->
+				<button class="myform" onclick="submitForm('editForm')">submit form</button>
+
+			</div>
+		</div>
+
+
+	</div>
+
+	<script>
+
+		function insertText(){
+
+			// get form
+			var editFormBox = document.getElementById("editFormBox")
+
+			// check if we need to fill box out with existing form
+			var docString = "<%- docString %>";
+			var docid = "<%- docid %>"
+
+			// if a doc string was passed in, fill out the form accordingly and add hidden uid to form
+			if (docString.length > 0){
+				
+				// add docstring
+				editFormBox.value = docString
+
+				// add uid
+				document.getElementById("uid").value = docid
+
+			}
+		}
+
+		// helper function to submit form
+		function submitForm(formName){
+
+			// submit!
+			document.getElementById(formName).submit()
+
+		}
+
+
+
+
+	</script>
+
+
+<footer>
+
+	<% include ../partials/footer %>
+
+</footer>
+
+
+</body>
+</html>

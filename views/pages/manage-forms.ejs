@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+
+	<% include ../partials/head %>
+
+
+</head>
+
+<body onload=insertText()>
+
+	<div id="header">
+
+		<% include ../partials/header %>
+
+	</div>
+
+	<div id="content"><br><br>
+
+		<div class="box">
+			<div style="overflow:auto;">
+				<p>
+					Welcome <%= username%> to the metadata form modification page!
+				</p>
+				<p>
+					First, please select what you want to do.
+				</p>
+			</div>
+		</div>
+
+		<!-- create -->
+		<div id="create" class="box">
+			<div style="overflow:auto;">
+				<p>
+				<a href="./edit-form-entry">CREATE a new metadata form entry.</a>
+				</p>
+			</div>
+		</div>
+
+		<!-- edit -->
+		<div id="edit" class="box">
+			<div style="overflow:auto;">
+
+				<p>UPDATE an existing metadata form entry.</p>
+
+				<form action="/edit-form-entry" method="get" id="editForm">
+					<select class="myform" id="editSelect" name="editSelect">
+					</select>
+				    
+				    <!-- Hidden text form for uid -->
+				    <!-- <div name="hiddenuid" style="display:none"> -->
+				        <!-- <input name="uid" id="uidEdit" type="text"> -->
+				    <!-- </div> -->
+				
+				</form>
+				
+				<!-- Include a submit form field -->
+				<button class="myform" onclick="submitForm('editForm')">edit</button>
+
+			</div>
+		</div>
+
+		<!-- delete -->
+		<div id="delete" class="box">
+			<div style="overflow:auto;">
+
+				<p>DELETE a metadata form entry.</p>
+
+				<form action="/delete-form-entry" method="post" id="deleteForm">
+					<select class="myform" id="deleteSelect" name="deleteSelect">
+					</select>
+
+				    <!-- Hidden text form for uid -->
+				    <div name="hiddenuid" style="display:none">
+				        <input name="uid" id="uidDelete" type="text">
+				    </div>
+
+				</form>
+				
+				<!-- Include a submit form field -->
+				<button class="myform" onclick="submitForm('deleteForm')" style="background-color:#FF5733" >delete</button>
+			</div>
+		</div>
+
+
+	</div>
+
+	<script>
+
+		function insertText(){
+
+			// get forms
+			var editSelect = document.getElementById("editSelect")
+			var deleteSelect = document.getElementById('deleteSelect')
+
+			// get form information
+			var docsObject = <%- docs %>;
+			var fieldToGrab = "element name"
+
+			i = 0
+			while (i < docsObject.length){
+
+				// get obj
+				obj = docsObject[i]
+
+				// hopefully every object has an element name...
+				if (obj.hasOwnProperty(fieldToGrab)){
+
+					// if so add it to our dropdowns
+					var option = document.createElement("option")
+					var option2 = document.createElement("option")
+					var name = obj[fieldToGrab]
+					option.text = name
+					option2.text = name
+
+					// add option to selects
+					editSelect.add(option)
+					deleteSelect.add(option2)
+				}
+
+				// increment counter
+				i = i + 1
+
+			}
+		}
+
+		// helper function to submit form
+		function submitForm(formName){
+
+			// submit for 
+			document.getElementById(formName).submit()
+
+		}
+
+
+
+
+	</script>
+
+
+<footer>
+
+	<% include ../partials/footer %>
+
+</footer>
+
+
+</body>
+</html>

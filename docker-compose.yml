@@ -1,0 +1,54 @@
+version: "3.7"
+services:
+
+  web-app:
+    build:
+      context: .
+    depends_on:
+      - mongo
+      - minio
+    ports:
+      - "5000:5000"
+    networks:
+      net:
+    environment:
+      MINIO_ENDPOINT: "${MINIO_ENDPOINT:-minio.localhost}"
+      MINIO_ACCESS_KEY: "${MINIO_ACCESS_KEY:-minioadmin}"
+      MINIO_SECRET_KEY: "${MINIO_SECRET_KEY:-minioadmin}"
+    # docker run -p 49160:5000 --name minimo-web-app -d minimo/node-web-app
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: test
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      net:
+    # docker run -it -v /data/db -p 27017:27017 --name minimo-mongo -d mongo
+
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+    environment:
+      MINIO_ACCESS_KEY: "${MINIO_ACCESS_KEY:-minioadmin}"
+      MINIO_SECRET_KEY: "${MINIO_SECRET_KEY:-minioadmin}"
+    entrypoint: sh
+    command: -c 'mkdir -p /data/data && /usr/bin/minio server /data'
+    volumes:
+      - minio-data:/data
+    networks:
+      net:
+        aliases:
+          - ${MINIO_ENDPOINT:-minio.localhost}
+    # docker run -p 9000:9000 --name minimo-minio -d minio/minio server /data
+
+networks:
+  net:
+
+volumes:
+  minio-data:
+  mongodb-data:
