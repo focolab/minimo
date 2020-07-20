@@ -120,8 +120,8 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-app.get('/add-user', checkAuth, function(req, res) {
-  res.render('pages/add-user', { });
+app.get('/manage-users', checkAuth, function(req, res) {
+  res.render('pages/manage-users', { });
 });
 
 // add web app user
@@ -129,7 +129,7 @@ app.post('/add-user', checkAuth, (req, res) => {
 
   Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
     if (err) {
-        return res.render('pages/add-user', { account : account });
+        return res.render('pages/manage-users', { account : account });
     }
 
     res.redirect('/');
@@ -142,7 +142,7 @@ app.post('/remove-user', checkAuth, (req, res) => {
   Account.findOneAndDelete({ username: req.body.username }, function(err, account) {
     if (err) {
       console.log(err);
-      return res.render('pages/add-user', { account : account });
+      return res.render('pages/manage-users', { account : account });
     }
 
     res.redirect('/');
