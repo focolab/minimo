@@ -5,8 +5,11 @@ const path = require('path');
 
 const PORT = process.env.PORT || 5000;
 
-// for sessions
-const cookieSession = require('cookie-session');
+// for passport
+const mongoose = require('mongoose');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+var Account = require('./models/account');
 
 // for minio
 const Minio = require('minio');
@@ -33,20 +36,23 @@ const randstr = require('./javascripts/randomstr');
 app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(require('express-session')({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+}));
 app.use(express.static(path.join(__dirname, '/public')));
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 
-// for cookie sessions
-app.use(cookieSession({
+// passport config
+var Account = require('./models/account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
 
-  cookieName: 'session',
-  keys: [randstr(), randstr()],
-
-  // cookie options, expire after 30 days (in ms)
-  maxAge: 1000 * 60 * 60 * 24 * 30,
-
-}));
+// mongoose
+mongoose.connect('mongodb://mongo:27017/mongoose');
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
@@ -118,6 +124,24 @@ app.get('/logout', (req, res) => {
 
   // redirect to index
   res.redirect('/');
+});
+
+app.get('/add-user', function(req, res) {
+  res.render('pages/add-user', { });
+});
+
+// add web app user
+app.post('/add-user', checkAuth, (req, res) => {
+
+  Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+    if (err) {
+        return res.render('pages/add-user', { account : account });
+    }
+
+    passport.authenticate('local')(req, res, function () {
+        res.redirect('/');
+    });
+  });
 });
 
 // submit data page via uploader

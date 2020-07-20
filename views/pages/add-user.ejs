@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+
+	<% include ../partials/head %>
+
+
+</head>
+
+<body>
+
+	<div id="header">
+
+		<% include ../partials/header %>
+
+	</div>
+
+	<div id="content"><br><br>
+
+		<!-- delete -->
+		<div id="delete" class="box">
+			<div style="overflow:auto;">
+
+				<p>ADD a new user.</p>
+
+				<form action="/add-user" method="post" id="addUserForm">
+                    <input name="username" id="usernameAdd" type="text", placeholder="username">
+                    <input name="password" id="passwordAdd" type="text", placeholder="password">
+				</form>
+				
+				<!-- Include a submit form field -->
+				<button class="myform" type="submit" form="addUserForm" style="background-color:#FF5733" >add user</button>
+			</div>
+		</div>
+
+
+	</div>
+
+
+<footer>
+
+	<% include ../partials/footer %>
+
+</footer>
+
+
+</body>
+</html>
