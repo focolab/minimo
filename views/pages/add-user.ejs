@@ -19,8 +19,8 @@
 
 	<div id="content"><br><br>
 
-		<!-- delete -->
-		<div id="delete" class="box">
+		<!-- add -->
+		<div id="add" class="box">
 			<div style="overflow:auto;">
 
 				<p>ADD a new user.</p>
@@ -32,6 +32,21 @@
 				
 				<!-- Include a submit form field -->
 				<button class="myform" type="submit" form="addUserForm">add user</button>
+			</div>
+		</div>
+
+		<!-- remove -->
+		<div id="remove" class="box">
+			<div style="overflow:auto;">
+
+				<p>REMOVE a user.</p>
+
+				<form action="/remove-user" method="post" id="removeUserForm">
+                    <input name="username" id="usernameRemove" type="text", placeholder="username">
+				</form>
+				
+				<!-- Include a submit form field -->
+				<button class="myform" type="submit" form="removeUserForm" style="background-color:#FF5733">remove user</button>
 			</div>
 		</div>
 

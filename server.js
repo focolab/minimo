@@ -136,6 +136,19 @@ app.post('/add-user', checkAuth, (req, res) => {
   });
 });
 
+// remove web app user
+app.post('/remove-user', checkAuth, (req, res) => {
+
+  Account.findOneAndDelete({ username: req.body.username }, function(err, account) {
+    if (err) {
+      console.log(err);
+      return res.render('pages/add-user', { account : account });
+    }
+
+    res.redirect('/');
+  });
+});
+
 // submit data page via uploader
 app.get('/submit-data-boxuploader', checkAuth, (req, res) => {
   try {
