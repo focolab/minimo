@@ -41,6 +41,8 @@ app.use(require('express-session')({
   resave: false,
   saveUninitialized: false
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, '/public')));
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
@@ -71,16 +73,15 @@ const checkAuth = function (req, res, next) {
   console.log('Checking authorization...');
 
   // for debugging
-  SKIP_AUTH = true;
+  SKIP_AUTH = false;
   if (SKIP_AUTH) {
     console.log('SKIP_AUTH is set to true, skipping authorization...');
     next();
   }
 
   // check cookie session for authentication flag
-  else if (req.session.isAuthenticated) {
+  else if (req.isAuthenticated()) {
     // continue past middleware
-    console.log('Already authorized!');
     next();
   } else {
     // redirect user to login page
@@ -107,26 +108,19 @@ function handleError(req, res, errmsg) {
 
 // login page
 app.get('/login', (req, res) => {
-  // if already authenticated, skip to members
-  if (req.session.isAuthenticated) {
-    console.log('Already authenticated! Moving on...');
-    res.redirect('/faq');
-  } else {
-    req.session.isAuthenticated = true;
-  }
+  res.render('pages/login', { user : req.user });
+});
 
-  res.redirect('/faq');
+app.post('/login', passport.authenticate('local'), (req, res) => {
+    res.redirect('/');
 });
 
 app.get('/logout', (req, res) => {
-  // clear session
-  req.session = null;
-
-  // redirect to index
+  req.logout();
   res.redirect('/');
 });
 
-app.get('/add-user', function(req, res) {
+app.get('/add-user', checkAuth, function(req, res) {
   res.render('pages/add-user', { });
 });
 
@@ -138,9 +132,7 @@ app.post('/add-user', checkAuth, (req, res) => {
         return res.render('pages/add-user', { account : account });
     }
 
-    passport.authenticate('local')(req, res, function () {
-        res.redirect('/');
-    });
+    res.redirect('/');
   });
 });
 
