@@ -53,18 +53,18 @@
 			</div>
 		</div>
 
-		<!-- make admin -->
+		<!-- toggle admin -->
 		<div id="admin" class="box">
 			<div style="overflow:auto;">
 
-				<p>make user an ADMIN.</p>
+				<p>toggle user ADMIN status.</p>
 
-				<form action="/make-admin" method="post" id="makeAdminForm">
-                    <input name="username" id="usernameMakeAdmin" type="text", placeholder="username">
+				<form action="/toggle-admin" method="post" id="toggleAdminForm">
+                    <input name="username" id="usernameToggleAdmin" type="text", placeholder="username">
 				</form>
 				
 				<!-- Include a submit form field -->
-				<button class="myform" type="submit" form="makeAdminForm">make admin</button>
+				<button class="myform" type="submit" form="toggleAdminForm">toggle admin</button>
 			</div>
 		</div>
 

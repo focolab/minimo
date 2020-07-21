@@ -181,7 +181,7 @@ app.post('/add-user', checkAdmin, (req, res) => {
 // remove web app user
 app.post('/remove-user', checkAdmin, (req, res) => {
 
-  Account.findOneAndDelete({ username: req.body.username }, function(err, account) {
+  Account.findOneAndDelete({ username: req.body.username }, (err, account) => {
     if (err) {
       console.log(err);
       return res.render('pages/manage-users', { account : account });
@@ -191,16 +191,24 @@ app.post('/remove-user', checkAdmin, (req, res) => {
   });
 });
 
-// make web app user admin
-app.post('/make-admin', checkAdmin, (req, res) => {
+// toggle web app user admin status
+app.post('/toggle-admin', checkAdmin, (req, res) => {
 
-  Account.findOneAndUpdate({ username: req.body.username }, { administrator: true }, function(err, account) {
+  Account.findOne({ username: req.body.username }, (err, account) => {
     if (err) {
       console.log(err);
-      return res.render('pages/manage-users', { account : account });
+      return res.render('pages/manage-users');
+    } else {
+      previousAdminStatus = account.administrator;
+      Account.updateOne({ username: req.body.username }, { administrator: !previousAdminStatus}, (err, updatedAccount) => {
+        if (err) {
+          console.log(err);
+          return res.render('pages/manage-users');
+        } else {
+          res.redirect('/manage-users');
+        }
+      })
     }
-
-    res.redirect('/manage-users');
   });
 });
 
