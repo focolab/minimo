@@ -123,6 +123,15 @@ const checkAdmin = function (req, res, next) {
   });
 };
 
+function getUsername(req) {
+  if (!req.user == null) {
+    if (! req.user.username == null) {
+      return req.user.username;
+    }
+  }
+  return "anonymous user";
+}
+
 // helper function to handle errors, notifying user appropriately
 function handleError(req, res, errmsg) {
   // add error to locals
@@ -154,7 +163,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/manage-users', checkAdmin, function(req, res) {
-  res.locals.username = req.user.username;
+  res.locals.username = getUsername(req);
   Account.find({}, (err, userAccounts) => {
     if (err) {
       console.log(err);
@@ -213,7 +222,7 @@ app.post('/toggle-admin', checkAdmin, (req, res) => {
 });
 
 app.get('/update-password', checkAuth, (req, res) => {
-  res.locals.username = req.user.username;
+  res.locals.username = getUsername(req);
   res.render('pages/update-password', { });
 });
 
@@ -253,7 +262,7 @@ app.get('/submit-data-boxuploader', checkAuth, (req, res) => {
         // add docs to locals
         console.log(JSON.stringify(docs));
         res.locals.docs = JSON.stringify(docs);
-        res.locals.username = req.user.username;
+        res.locals.username = getUsername(req);
 
         // render data page
         res.render('pages/submit-data-boxuploader');
@@ -317,7 +326,7 @@ app.get('/manage-forms', checkAuth, (req, res) => {
 
         // add docs to locals
         res.locals.docs = JSON.stringify(docs);
-        res.locals.username = req.user.username;
+        res.locals.username = getUsername(req);
 
         // render manage forms page
         res.render('pages/manage-forms');
@@ -441,7 +450,7 @@ app.post('/delete-form-entry', checkAuth, (req, res) => {
 app.get('/manage-data', checkAuth, (req, res) => {
   try {
     // add username to locals
-    res.locals.username = req.user.username;
+    res.locals.username = getUsername(req);
 
     // render manage forms page
     res.render('pages/manage-data');
@@ -468,7 +477,7 @@ app.get('/link-metadata-to-data', checkAuth, (req, res) => {
         // add docs to locals
         console.log(JSON.stringify(docs));
         res.locals.docs = JSON.stringify(docs);
-        res.locals.username = req.user.username;
+        res.locals.username = getUsername(req);
 
         // render data page
         res.render('pages/link-metadata-to-data');
@@ -508,7 +517,7 @@ app.get('/browse-datametadata', checkAuth, (req, res) => {
 
             // add docs to locals
             res.locals.docs = JSON.stringify(formattedDocs);
-            res.locals.username = req.user.username;
+            res.locals.username = getUsername(req);
 
             // render manage forms page
             res.render('pages/browse-datametadata');
@@ -524,7 +533,7 @@ app.get('/browse-datametadata', checkAuth, (req, res) => {
 app.get('/browse-data', checkAuth, (req, res) => {
   try {
     // add username to locals
-    res.locals.username = req.user.username;
+    res.locals.username = getUsername(req);
 
     // render browse data page
     res.render('pages/browse-data');
