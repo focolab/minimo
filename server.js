@@ -154,6 +154,7 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/manage-users', checkAdmin, function(req, res) {
+  res.locals.username = req.user.username;
   res.render('pages/manage-users', { });
 });
 
