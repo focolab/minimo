@@ -72,53 +72,55 @@ app.get('/faq', (req, res) => res.render('pages/faq'));
 const checkAuth = function (req, res, next) {
   console.log('Checking authorization...');
 
-  // for debugging
-  SKIP_AUTH = false;
-  if (SKIP_AUTH) {
-    console.log('SKIP_AUTH is set to true, skipping authorization...');
-    next();
-  }
-
-  // check cookie session for authentication flag
-  else if (req.isAuthenticated()) {
-    // continue past middleware
-    next();
-  } else {
-    // redirect user to login page
-    console.log('Not authorized, redirecting to login.');
-    res.redirect('/login');
-  }
+  Account.findOne(null, function(err,arbitraryUserAccount) {
+    if (arbitraryUserAccount === null) {
+      // no user accounts, so skip authentication
+      console.log('no existing user accounts, skipping authorization...');
+      next();
+    } else if (req.isAuthenticated()) {
+      // continue past middleware
+      next();
+    } else {
+      // redirect user to login page
+      console.log('Not authorized, redirecting to login.');
+      res.redirect('/login');
+    }
+  });
 };
 
 // middleware function to check authorization
 const checkAdmin = function (req, res, next) {
   console.log('Checking authorization...');
 
-  // for debugging
-  SKIP_AUTH = false;
-  if (SKIP_AUTH) {
-    console.log('SKIP_AUTH is set to true, skipping authorization...');
-    next();
-  }
-
-  // check cookie session for authentication flag
-  else if (req.isAuthenticated()) {
-    Account.findOne({username: req.user.username}, function(err,userAccount) {
-      console.log(userAccount);
-      if (userAccount.administrator === true) {
-        // continue past middleware
-        next();
-      } else {
-        // redirect user to login page
-        console.log('Not authorized, redirecting to login.');
-        res.redirect('/login');
-      }
-    });
-  } else {
-    // redirect user to login page
-    console.log('Not authorized, redirecting to login.');
-    res.redirect('/login');
-  }
+  Account.findOne(null, (err,arbitraryUserAccount) => {
+    if (arbitraryUserAccount === null) {
+      // no user accounts, so skip authentication
+      console.log('no existing user accounts, skipping authorization...');
+      next();
+    } else if (req.isAuthenticated()) {
+      Account.findOne({administrator: true}, (err,arbitraryAdministratorAccount) => {
+        if (arbitraryAdministratorAccount === null) {
+          // no admin accounts, so proceed
+          next();
+        } else {
+          Account.findOne({username: req.user.username}, (err,userAccount) => {
+            if (userAccount.administrator === true) {
+              // continue past middleware
+              next();
+            } else {
+              // redirect user to login page
+              console.log('Not administrator, redirecting to update-password.');
+              res.redirect('/update-password');
+            }
+          });
+        }
+      });
+    } else {
+      // redirect user to login page
+      console.log('Not authorized, redirecting to login.');
+      res.redirect('/login');
+    }
+  });
 };
 
 // helper function to handle errors, notifying user appropriately
