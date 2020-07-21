@@ -193,6 +193,29 @@ app.post('/make-admin', checkAdmin, (req, res) => {
   });
 });
 
+app.get('/update-password', checkAuth, (req, res) => {
+  res.locals.username = req.user.username;
+  res.render('pages/update-password', { });
+});
+
+// make web app user admin
+app.post('/update-password', checkAuth, (req, res) => {
+  Account.findOne({username: req.user.username}, (err,userAccount) => {
+    if (err) {
+      console.log(err);
+      res.redirect('/update-password');
+    } else {
+      userAccount.changePassword(req.body.oldPassword, req.body.newPassword, (err) => {
+        if(err) {
+          console.log(err);
+          res.redirect('/update-password');
+        }
+        res.redirect('/update-password');
+      });
+    }
+  });
+});
+
 // submit data page via uploader
 app.get('/submit-data-boxuploader', checkAuth, (req, res) => {
   try {
