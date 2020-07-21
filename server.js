@@ -90,6 +90,37 @@ const checkAuth = function (req, res, next) {
   }
 };
 
+// middleware function to check authorization
+const checkAdmin = function (req, res, next) {
+  console.log('Checking authorization...');
+
+  // for debugging
+  SKIP_AUTH = false;
+  if (SKIP_AUTH) {
+    console.log('SKIP_AUTH is set to true, skipping authorization...');
+    next();
+  }
+
+  // check cookie session for authentication flag
+  else if (req.isAuthenticated()) {
+    Account.findOne({username: req.user.username}, function(err,userAccount) {
+      console.log(userAccount);
+      if (userAccount.administrator === true) {
+        // continue past middleware
+        next();
+      } else {
+        // redirect user to login page
+        console.log('Not authorized, redirecting to login.');
+        res.redirect('/login');
+      }
+    });
+  } else {
+    // redirect user to login page
+    console.log('Not authorized, redirecting to login.');
+    res.redirect('/login');
+  }
+};
+
 // helper function to handle errors, notifying user appropriately
 function handleError(req, res, errmsg) {
   // add error to locals
@@ -120,24 +151,24 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-app.get('/manage-users', checkAuth, function(req, res) {
+app.get('/manage-users', checkAdmin, function(req, res) {
   res.render('pages/manage-users', { });
 });
 
 // add web app user
-app.post('/add-user', checkAuth, (req, res) => {
+app.post('/add-user', checkAdmin, (req, res) => {
 
-  Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+  Account.register(new Account({ username : req.body.username, administrator: false }), req.body.password, function(err, account) {
     if (err) {
         return res.render('pages/manage-users', { account : account });
     }
 
-    res.redirect('/');
+    res.redirect('/manage-users');
   });
 });
 
 // remove web app user
-app.post('/remove-user', checkAuth, (req, res) => {
+app.post('/remove-user', checkAdmin, (req, res) => {
 
   Account.findOneAndDelete({ username: req.body.username }, function(err, account) {
     if (err) {
@@ -145,7 +176,20 @@ app.post('/remove-user', checkAuth, (req, res) => {
       return res.render('pages/manage-users', { account : account });
     }
 
-    res.redirect('/');
+    res.redirect('/manage-users');
+  });
+});
+
+// make web app user admin
+app.post('/make-admin', checkAdmin, (req, res) => {
+
+  Account.findOneAndUpdate({ username: req.body.username }, { administrator: true }, function(err, account) {
+    if (err) {
+      console.log(err);
+      return res.render('pages/manage-users', { account : account });
+    }
+
+    res.redirect('/manage-users');
   });
 });
 
