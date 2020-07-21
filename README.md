@@ -108,10 +108,6 @@ Anything! We welcome issues and pull requests.
 
 You may also want to change some infrastructure for your deployment. For example, our lab uses an mlab MongoDB endpoint (rather than a local one), and we run our MinIO server in gateway mode against a separate NAS device. You might also prefer to use a cloud endpoint (probably S3) for your raw data storage or for data backups. Changes of this sort should be fairly easy to make locally.
 
-# what isn't included?
-
-This is a pared down version of the branch that our lab uses. We'll try to port features here as we add them, but there are a few things on our branch that wouldn't make sense for a more general user base. Currently, the most notable such thing is our authentication flow. In the future, we may move to a flow that generalizes better than the one we use now; in the meantime, we've left a barebones `checkAuth` function in `server.js` so that you can add your own authentication flow if you so desire.
-
 # contact us
 
 minimo was put together by members of UCSF's [FOCO Lab](http://saulkato.com/focolab/team.htm). Please feel free to contact us through the Issues section of this repository if you run into problems or have suggestions for improvements. We're happy to hear your input!
