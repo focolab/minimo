@@ -9,7 +9,7 @@
 
 </head>
 
-<body>
+<body onload=drawUserTable()>
 
 	<div id="header">
 
@@ -68,16 +68,33 @@
 			</div>
 		</div>
 
-
+		<div id="userTable" class="box"></div>
 	</div>
 
+	<script>
 
-<footer>
+		function drawUserTable() {
 
-	<% include ../partials/footer %>
+			var userAccounts = <%- accounts %>;
 
-</footer>
+			// get account attributes and append to table
+			tableHtml = "<table><tr><th>username</th><th>admin?</th></tr>"
+			for(i=0; i < userAccounts.length; i++){
+				account = userAccounts[i]
+				tableHtml += "<tr><td>" + String(account['username']) + "</td><td>"  + String(account['administrator']) + "</td></tr>"
+			}
+			tableHtml += "</table"
 
+			document.getElementById('userTable').innerHTML = tableHtml
+		}
+
+	</script>
+
+	<footer>
+
+		<% include ../partials/footer %>
+
+	</footer>
 
 </body>
 </html>

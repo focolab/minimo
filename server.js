@@ -155,7 +155,15 @@ app.get('/logout', (req, res) => {
 
 app.get('/manage-users', checkAdmin, function(req, res) {
   res.locals.username = req.user.username;
-  res.render('pages/manage-users', { });
+  Account.find({}, (err, userAccounts) => {
+    if (err) {
+      console.log(err);
+      res.render('pages/manage-users');
+    } else {
+      res.locals.accounts = JSON.stringify(userAccounts);
+      res.render('pages/manage-users');
+    }
+  });
 });
 
 // add web app user
