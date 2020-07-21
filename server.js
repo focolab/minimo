@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-var Account = require('./models/account');
+const Account = require('./models/account');
+const { v4: uuidv4 } = require('uuid');
 
 // for minio
 const Minio = require('minio');
@@ -37,7 +38,7 @@ app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(require('express-session')({
-  secret: 'keyboard cat',
+  secret: uuidv4(),
   resave: false,
   saveUninitialized: false
 }));
@@ -48,7 +49,6 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 
 // passport config
-var Account = require('./models/account');
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
