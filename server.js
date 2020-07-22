@@ -69,10 +69,10 @@ app.get('/', (req, res) => res.render('pages/faq'));
 app.get('/faq', (req, res) => res.render('pages/faq'));
 
 // middleware function to check authorization
-const checkAuth = function (req, res, next) {
+const checkAuth = (req, res, next) => {
   console.log('Checking authorization...');
 
-  Account.findOne(null, function(err,arbitraryUserAccount) {
+  Account.findOne(null, (err,arbitraryUserAccount) => {
     if (arbitraryUserAccount === null) {
       // no user accounts, so skip authentication
       console.log('no existing user accounts, skipping authorization...');
@@ -89,7 +89,7 @@ const checkAuth = function (req, res, next) {
 };
 
 // middleware function to check authorization
-const checkAdmin = function (req, res, next) {
+const checkAdmin = (req, res, next) => {
   console.log('Checking authorization...');
 
   Account.findOne(null, (err,arbitraryUserAccount) => {
@@ -162,7 +162,7 @@ app.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-app.get('/manage-users', checkAdmin, function(req, res) {
+app.get('/manage-users', checkAdmin, (req, res) => {
   res.locals.username = getUsername(req);
   Account.find({}, (err, userAccounts) => {
     if (err) {
@@ -178,7 +178,7 @@ app.get('/manage-users', checkAdmin, function(req, res) {
 // add web app user
 app.post('/add-user', checkAdmin, (req, res) => {
 
-  Account.register(new Account({ username : req.body.username, administrator: false }), req.body.password, function(err, account) {
+  Account.register(new Account({ username : req.body.username, administrator: false }), req.body.password, (err, account) => {
     if (err) {
         return res.render('pages/manage-users', { account : account });
     }
