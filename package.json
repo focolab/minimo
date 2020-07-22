@@ -30,11 +30,16 @@
 	"homepage": "https://github.com/focolab/minimo",
 	"dependencies": {
 		"body-parser": "^1.14.1",
-		"cookie-session": "^2.0.0-beta.3",
 		"ejs": "^2.5.6",
 		"express": "^4.13.3",
+		"express-session": "^1.17.1",
 		"minio": "^7.0.15",
 		"mongodb": "^2.0.43",
+		"mongoose": "^5.9.25",
+		"passport": "^0.4.1",
+		"passport-local": "^1.0.0",
+		"passport-local-mongoose": "^6.0.1",
+		"uuid": "^8.2.0",
 		"xmlhttprequest": "^1.8.0"
 	}
 }

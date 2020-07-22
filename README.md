@@ -71,6 +71,14 @@ Now, your comments field will be available for all new data submissions! You can
 
 Now, you should be able to see your metadata in the metadata browser and its associated experimental data in the data browser!
 
+# user management
+
+By default, minimo does not require user authentication. If you would like to restrict access to your minimo instance to some set authorized users, you can do so by going to the `manage-users` endpoint and creating login credentials for those users. Once the first set of user credentials has been created, access to all pages other than the FAQ will be limited to authorized users. The `manage-users` page also exposes interfaces for updating the current user's password, removing existing user accounts, and toggling administrator status on existing accounts.
+
+By default, all accounts are created with administrator status set to false. If you would like to restrict access to the interfaces for adding and removing users and toggling administrator status to only a subset of authorized users, you can do so by toggling administrator status to true for that subset. Like with user account creation, once any administrator has been designated, access to this "administrator" functionality will be limited to users with administrator status set to true.
+
+If all user accounts are removed, your instance will revert to its default behavior of not requiring authentication. Similarly, if administrator access toggles for all accounts are set to false, your instance will revert to its default behavior of granting administrator access to all users.
+
 # technical details
 
 minimo is really just a lightweight [Node](https://nodejs.org) web server. This server talks to [MinIO](https://min.io/) and [MongoDB](https://www.mongodb.com/) servers, which store experimental data and metadata respectively, and it serves pages which allow upload of data to and access to data on those servers.
@@ -99,10 +107,6 @@ We're working on streamlining production deployment steps, but in the meantime, 
 Anything! We welcome issues and pull requests.
 
 You may also want to change some infrastructure for your deployment. For example, our lab uses an mlab MongoDB endpoint (rather than a local one), and we run our MinIO server in gateway mode against a separate NAS device. You might also prefer to use a cloud endpoint (probably S3) for your raw data storage or for data backups. Changes of this sort should be fairly easy to make locally.
-
-# what isn't included?
-
-This is a pared down version of the branch that our lab uses. We'll try to port features here as we add them, but there are a few things on our branch that wouldn't make sense for a more general user base. Currently, the most notable such thing is our authentication flow. In the future, we may move to a flow that generalizes better than the one we use now; in the meantime, we've left a barebones `checkAuth` function in `server.js` so that you can add your own authentication flow if you so desire.
 
 # contact us
 

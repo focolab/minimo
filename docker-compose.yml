@@ -19,8 +19,8 @@ services:
 
   mongo:
     image: mongo
-    ports:
-      - "27017:27017"
+    expose:
+      - "27017"
     environment:
       MONGO_INITDB_DATABASE: test
     volumes:

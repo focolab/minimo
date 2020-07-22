@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+
+	<% include ../partials/head %>
+
+
+</head>
+
+<body onload=drawUserTable()>
+
+	<div id="header">
+
+		<% include ../partials/header %>
+
+	</div>
+
+	<div id="content"><br><br>
+
+		<!-- update -->
+		<% include ../partials/update-password-form %>
+
+		<!-- add -->
+		<div id="add" class="box">
+			<div style="overflow:auto;">
+
+				<p>ADD a new user.</p>
+
+				<form action="/add-user" method="post" id="addUserForm">
+                    <input name="username" id="usernameAdd" type="text", placeholder="username">
+                    <input name="password" id="passwordAdd" type="text", placeholder="password">
+				</form>
+				
+				<!-- Include a submit form field -->
+				<button class="myform" type="submit" form="addUserForm">add user</button>
+			</div>
+		</div>
+
+		<!-- remove -->
+		<div id="remove" class="box">
+			<div style="overflow:auto;">
+
+				<p>REMOVE a user.</p>
+
+				<form action="/remove-user" method="post" id="removeUserForm">
+                    <input name="username" id="usernameRemove" type="text", placeholder="username">
+				</form>
+				
+				<!-- Include a submit form field -->
+				<button class="myform" type="submit" form="removeUserForm" style="background-color:#FF5733">remove user</button>
+			</div>
+		</div>
+
+		<!-- toggle admin -->
+		<div id="admin" class="box">
+			<div style="overflow:auto;">
+
+				<p>toggle user ADMIN status.</p>
+
+				<form action="/toggle-admin" method="post" id="toggleAdminForm">
+                    <input name="username" id="usernameToggleAdmin" type="text", placeholder="username">
+				</form>
+				
+				<!-- Include a submit form field -->
+				<button class="myform" type="submit" form="toggleAdminForm">toggle admin</button>
+			</div>
+		</div>
+
+		<div id="userTable" class="box"></div>
+	</div>
+
+	<script>
+
+		function drawUserTable() {
+
+			var userAccounts = <%- accounts %>;
+
+			// get account attributes and append to table
+			tableHtml = "<table><tr><th>username</th><th>admin?</th></tr>"
+			for(i=0; i < userAccounts.length; i++){
+				account = userAccounts[i]
+				tableHtml += "<tr><td>" + String(account['username']) + "</td><td>"  + String(account['administrator']) + "</td></tr>"
+			}
+			tableHtml += "</table"
+
+			document.getElementById('userTable').innerHTML = tableHtml
+		}
+
+	</script>
+
+	<footer>
+
+		<% include ../partials/footer %>
+
+	</footer>
+
+</body>
+</html>
