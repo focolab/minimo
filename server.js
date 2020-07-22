@@ -75,8 +75,11 @@ const checkAuth = (req, res, next) => {
     // continue past middleware
     next();
   } else {
-    Account.findOne(null, (err,arbitraryUserAccount) => {
-      if (arbitraryUserAccount === null) {
+    Account.findOne(null, (err, anyUserAccount) => {
+      if (err) {
+        errmsg = `Error while trying to fetch user accounts. \n`;
+        handleError(req, res, err, errmsg);
+      } else if (anyUserAccount === null) {
         // no user accounts, so skip authentication
         console.log('no existing user accounts, skipping authorization...');
         next();
@@ -93,13 +96,19 @@ const checkAuth = (req, res, next) => {
 const checkAdmin = (req, res, next) => {
   console.log('Checking authorization...');
   if (req.isAuthenticated()) {
-    Account.findOne({username: req.user.username}, (err,userAccount) => {
-      if (userAccount.administrator === true) {
+    Account.findOne({username: req.user.username}, (err, userAccount) => {
+      if (err) {
+        errmsg = `Error while trying to fetch user account. \n`;
+        handleError(req, res, err, errmsg);
+      } else if (userAccount.administrator === true) {
         // continue past middleware
         next();
       } else {
-        Account.findOne({administrator: true}, (err,anyAdministratorAccount) => {
-          if (anyAdministratorAccount === null) {
+        Account.findOne({administrator: true}, (err, anyAdministratorAccount) => {
+          if (err) {
+            errmsg = `Error while trying to fetch administrator accounts. \n`;
+            handleError(req, res, err, errmsg);
+          } else if (anyAdministratorAccount === null) {
             // no admin accounts, so proceed
             next();
           } else {
@@ -111,8 +120,11 @@ const checkAdmin = (req, res, next) => {
       }
     });
   } else {
-    Account.findOne(null, (err,anyUserAccount) => {
-      if (anyUserAccount === null) {
+    Account.findOne(null, (err, anyUserAccount) => {
+      if (err) {
+        errmsg = `Error while trying to fetch user accounts. \n`;
+        handleError(req, res, err, errmsg);
+      } else if (anyUserAccount === null) {
         // no user accounts, so skip authentication
         console.log('no existing user accounts, skipping authorization...');
         next();
@@ -135,10 +147,10 @@ function getUsername(req) {
 }
 
 // helper function to handle errors, notifying user appropriately
-function handleError(req, res, errmsg) {
+function handleError(req, res, err, errmsg) {
   // add error to locals
   res.locals.errmsg = errmsg;
-  console.log(errmsg);
+  console.log(err);
 
   // clear session
   req.session = null;
@@ -168,8 +180,8 @@ app.get('/manage-users', checkAdmin, (req, res) => {
   res.locals.username = getUsername(req);
   Account.find({}, (err, userAccounts) => {
     if (err) {
-      console.log(err);
-      res.render('pages/manage-users');
+      errmsg = `Error while trying to fetch user accounts. \n`;
+      handleError(req, res, err, errmsg);
     } else {
       res.locals.accounts = JSON.stringify(userAccounts);
       res.render('pages/manage-users');
@@ -182,10 +194,11 @@ app.post('/add-user', checkAdmin, (req, res) => {
 
   Account.register(new Account({ username : req.body.username, administrator: false }), req.body.password, (err, account) => {
     if (err) {
-        return res.render('pages/manage-users', { account : account });
+      errmsg = `Error while trying to create user account. \n`;
+      handleError(req, res, err, errmsg);
+    } else {
+      res.redirect('/manage-users');
     }
-
-    res.redirect('/manage-users');
   });
 });
 
@@ -194,11 +207,11 @@ app.post('/remove-user', checkAdmin, (req, res) => {
 
   Account.findOneAndDelete({ username: req.body.username }, (err, account) => {
     if (err) {
-      console.log(err);
-      return res.render('pages/manage-users', { account : account });
+      errmsg = `Error while trying to delete user account. \n`;
+      handleError(req, res, err, errmsg);
+    } else {
+      res.redirect('/manage-users');
     }
-
-    res.redirect('/manage-users');
   });
 });
 
@@ -207,14 +220,14 @@ app.post('/toggle-admin', checkAdmin, (req, res) => {
 
   Account.findOne({ username: req.body.username }, (err, account) => {
     if (err) {
-      console.log(err);
-      return res.render('pages/manage-users');
-    } else {
+      errmsg = `Error while trying to fetch user account. \n`;
+      handleError(req, res, err, errmsg);
+    } else  {
       previousAdminStatus = account.administrator;
       Account.updateOne({ username: req.body.username }, { administrator: !previousAdminStatus}, (err, updatedAccount) => {
         if (err) {
-          console.log(err);
-          return res.render('pages/manage-users');
+          errmsg = `Error while trying to update user admin status. \n`;
+          handleError(req, res, err, errmsg);
         } else {
           res.redirect('/manage-users');
         }
@@ -230,17 +243,18 @@ app.get('/update-password', checkAuth, (req, res) => {
 
 // make web app user admin
 app.post('/update-password', checkAuth, (req, res) => {
-  Account.findOne({username: req.user.username}, (err,userAccount) => {
+  Account.findOne({username: req.user.username}, (err, userAccount) => {
     if (err) {
-      console.log(err);
-      res.redirect('/update-password');
+      errmsg = `Error while trying to fetch user account. \n`;
+      handleError(req, res, err, errmsg);
     } else {
       userAccount.changePassword(req.body.oldPassword, req.body.newPassword, (err) => {
-        if(err) {
-          console.log(err);
-          res.redirect('/update-password');
+        if (err) {
+          errmsg = `Error while trying to update password. \n`;
+          handleError(req, res, err, errmsg);
+        } else {
+          res.redirect('/manage-users');
         }
-        res.redirect('/update-password');
       });
     }
   });
@@ -271,16 +285,20 @@ app.get('/submit-data-boxuploader', checkAuth, (req, res) => {
       });
   } catch (err) {
     // craft error message, log
-    errmsg = `Error while getting ready to allow user to submit data.\n${err}`;
-    handleError(req, res, errmsg);
+    errmsg = `Error while getting ready to allow user to submit data.\n`;
+    handleError(req, res, err, errmsg);
   }
 });
 
 // taken from https://docs.min.io/docs/upload-files-from-browser-using-pre-signed-urls.html
 app.get('/presigned-url', checkAuth, (req, res) => {
   minioClient.presignedPutObject('data', req.query.name, (err, url) => {
-    if (err) throw err;
-    res.end(url);
+    if (err) {
+      errmsg = `Error while trying to put object. \n`;
+      handleError(req, res, err, errmsg);
+    } else {
+      res.end(url);
+    }
   });
 });
 
@@ -309,8 +327,8 @@ app.post('/submitted-metadata', checkAuth, (req, res) => {
       });
   } catch (err) {
     // craft error message, log
-    errmsg = `Error during metadata submission. Metadata was not submitted, but data may have been submitted. Please notify webdev.\n${err}`;
-    handleError(req, res, errmsg);
+    errmsg = `Error during metadata submission. Metadata was not submitted, but data may have been submitted. Please notify webdev.\n`;
+    handleError(req, res, err, errmsg);
   }
 });
 
@@ -334,8 +352,8 @@ app.get('/manage-forms', checkAuth, (req, res) => {
         res.render('pages/manage-forms');
       });
   } catch (err) {
-    errmsg = `Error while trying to get form entries. \n${err}`;
-    handleError(req, res, errmsg);
+    errmsg = `Error while trying to get form entries. \n`;
+    handleError(req, res, err, errmsg);
   }
 });
 
@@ -373,8 +391,8 @@ app.get('/edit-form-entry', checkAuth, (req, res) => {
       res.render('pages/edit-form-entry');
     }
   } catch (err) {
-    errmsg = `Error while trying to get form to edit: ${err}`;
-    handleError(req, res, errmsg);
+    errmsg = `Error while trying to get form to edit. \n`;
+    handleError(req, res, err, errmsg);
   }
 });
 
@@ -412,8 +430,8 @@ app.post('/edit-form-entry', checkAuth, (req, res) => {
         res.redirect('/manage-forms');
       });
   } catch (err) {
-    errmsg = `Error during edit form entry, form entry not edited: ${err}`;
-    handleError(req, res, errmsg);
+    errmsg = `Error during edit form entry, form entry not edited. \n`;
+    handleError(req, res, err, errmsg);
   }
 });
 
@@ -443,8 +461,8 @@ app.post('/delete-form-entry', checkAuth, (req, res) => {
         res.redirect('/manage-forms');
       });
   } catch (err) {
-    errmsg = `Error during delete of form entry, delete not successful: ${err}`;
-    handleError(req, res, errmsg);
+    errmsg = `Error during delete of form entry, delete not successful. \n`;
+    handleError(req, res, err, errmsg);
   }
 });
 
@@ -457,8 +475,8 @@ app.get('/manage-data', checkAuth, (req, res) => {
     // render manage forms page
     res.render('pages/manage-data');
   } catch (err) {
-    errmsg = `Error while trying to manage metadata. \n${err}`;
-    handleError(req, res, errmsg);
+    errmsg = `Error while trying to manage metadata. \n`;
+    handleError(req, res, err, errmsg);
   }
 });
 
@@ -485,8 +503,8 @@ app.get('/link-metadata-to-data', checkAuth, (req, res) => {
         res.render('pages/link-metadata-to-data');
       });
   } catch (err) {
-    errmsg = `Error while trying to link metadata to data!\n${err}`;
-    handleError(req, res, errmsg);
+    errmsg = `Error while trying to link metadata to data! \n`;
+    handleError(req, res, err, errmsg);
   }
 });
 
@@ -526,8 +544,8 @@ app.get('/browse-datametadata', checkAuth, (req, res) => {
           });
       });
   } catch (err) {
-    errmsg = `Error while trying to get datametadata entries. \n${err}`;
-    handleError(req, res, errmsg);
+    errmsg = `Error while trying to get datametadata entries. \n`;
+    handleError(req, res, err, errmsg);
   }
 });
 
@@ -540,7 +558,7 @@ app.get('/browse-data', checkAuth, (req, res) => {
     // render browse data page
     res.render('pages/browse-data');
   } catch (err) {
-    errmsg = `Error while trying to browse data. \n${err}`;
-    handleError(req, res, errmsg);
+    errmsg = `Error while trying to browse data. \n`;
+    handleError(req, res, err, errmsg);
   }
 });
