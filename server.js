@@ -71,56 +71,58 @@ app.get('/faq', (req, res) => res.render('pages/faq'));
 // middleware function to check authorization
 const checkAuth = (req, res, next) => {
   console.log('Checking authorization...');
-
-  Account.findOne(null, (err,arbitraryUserAccount) => {
-    if (arbitraryUserAccount === null) {
-      // no user accounts, so skip authentication
-      console.log('no existing user accounts, skipping authorization...');
-      next();
-    } else if (req.isAuthenticated()) {
-      // continue past middleware
-      next();
-    } else {
-      // redirect user to login page
-      console.log('Not authorized, redirecting to login.');
-      res.redirect('/login');
-    }
-  });
+  if (req.isAuthenticated()) {
+    // continue past middleware
+    next();
+  } else {
+    Account.findOne(null, (err,arbitraryUserAccount) => {
+      if (arbitraryUserAccount === null) {
+        // no user accounts, so skip authentication
+        console.log('no existing user accounts, skipping authorization...');
+        next();
+      } else {
+        // redirect user to login page
+        console.log('Not authorized, redirecting to login.');
+        res.redirect('/login');
+      }
+    });
+  }
 };
 
-// middleware function to check authorization
+// middleware function to check admin authorization
 const checkAdmin = (req, res, next) => {
   console.log('Checking authorization...');
-
-  Account.findOne(null, (err,arbitraryUserAccount) => {
-    if (arbitraryUserAccount === null) {
-      // no user accounts, so skip authentication
-      console.log('no existing user accounts, skipping authorization...');
-      next();
-    } else if (req.isAuthenticated()) {
-      Account.findOne({administrator: true}, (err,arbitraryAdministratorAccount) => {
-        if (arbitraryAdministratorAccount === null) {
-          // no admin accounts, so proceed
-          next();
-        } else {
-          Account.findOne({username: req.user.username}, (err,userAccount) => {
-            if (userAccount.administrator === true) {
-              // continue past middleware
-              next();
-            } else {
-              // redirect user to login page
-              console.log('Not administrator, redirecting to update-password.');
-              res.redirect('/update-password');
-            }
-          });
-        }
-      });
-    } else {
-      // redirect user to login page
-      console.log('Not authorized, redirecting to login.');
-      res.redirect('/login');
-    }
-  });
+  if (req.isAuthenticated()) {
+    Account.findOne({username: req.user.username}, (err,userAccount) => {
+      if (userAccount.administrator === true) {
+        // continue past middleware
+        next();
+      } else {
+        Account.findOne({administrator: true}, (err,anyAdministratorAccount) => {
+          if (anyAdministratorAccount === null) {
+            // no admin accounts, so proceed
+            next();
+          } else {
+            // redirect user to login page
+            console.log('Not administrator, redirecting to update-password.');
+            res.redirect('/update-password');
+          }
+        });
+      }
+    });
+  } else {
+    Account.findOne(null, (err,anyUserAccount) => {
+      if (anyUserAccount === null) {
+        // no user accounts, so skip authentication
+        console.log('no existing user accounts, skipping authorization...');
+        next();
+      } else {
+        // redirect user to login page
+        console.log('Not authorized, redirecting to login.');
+        res.redirect('/login');
+      }
+    });
+  }
 };
 
 function getUsername(req) {
