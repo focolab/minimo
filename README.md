@@ -37,11 +37,13 @@ This repo provides a Dockerized version of minimo. To deploy it with default set
 
 For non-default settings, just prepend the command in step 4 above with any of the following user option flags:
 
-1. `MINIO_ENDPOINT`: Set this to your host's local IP address if you'd like your minimo instance to be reachable from other machines on your network.
+1. `MINIO_ENDPOINT`: Set this to your host's hostname or local IP address if you'd like your minimo instance to be reachable from other machines on your network.
 2. `MINIO_ACCESS_KEY`: Think of this as the administrator username for your MinIO service. Specify a value if you don't want to use the default.
 3. `MINIO_SECREY_KEY`: Think of this as the administrator password for your MinIO service. Specify a value if you don't want to use the default.
+4. `MINIO_DATA_DIRECTORY`: If you would like to use an existing directory on your host for data storage, use this flag to specify the absolute path of that directory.
+5. `MINIO_COMMAND`: If you would like to start MinIO with a command other than `server`, use this flag to specify that command.
 
-So, to bring up an instance with all three optional values specified, you would run `MINIO_ACCESS_KEY=<accesskey> MINIO_SECRET_KEY=<secretkey> MINIO_ENDPOINT=<IP ADDRESS> docker-compose up -d --build`. Note that if you have brought up a MinIO service previously, you will need to [rotate its credentials](https://github.com/minio/minio/tree/master/docs/config#rotating-encryption-with-new-credentials) in order to specify a new `MINIO_ACCESS_KEY` or `MINIO_SECRET_KEY`.
+So, to bring up an instance with all five optional values specified, you would run `MINIO_ACCESS_KEY=youraccesskey MINIO_SECRET_KEY=yoursecretkey MINIO_ENDPOINT=yourhostname MINIO_DATA_DIRECTORY=/your/directory/path MINIO_COMMAND=gateway\ nas docker-compose up -d --build`. Note that if you have brought up a MinIO service previously, you will need to [rotate its credentials](https://github.com/minio/minio/tree/master/docs/config#rotating-encryption-with-new-credentials) in order to specify a new `MINIO_ACCESS_KEY` or `MINIO_SECRET_KEY`.
 
 The app should now be accessible at `http://localhost:5000`. By default, the username and password for the data browser will both be `minioadmin`.
 
