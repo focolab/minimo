@@ -112,4 +112,4 @@ You may also want to change some infrastructure for your deployment. For example
 
 # contact us
 
-minimo was put together by members of UCSF's [FOCO Lab](http://saulkato.com/focolab/team.htm). Please feel free to contact us through the Issues section of this repository if you run into problems or have suggestions for improvements. We're happy to hear your input!
+minimo was put together by members of UCSF's [Foundation of Cognition Lab](http://saulkato.com/focolab/team.htm). Please feel free to contact us through the Issues section of this repository if you run into problems or have suggestions for improvements. We're happy to hear your input!
