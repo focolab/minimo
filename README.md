@@ -7,6 +7,7 @@ App components include:
 1. A [MinIO](https://min.io/) server for raw data storage.
 2. A [MongoDB](https://www.mongodb.com/) server for metadata storage.
 3. A [Node](https://nodejs.org) server which provides an interface for uploading and accessing raw data and metadata.
+4. A [Traefik](https://containo.us/traefik/) server which acts as a reverse proxy for the other three components.
 
 Data and and metadata are uploaded through the app's web interface, as shown below. Data are uploaded through a simple folder selector, and metadata are entered through user configurable text or dropdown form fields.
 
@@ -47,6 +48,8 @@ So, to bring up an instance with all five optional values specified, you would r
 
 The app should now be accessible at `http://localhost:5000`. By default, the username and password for the data browser will both be `minioadmin`.
 
+Note that because minimo uses self-generated TLS certificates, you will probably need to acknowledge a security warning in your browser when loading the web app for the first time and periodically thereafter.
+
 # use
 
 Before uploading data and metadata, you will need to create some metadata forms to represent the fields you'd like associated with your data. As an example, you can create a simple "Comments" field as follows:
@@ -81,6 +84,12 @@ By default, all accounts are created with administrator status set to false. If 
 
 If all user accounts are removed, your instance will revert to its default behavior of not requiring authentication. Similarly, if administrator access toggles for all accounts are set to false, your instance will revert to its default behavior of granting administrator access to all users.
 
+# security
+
+minimo uses [Passport](http://www.passportjs.org/) for user authentication. It exposes its Node and MinIO servers through a [Traefik](https://containo.us/traefik/) reverse proxy which is configured to route all requests through HTTPS.
+
+We've made an effort to be diligent here, but we are not yet comfortable recommending minimo for use outside of trusted networks. One reason for this is that minimo currently uses unverifiable self-generated TLS certificates. If you wish to deploy your instance to a publicly accessible host, we recommend at a bare minimum that you update your Traefik container to use a certificate signed by a trusted CA.
+
 # technical details
 
 minimo is really just a lightweight [Node](https://nodejs.org) web server. This server talks to [MinIO](https://min.io/) and [MongoDB](https://www.mongodb.com/) servers, which store experimental data and metadata respectively, and it serves pages which allow upload of data to and access to data on those servers.
@@ -100,9 +109,9 @@ This architecture offers several advantages over other options that we considere
 3. **Each of its components can be deployed both on local hardware and in the cloud.** The app's Node server can be run either on a local machine or on a cloud server. It supports both local and cloud hosted MongoDB endpoints for metadata storage. MinIO is compatible with AWS S3, so it is possible use S3 in place of local hardware for data storage and/or backup. This gives users a large degree of control over the costs and operational loads they will incur and over the performance they will achieve.
 4. **It is lightweight enough to be easily extensible.** We intend to continue to add functionality to the app, and we want to allow and encourage our users to do the same!
 
-This repo contains a [Dockerized](https://www.docker.com/) version of the app that bundles all three components for easy deployment and tinkering. We hope that this will allow curious prospective users to get a feel for whether it might suit their needs.
+This repo contains a [Dockerized](https://www.docker.com/) version of the app that bundles all three components behind a reverse proxy for easy deployment and tinkering. We hope that this will allow curious prospective users to get a feel for whether it might suit their needs.
 
-We're working on streamlining production deployment steps, but in the meantime, if you like it and would like help deploying it for production use, please feel free to reach out to us!
+We're working on formalizing "production" deployment steps, but in the meantime, if you like it and would like help deploying it for production use, please feel free to reach out to us!
 
 # what can I change?
 
