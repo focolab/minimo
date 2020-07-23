@@ -18,7 +18,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.web-app-minimo.rule=Host(`nuc`)"
-      - "traefik.http.routers.web-app-minimo.entrypoints=web"
+      - "traefik.http.routers.web-app-minimo.entrypoints=web-secure"
+      - "traefik.http.routers.web-app-minimo.tls=true"
     # docker run -p 49160:5000 --name minimo-web-app -d minimo/node-web-app
 
   mongo:
@@ -52,7 +53,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.minio-minimo.rule=Host(`nuc`)"
       - "traefik.http.routers.minio-minimo.rule=PathPrefix(`/minio/`)"
-      - "traefik.http.routers.minio-minimo.entrypoints=web"
+      - "traefik.http.routers.minio-minimo.entrypoints=web-secure"
+      - "traefik.http.routers.minio-minimo.tls=true"
     # docker run -p 9000:9000 --name minimo-minio -d minio/minio server /data
 
   reverse-proxy:
@@ -64,9 +66,14 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=web-secure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      - "--entrypoints.web-secure.address=:443"
     ports:
       # The HTTP port
       - "80:80"
+      - "443:443"
       # The Web UI (enabled by --api.insecure=true)
       - "8080:8080"
     volumes:
