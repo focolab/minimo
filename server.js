@@ -219,12 +219,11 @@ app.post('/remove-user', checkAdmin, (req, res) => {
 app.post('/toggle-admin', checkAdmin, (req, res) => {
 
   Account.findOne({ username: req.body.username }, (err, account) => {
-    if (err) {
-      errmsg = `Error while trying to fetch user account. \n`;
+    if (err || account === null) {
+      errmsg = `Error while trying to fetch specified user account. \n`;
       handleError(req, res, err, errmsg);
     } else  {
-      previousAdminStatus = account.administrator;
-      Account.updateOne({ username: req.body.username }, { administrator: !previousAdminStatus}, (err, updatedAccount) => {
+      Account.updateOne({ username: req.body.username }, { administrator: !account.administrator}, (err, updatedAccount) => {
         if (err) {
           errmsg = `Error while trying to update user admin status. \n`;
           handleError(req, res, err, errmsg);
