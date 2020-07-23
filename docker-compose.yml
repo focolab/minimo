@@ -37,9 +37,9 @@ services:
       MINIO_ACCESS_KEY: "${MINIO_ACCESS_KEY:-minioadmin}"
       MINIO_SECRET_KEY: "${MINIO_SECRET_KEY:-minioadmin}"
     entrypoint: sh
-    command: -c 'mkdir -p /data/data && /usr/bin/minio server /data'
+    command: -c 'mkdir -p /data/data && /usr/bin/minio ${MINIO_COMMAND:-server} /data'
     volumes:
-      - minio-data:/data
+      - ${MINIO_DATA_DIRECTORY:-minio-data}:/data
     networks:
       net:
         aliases:
