@@ -138,8 +138,8 @@ const checkAdmin = (req, res, next) => {
 };
 
 function getUsername(req) {
-  if (!req.user == null) {
-    if (! req.user.username == null) {
+  if (req.user) {
+    if (req.user.username) {
       return req.user.username;
     }
   }
