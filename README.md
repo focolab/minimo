@@ -1,6 +1,6 @@
 # minimo
 
-minimo is a simple web app for storage and association of experimental data (e.g. microscope video files) and metadata (e.g. apparatus used for recording or treatment applied to recorded subject).
+minimo is a simple web app for storage and association of experimental data (e.g. microscope video files) and metadata (e.g. apparatus used for recording or treatment applied to recorded subject). It is designed to handle very large data.
 
 App components include:
 
