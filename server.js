@@ -16,7 +16,7 @@ const { v4: uuidv4 } = require('uuid');
 const Minio = require('minio');
 
 const minioClient = new Minio.Client({
-  endPoint: process.env.MINIO_ENDPOINT,
+  endPoint: process.env.HOST_NAME,
   port: 9000,
   useSSL: false,
   accessKey: process.env.MINIO_ACCESS_KEY,
@@ -62,7 +62,7 @@ app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 app.locals.DB = new DB();
 
 //set domain name
-app.locals.minioEndpoint = process.env.MINIO_ENDPOINT;
+app.locals.hostName = process.env.HOST_NAME;
 
 // general get requests
 app.get('/', (req, res) => res.render('pages/faq'));

@@ -12,7 +12,7 @@ services:
     networks:
       net:
     environment:
-      MINIO_ENDPOINT: "${MINIO_ENDPOINT:-minio.localhost}"
+      HOST_NAME: "${HOST_NAME:-localhost}"
       MINIO_ACCESS_KEY: "${MINIO_ACCESS_KEY:-minioadmin}"
       MINIO_SECRET_KEY: "${MINIO_SECRET_KEY:-minioadmin}"
     labels:
@@ -48,7 +48,7 @@ services:
     networks:
       net:
         aliases:
-          - ${MINIO_ENDPOINT:-minio.localhost}
+          - ${HOST_NAME:-localhost}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.minio-minimo.rule=Host(`nuc`)"
