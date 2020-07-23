@@ -7,14 +7,18 @@ services:
     depends_on:
       - mongo
       - minio
-    ports:
-      - "5000:5000"
+    expose:
+      - "5000"
     networks:
       net:
     environment:
       MINIO_ENDPOINT: "${MINIO_ENDPOINT:-minio.localhost}"
       MINIO_ACCESS_KEY: "${MINIO_ACCESS_KEY:-minioadmin}"
       MINIO_SECRET_KEY: "${MINIO_SECRET_KEY:-minioadmin}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web-app-minimo.rule=Host(`nuc`)"
+      - "traefik.http.routers.web-app-minimo.entrypoints=web"
     # docker run -p 49160:5000 --name minimo-web-app -d minimo/node-web-app
 
   mongo:
@@ -31,8 +35,8 @@ services:
 
   minio:
     image: minio/minio
-    ports:
-      - "9000:9000"
+    expose:
+      - "9000"
     environment:
       MINIO_ACCESS_KEY: "${MINIO_ACCESS_KEY:-minioadmin}"
       MINIO_SECRET_KEY: "${MINIO_SECRET_KEY:-minioadmin}"
@@ -44,7 +48,32 @@ services:
       net:
         aliases:
           - ${MINIO_ENDPOINT:-minio.localhost}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio-minimo.rule=Host(`nuc`)"
+      - "traefik.http.routers.minio-minimo.rule=PathPrefix(`/minio/`)"
+      - "traefik.http.routers.minio-minimo.entrypoints=web"
     # docker run -p 9000:9000 --name minimo-minio -d minio/minio server /data
+
+  reverse-proxy:
+    # The official v2 Traefik docker image
+    image: traefik:v2.2
+    # Enables the web UI and tells Traefik to listen to docker
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      net:
 
 networks:
   net:
