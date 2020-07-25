@@ -30,7 +30,7 @@
                 //do something with e.g. req.body[key]
                 var value = obj[key]
                 if (key === "folderID") {
-                  totalhtml += "<strong><u>" + String(key) + "</strong></u>: <a href='http://<%= hostName %>/data/" + String(value) + "/'>" + String(value) + "</a><br>"
+                  totalhtml += "<strong><u>" + String(key) + "</strong></u>: <a href='https://<%= hostName %>/minio/data/" + String(value) + "/'>" + String(value) + "</a><br>"
                 } else {
                   totalhtml += "<strong><u>" + String(key) + "</strong></u>: " + String(value) + "<br>"
                 }
