@@ -46,7 +46,7 @@ For non-default settings, just prepend the command in step 4 above with any of t
 
 So, to bring up an instance with all five optional values specified, you would run `MINIO_ACCESS_KEY=youraccesskey MINIO_SECRET_KEY=yoursecretkey HOST_NAME=yourhostname MINIO_DATA_DIRECTORY=/your/directory/path MINIO_COMMAND=gateway\ nas docker-compose up -d --build`. Note that if you have brought up a MinIO service previously, you will need to [rotate its credentials](https://github.com/minio/minio/tree/master/docs/config#rotating-encryption-with-new-credentials) in order to specify a new `MINIO_ACCESS_KEY` or `MINIO_SECRET_KEY`.
 
-The app should now be accessible at `http://localhost`. By default, the username and password for the data browser will both be `minioadmin`.
+The app should now be accessible at `http://minimo.localhost`. By default, the username and password for the data browser will both be `minioadmin`.
 
 Note that because minimo uses self-generated TLS certificates, you will probably need to acknowledge a security warning in your browser when loading the web app for the first time and periodically thereafter.
 
