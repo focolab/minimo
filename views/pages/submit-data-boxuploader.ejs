@@ -56,7 +56,7 @@
             }
 
             // `retrieveNewURL` accepts the name of the current file and invokes the `/presigned-url` endpoint to
-            // generate a pre-signed URL for use in uploading that file: 
+            // generate a pre-signed URL for use in uploading that file
             function retrieveNewURL(file, cb) {
                 return new Promise((resolve) => {
                     fetch(`/presigned-url?name=${file.webkitRelativePath}`).then((response) => {
@@ -70,7 +70,7 @@
             }
 
             // ``uploadFile` accepts the current filename and the pre-signed URL. It then uses `Fetch API`
-            // to upload this file to S3 at `play.min.io:9000` using the URL:
+            // to upload this file to MinIO using the URL
             function uploadFile(file, url, resolve) {
                 if (document.querySelector('#status').innerText === 'No uploads') {
                     document.querySelector('#status').innerHTML = '';
