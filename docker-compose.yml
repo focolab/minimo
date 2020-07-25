@@ -7,14 +7,19 @@ services:
     depends_on:
       - mongo
       - minio
-    ports:
-      - "5000:5000"
+    expose:
+      - "5000"
     networks:
       net:
     environment:
-      MINIO_ENDPOINT: "${MINIO_ENDPOINT:-minio.localhost}"
+      HOST_NAME: "${HOST_NAME:-minimo.localhost}"
       MINIO_ACCESS_KEY: "${MINIO_ACCESS_KEY:-minioadmin}"
       MINIO_SECRET_KEY: "${MINIO_SECRET_KEY:-minioadmin}"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web-app-minimo.rule=Host(`${HOST_NAME:-minimo.localhost}`)"
+      - "traefik.http.routers.web-app-minimo.entrypoints=web-secure"
+      - "traefik.http.routers.web-app-minimo.tls=true"
     # docker run -p 49160:5000 --name minimo-web-app -d minimo/node-web-app
 
   mongo:
@@ -31,20 +36,45 @@ services:
 
   minio:
     image: minio/minio
-    ports:
-      - "9000:9000"
+    expose:
+      - "80"
     environment:
       MINIO_ACCESS_KEY: "${MINIO_ACCESS_KEY:-minioadmin}"
       MINIO_SECRET_KEY: "${MINIO_SECRET_KEY:-minioadmin}"
     entrypoint: sh
-    command: -c 'mkdir -p /data/data && /usr/bin/minio ${MINIO_COMMAND:-server} /data'
+    command: -c 'mkdir -p /data/data && /usr/bin/minio ${MINIO_COMMAND:-server} --address :80 /data'
     volumes:
       - ${MINIO_DATA_DIRECTORY:-minio-data}:/data
     networks:
       net:
         aliases:
-          - ${MINIO_ENDPOINT:-minio.localhost}
+          - ${HOST_NAME:-minimo.localhost}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minio-minimo.rule=Host(`${HOST_NAME:-minimo.localhost}`)"
+      - "traefik.http.routers.minio-minimo.rule=PathPrefix(`/minio/`,`/data/`)"
+      - "traefik.http.routers.minio-minimo.entrypoints=web-secure"
+      - "traefik.http.routers.minio-minimo.tls=true"
+      - "traefik.frontend.passHostHeader=true"
     # docker run -p 9000:9000 --name minimo-minio -d minio/minio server /data
+
+  reverse-proxy:
+    image: traefik:v2.2
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=web-secure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      - "--entrypoints.web-secure.address=:443"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      net:
 
 networks:
   net:
