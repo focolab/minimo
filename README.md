@@ -1,13 +1,21 @@
 # minimo
 
-minimo is a simple web app for storage and association of experimental data (e.g. microscope video files) and metadata (e.g. apparatus used for recording or treatment applied to recorded subject). It is designed to handle very large data.
+minimo is a thoughtful data storage system for small labs. 
 
-App components include:
+All too often we want to revisit data and struggle with a loss of context-- old data is hard to find, hard to understand, hard to fuse. If hygiene is applied to the initial data commit process, lots of blood, sweat, and tears can be avoided. An ounce of prevention...
 
-1. A [MinIO](https://min.io/) server for raw data storage.
-2. A [MongoDB](https://www.mongodb.com/) server for metadata storage.
-3. A [Node](https://nodejs.org) server which provides an interface for uploading and accessing raw data and metadata.
-4. A [Traefik](https://containo.us/traefik/) server which acts as a reverse proxy for the other three components.
+minimo is a lightweight web app that facilitates storage of experimental data (e.g. microscope video files) and associated metadata (e.g. apparatus used for recording or treatment applied to recorded subject). It is designed to handle large data types and support both local and cloud storage. It takes advantage of current  modern architecture patterns.
+
+App components are:
+
+1. A [MinIO](https://min.io/) server for raw data storage. (because big, chunky data should live in object storage)
+2. A [MongoDB](https://www.mongodb.com/) server for metadata storage. (because structured, semantic data should live in a DB)
+3. A [Node](https://nodejs.org) server which provides an interface for uploading and accessing raw data and metadata. (to provide human convenience and enforce human annotation hygiene)
+4. A [Traefik](https://containo.us/traefik/) server which acts as a reverse proxy for the other three components. (because, glue)
+
+All bundled up for you to keep things nice and easy!
+
+Data and metadata are inseparably linked. This is the central principle of minimo.
 
 Data and and metadata are uploaded through the app's web interface, as shown below. Data are uploaded through a simple folder selector, and metadata are entered through user configurable text or dropdown form fields.
 
@@ -29,7 +37,7 @@ Within the metadata browser, clicking the "folderID" hyperlink for any metadata 
 
 # deployment
 
-This repo provides a Dockerized version of minimo. To deploy it with default settings, just follow these steps:
+Docker makes installation easy. TRUST! This repo provides a Dockerized version of minimo. To deploy it with default settings, just follow these steps:
 
 1. Clone this repo.
 2. Install [Docker](https://docs.docker.com/get-docker/).
@@ -78,7 +86,7 @@ Now, you should be able to see your metadata in the metadata browser and its ass
 
 # user management
 
-By default, minimo does not require user authentication. If you would like to restrict access to your minimo instance to some set authorized users, you can do so by going to the `manage-users` endpoint and creating login credentials for those users. Once the first set of user credentials has been created, access to all pages other than the FAQ will be limited to authorized users. The `manage-users` page also exposes interfaces for updating the current user's password, removing existing user accounts, and toggling administrator status on existing accounts.
+By default, minimo does not require user authentication. We get it though. If you would like to restrict access to your minimo instance to some set authorized users, you can do so by going to the `manage-users` endpoint and creating login credentials for those users. Once the first set of user credentials has been created, access to all pages other than the FAQ will be limited to authorized users. The `manage-users` page also exposes interfaces for updating the current user's password, removing existing user accounts, and toggling administrator status on existing accounts.
 
 By default, all accounts are created with administrator status set to false. If you would like to restrict access to the interfaces for adding and removing users and toggling administrator status to only a subset of authorized users, you can do so by toggling administrator status to true for that subset. Like with user account creation, once any administrator has been designated, access to this "administrator" functionality will be limited to users with administrator status set to true.
 
@@ -121,4 +129,4 @@ You may also want to change some infrastructure for your deployment. For example
 
 # contact us
 
-minimo was put together by members of UCSF's [Foundation of Cognition Lab](http://saulkato.com/focolab/team.htm). Please feel free to contact us through the Issues section of this repository if you run into problems or have suggestions for improvements. We're happy to hear your input!
+minimo was put together by members of UCSF's [Foundations of Cognition Lab](http://saulkato.com/focolab/team.htm). Please feel free to contact us through the Issues section of this repository if you run into problems or have suggestions for improvements. We're happy to hear your input!
