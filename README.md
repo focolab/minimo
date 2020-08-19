@@ -37,7 +37,7 @@ Within the metadata browser, clicking the "folderID" hyperlink for any metadata 
 
 # deployment
 
-Docker makes installation easy. TRUST! This repo provides a Dockerized version of minimo. To deploy it with default settings, just follow these steps:
+Docker makes installation easy. This repo provides a Dockerized version of minimo. To deploy it with default settings, just follow these steps:
 
 1. Clone this repo.
 2. Install [Docker](https://docs.docker.com/get-docker/).
@@ -86,7 +86,7 @@ Now, you should be able to see your metadata in the metadata browser and its ass
 
 # user management
 
-By default, minimo does not require user authentication. We get it though. If you would like to restrict access to your minimo instance to some set authorized users, you can do so by going to the `manage-users` endpoint and creating login credentials for those users. Once the first set of user credentials has been created, access to all pages other than the FAQ will be limited to authorized users. The `manage-users` page also exposes interfaces for updating the current user's password, removing existing user accounts, and toggling administrator status on existing accounts.
+By default, minimo does not require user authentication. If you would like to restrict access to your minimo instance to some set authorized users, you can do so by going to the `manage-users` endpoint and creating login credentials for those users. Once the first set of user credentials has been created, access to all pages other than the FAQ will be limited to authorized users. The `manage-users` page also exposes interfaces for updating the current user's password, removing existing user accounts, and toggling administrator status on existing accounts.
 
 By default, all accounts are created with administrator status set to false. If you would like to restrict access to the interfaces for adding and removing users and toggling administrator status to only a subset of authorized users, you can do so by toggling administrator status to true for that subset. Like with user account creation, once any administrator has been designated, access to this "administrator" functionality will be limited to users with administrator status set to true.
 
