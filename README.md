@@ -4,7 +4,10 @@ minimo is a thoughtful data & metadata storage system for small labs.
 
 All too often we want to revisit data and struggle with a loss of context-- old data is hard to find, hard to understand, hard to fuse. If hygiene is applied to the initial data commit process, lots of blood, sweat, and tears can be avoided. An ounce of prevention...
 
-> Raw data and metadata are inseparably linked. This is the central principle of minimo.
+---
+Raw data and metadata are inseparably linked. This is the central principle of minimo.
+
+---
 
 However, raw data are typically LARGE and not a great fit for most database implementations. Metadata, on the other hand, are typically small but benefit greatly from structure and semantics to allow efficient search and selection.
 
