@@ -1,8 +1,10 @@
 # minimo
 
-minimo is a thoughtful data storage system for small labs. 
+minimo is a thoughtful data & metadata storage system for small labs. 
 
 All too often we want to revisit data and struggle with a loss of context-- old data is hard to find, hard to understand, hard to fuse. If hygiene is applied to the initial data commit process, lots of blood, sweat, and tears can be avoided. An ounce of prevention...
+
+Data and metadata are inseparably linked. This is the central principle of minimo.
 
 minimo is a lightweight web app that facilitates storage of experimental data (e.g. microscope video files) and associated metadata (e.g. apparatus used for recording or treatment applied to recorded subject). It is designed to handle large data types and support both local and cloud storage. It takes advantage of current  modern architecture patterns.
 
@@ -15,7 +17,7 @@ App components are:
 
 All bundled up for you to keep things nice and easy!
 
-Data and metadata are inseparably linked. This is the central principle of minimo.
+
 
 Data and and metadata are uploaded through the app's web interface, as shown below. Data are uploaded through a simple folder selector, and metadata are entered through user configurable text or dropdown form fields.
 
