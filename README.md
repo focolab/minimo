@@ -6,9 +6,9 @@ All too often we want to revisit data and struggle with a loss of context-- old 
 
 > Raw data and metadata are inseparably linked. This is the central principle of minimo.
 
-However, raw data are typically LARGE and not a great fit for most database implementations. Metadata, on the other hand, are typically small but benefits greatly from structure and semantics to allow efficient search and selection.
+However, raw data are typically LARGE and not a great fit for most database implementations. Metadata, on the other hand, are typically small but benefit greatly from structure and semantics to allow efficient search and selection.
 
-minimo is a lightweight web app that facilitates storage of experimental data (e.g. microscope video files) and associated metadata (e.g. apparatus used for recording or treatment applied to recorded subject). It is designed to handle large data types and support both local and cloud storage. It takes advantage of current  modern architecture patterns.
+minimo is a lightweight web app that facilitates storage of experimental data (e.g. microscope video files) and associated metadata (e.g. apparatus used for recording or treatment applied to recorded subject). It takes advantage of current modern architecture patterns, handles large data types, and supports both local and cloud storage.
 
 App components are:
 
