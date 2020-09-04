@@ -23,8 +23,8 @@ DB.prototype.connect = function (uri) {
 
     		// connect and store db connection
     		MongoClient.connect(uri)
-    		.then((database) => {
-    			__this.db = database;
+    		.then((client) => {
+    			__this.db = client.db();
     			resolve(true);
     		});
     	}
