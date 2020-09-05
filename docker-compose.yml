@@ -52,7 +52,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.minio-minimo.rule=Host(`${HOST_NAME:-minimo.localhost}`)"
-      - "traefik.http.routers.minio-minimo.rule=PathPrefix(`/minio/`,`/data/`)"
+      - "traefik.http.routers.minio-minimo.rule=PathPrefix(`/minio/`,`/data{regex:$$|/.*}`)"
       - "traefik.http.routers.minio-minimo.entrypoints=web-secure"
       - "traefik.http.routers.minio-minimo.tls=true"
       - "traefik.frontend.passHostHeader=true"
