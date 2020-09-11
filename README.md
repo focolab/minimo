@@ -30,7 +30,7 @@ Data and and metadata are uploaded through the app's web interface, as shown bel
 |:--:| 
 | *minimo data/metadata uploader* |
 
-Once uploaded, metadata and data can be accessed through the app's embedded browsers. The metadata browser for a fresh instance with only two entries is shown below.
+Once uploaded, metadata and data can be accessed through the app's embedded browsers. The metadata browser for a fresh instance with only four entries is shown below.
 
 | ![minimo metadata browser](https://github.com/Borchardt/image_hosting/blob/master/foco_db_metadata_browser.png?raw=true) | 
 |:--:| 
@@ -90,6 +90,34 @@ Now, your comments field will be available for all new data submissions! You can
 6. Click "submit."
 
 Now, you should be able to see your metadata in the metadata browser and its associated experimental data in the data browser!
+
+# programmatic primary data access
+
+Requests to URLs with paths beginning with `/data` are forwarded by Traefik to minimo's MinIO container.  This means that operations can be performed on the "data" bucket containing your primary data by using the MinIO client in any programming language for which it is available. As an example, we can use the Python code below to fetch an image file from storage, load it into local memory, and open it as a tiff file.
+
+```
+ from minio import Minio
+ from minio.error import ResponseError
+ import io
+ import tifffile as tiff
+ import urllib3
+ 
+ http = urllib3.PoolManager(cert_reqs='CERT_NONE')
+ 
+ minio_client = Minio(
+     'minimo.localhost',
+     access_key='minioadmin',
+     secret_key='minioadmin',
+     secure=True,
+     http_client=http,
+ )
+ 
+ get_object_response = minio_client.get_object("data", "folder_name/file_name.tif")
+ object_bytes_buffer = io.BytesIO(get_object_response.data)
+ im = tiff.imread(object_bytes_buffer)
+```
+
+Note that the endpoint, access key, and secret key used here for client instantiation are minimo's default values for those fields. For endpoints using non-default values, the client constructor call will need to be updated accordingly.
 
 # user management
 
