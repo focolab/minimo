@@ -31,10 +31,22 @@
     
         <!-- based on https://docs.min.io/docs/upload-files-from-browser-using-pre-signed-urls.html and https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory -->
         <input type="file" id="selector" style="margin-top: 10px;" webkitdirectory multiple>
-
-        <div id="status">No uploads</div>
+        <ul id="selected_files" style="display: grid;">Select a data folder for upload.</ul>
 
         <script type="text/javascript">
+            // display selected filenames when selection is made (from https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory)
+            document.getElementById("selector").addEventListener("change", function(event) {
+                let selection_list = document.getElementById("selected_files");
+                selection_list.innerHTML = "";
+                let selected_files = event.target.files;
+
+                for (let i=0; i < selected_files.length; i++) {
+                    let item = document.createElement("li");
+                    item.innerHTML = selected_files[i].webkitRelativePath;
+                    selection_list.appendChild(item);
+                };
+            }, false);
+
             // first iterate through all selected files and invoke a helper function called `retrieveNewURL` to upload them to MinIO
             // then iterate through all selected files again to populate relevant metadata form fields and upload to MongoDB
             function upload() {
@@ -47,7 +59,11 @@
                     promises.push(
                         retrieveNewURL(file, (file, url, resolve) => {
                             // Upload the file to the server.
+
+                            selected_files_li = Array.from(document.querySelectorAll("#selected_files li")).find(li => li.textContent === file.webkitRelativePath)
+                            selected_files_li.innerText += ` uploading...`;
                             uploadFile(file, url, resolve);
+                            selected_files_li.innerText = file.webkitRelativePath + ' uploaded.'
                     }));
                 }
                 Promise.all(promises).then(() => {
@@ -72,15 +88,10 @@
             // ``uploadFile` accepts the current filename and the pre-signed URL. It then uses `Fetch API`
             // to upload this file to MinIO using the URL
             function uploadFile(file, url, resolve) {
-                if (document.querySelector('#status').innerText === 'No uploads') {
-                    document.querySelector('#status').innerHTML = '';
-                }
                 fetch(url, {
                     method: 'PUT',
                     body: file
                 }).then(() => {
-                    // If multiple files are uploaded, append upload status on the next line.
-                    document.querySelector('#status').innerHTML += `<br>Uploaded ${file.webkitRelativePath}.`;
                     resolve();
                 }).catch((e) => {
                     console.error(e);
