@@ -553,6 +553,10 @@ app.get('/browse-data', checkAuth, (req, res) => {
     // add username to locals
     res.locals.username = getUsername(req);
 
+    // passport is source of auth, so add minio access and secret keys to locals for auto login if user is authenticated 
+    res.locals.accessKey = process.env.MINIO_ACCESS_KEY;
+    res.locals.secretKey = process.env.MINIO_SECRET_KEY;
+
     // render browse data page
     res.render('pages/browse-data');
   } catch (err) {

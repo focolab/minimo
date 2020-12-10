@@ -19,7 +19,7 @@
             <div id="content" style="flex-grow: 1; border: none; margin: 0; padding: 0;">
 
                 <% var minioBrowserUrl = "https://" + hostName + "/minio/data"; %>
-                <iframe id="minio-browser" src=<%= minioBrowserUrl %> style="height: 100%; width: 100%;"></iframe>
+                <iframe id="minio-browser" src=<%= minioBrowserUrl %> style="height: 100%; width: 100%;" onload="checkMinioBrowserLoaded();"></iframe>
 
             </div>
 
@@ -29,6 +29,41 @@
 
             </footer>
         </div>
+
+        <script type="text/javascript">
+            function checkMinioBrowserLoaded() {
+                minio_browser_document = document.getElementById("minio-browser").contentWindow.document;
+                // user needs to be logged in to minio browser
+                if (minio_browser_document.querySelector("#root div.login") !== null) {
+                    // The loading is complete, call the function we want executed once the iframe is loaded
+                    autoLogin();
+                    return;
+                // user is already authenticated with minio browser
+                } else if (minio_browser_document.querySelector("#root div.file-explorer") !== null && ! minio_browser_document.body.classList.contains("is-guest") === null && minio_browser_document.querySelectorAll(".login") === null) {
+                    return;
+                }
+                // browser isn't finished loading yet
+                window.setTimeout(checkMinioBrowserLoaded, 100);
+            }
+
+            function autoLogin() {
+                minio_browser_document = document.getElementById("minio-browser").contentWindow.document;
+                access_key_input = minio_browser_document.getElementById("accessKey");
+                secret_key_input = minio_browser_document.getElementById("secretKey");
+                submit_button = minio_browser_document.getElementsByTagName("button")[0];
+
+                // data browser swallows input value setter, so call it directly per https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-onchange-event-in-react-js
+                var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+                nativeInputValueSetter.call(access_key_input, "<%=accessKey%>");
+                var ev2 = new Event('input', { bubbles: true});
+                access_key_input.dispatchEvent(ev2);
+                nativeInputValueSetter.call(secret_key_input, "<%=secretKey%>");
+                var ev2 = new Event('input', { bubbles: true});
+                secret_key_input.dispatchEvent(ev2);
+                
+                submit_button.click();
+            }
+        </script>
 
     </body>
 </html>
