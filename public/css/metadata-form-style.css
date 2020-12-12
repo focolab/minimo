@@ -34,7 +34,6 @@ label.myform {
     color: #4B4941;
     font-weight: bold;
     display: block;
-    font-family: Arial;
 }
 label.myform:after { content: ": " }
 

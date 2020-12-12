@@ -22,7 +22,7 @@
 	#header {
 		background-color:#666;
 		height:50px;
-		font-family: Oswald, sans-serif;
+		font-family: Helvetica, sans-serif;
 		position:fixed;
 		top:0px;
 		z-index:100000;
@@ -31,21 +31,21 @@
 	}
 
 	h1 {
-		font-family: Oswald, sans-serif;
+		font-family: Helvetica, sans-serif;
 		font-size: 26px;
 		margin: 10px;
 		font-weight:400;
 	}
 
 	h2 {
-		font-family: Oswald, sans-serif;
+		font-family: Helvetica, sans-serif;
 		font-size: 17px;
 		margin: 10px;
 		font-weight:400;
 	}
 
 	h3 {
-		font-family: Lato, sans-serif;
+		font-family: Helvetica, sans-serif;
 		font-size:15px;
 		margin: 10px ;
 		font-weight:300;
@@ -53,7 +53,7 @@
 	}
 
 	h4 {
-		font-family: Oswald, sans-serif;
+		font-family: Helvetica, sans-serif;
 		font-size:16px;
 		margin: 5px;
 		font-weight:100;
@@ -127,14 +127,14 @@
 		
 p {
   color: black; 
-  font-family: "Oswald";
+  font-family: "Helvetica";
   font-size: 20px;
   margin: 5px 0 0 10px;
 }
 
 p.anim{
   color: black; 
-  font-family: "Oswald";
+  font-family: "Helvetica";
   font-size: 20px;
   margin: 5px 0 0 10px;
   white-space: nowrap;
@@ -154,12 +154,12 @@ p.anim a{
 }
 
 p.authorlist{
-  font-family: "Oswald";
+  font-family: "Helvetica";
   font-size: 16px;	
 }
 
 p.abstracttext{
-  font-family: Lato, sans-serif;
+  font-family: Helvetica, sans-serif;
   font-size: 13px;	
   max-height: 100%
   overflow:auto;
@@ -202,7 +202,7 @@ infinite;
 
 .box
 {
-	font-family: Oswald, sans-serif;
+	font-family: Helvetica, sans-serif;
 	position: relative;
 	width:700px;
 	padding: 10px;
