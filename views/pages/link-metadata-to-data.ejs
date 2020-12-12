@@ -28,7 +28,7 @@
 
     <br><br><br><br><br>
 
-    <div style="height:600px;width:600px;position: relative;left: 30px;margin: 0 auto;background-color: #fff;">
+    <div id="bucket-selector-container">
         <ul id="bucket_browser">
         </ul>>
     </div>
@@ -46,7 +46,6 @@
                             var fully_qualified_name = data[i]["prefix"]
                             var folder_name = fully_qualified_name.slice(prefix.length)
                             var child_li = document.createElement("li");
-                            child_li.setAttribute("style", "float: none;padding-left: 15px");
                             child_li.appendChild(document.createTextNode(folder_name));
                             child_li.setAttribute("id", fully_qualified_name);
                             child_li.setAttribute("class", "minio_folder_li");
@@ -61,7 +60,6 @@
                             var fully_qualified_name = data[i]["name"]
                             var object_name = fully_qualified_name.slice(prefix.length)
                             var li = document.createElement("li");
-                            li.setAttribute("style", "float: none;padding-left: 15px");
                             li.appendChild(document.createTextNode(object_name));
                             li.setAttribute("id", fully_qualified_name);
                             li.setAttribute("class", "minio_object");
@@ -132,7 +130,7 @@
 
     <br><br>
 
-    <div id="metadata_form_label" style="position: relative;left: 30px;margin: 0 auto; width: 500px">
+    <div id="metadata_form_label">
     
         <p>
             Select your data folder (formatted "YYYYMMDD_INITIALS"), fill out the form, and hit submit! The form will submit when data upload is complete.
@@ -148,7 +146,7 @@
 
     <% include ../partials/metadata-form-mongo %>
 
-    <button onclick="submitForm()" style="float: right;">submit</button>
+    <button class="submit-form-button" onclick="submitForm()">submit</button>
 
     <br><br><br><br>
 

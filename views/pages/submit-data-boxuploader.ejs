@@ -27,11 +27,11 @@
 	</div>
 
     <br><br><br><br><br>
-    <div class="container" style="height:600px;width:600px;position: relative;left: 30px;margin: 0 auto;text-align: center;background-color: #fff;">
+    <div id="folder-selector-container" class="container">
     
         <!-- based on https://docs.min.io/docs/upload-files-from-browser-using-pre-signed-urls.html and https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory -->
-        <input type="file" id="selector" style="margin-top: 10px;" webkitdirectory multiple>
-        <ul id="selected_files" style="display: grid;">Select a data folder for upload.</ul>
+        <input type="file" id="selector" webkitdirectory multiple>
+        <ul id="selected_files">Select a data folder for upload.</ul>
 
         <script type="text/javascript">
             // display selected filenames when selection is made (from https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory)
@@ -160,7 +160,7 @@
 
     <br><br>
 
-    <div id="metadata_form_label" style="position: relative;left: 30px;margin: 0 auto; width: 500px">
+    <div id="metadata_form_label">
     
         <p>
             Select your data folder (formatted "YYYYMMDD_INITIALS"), fill out the form, and hit upload. The form will submit when data upload is complete.
@@ -176,7 +176,7 @@
 
     <% include ../partials/metadata-form-mongo %>
 
-    <button onclick="upload()" style="float: right;">submit</button>
+    <button class="submit-form-button" onclick="upload()">submit</button>
 
 	<footer>
 		

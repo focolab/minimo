@@ -52,3 +52,11 @@ button.myform {
 button.myform:hover {
     background-color: #45a049;
 }
+
+#metadata_form_div {
+    position: relative;
+    left: 30px;
+    margin: 0 auto;
+    width: 500px;
+} 
+

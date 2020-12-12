@@ -20,7 +20,7 @@
 	<div id="content"><br><br>
 
 		<div class="box">
-			<div style="overflow:auto;">
+			<div>
 				<p>
 					Welcome <%= username%> to the metadata form modification page!
 				</p>
@@ -32,7 +32,7 @@
 
 		<!-- create -->
 		<div id="create" class="box">
-			<div style="overflow:auto;">
+			<div>
 				<p>
 				<a href="./edit-form-entry">CREATE a new metadata form entry.</a>
 				</p>
@@ -41,18 +41,13 @@
 
 		<!-- edit -->
 		<div id="edit" class="box">
-			<div style="overflow:auto;">
+			<div>
 
 				<p>UPDATE an existing metadata form entry.</p>
 
 				<form action="/edit-form-entry" method="get" id="editForm">
 					<select class="myform" id="editSelect" name="editSelect">
 					</select>
-				    
-				    <!-- Hidden text form for uid -->
-				    <!-- <div name="hiddenuid" style="display:none"> -->
-				        <!-- <input name="uid" id="uidEdit" type="text"> -->
-				    <!-- </div> -->
 				
 				</form>
 				
@@ -64,7 +59,7 @@
 
 		<!-- delete -->
 		<div id="delete" class="box">
-			<div style="overflow:auto;">
+			<div>
 
 				<p>DELETE a metadata form entry.</p>
 
@@ -73,14 +68,14 @@
 					</select>
 
 				    <!-- Hidden text form for uid -->
-				    <div name="hiddenuid" style="display:none">
+				    <div class="hidden">
 				        <input name="uid" id="uidDelete" type="text">
 				    </div>
 
 				</form>
 				
 				<!-- Include a submit form field -->
-				<button class="myform" onclick="submitForm('deleteForm')" style="background-color:#FF5733" >delete</button>
+				<button class="myform myform-red" onclick="submitForm('deleteForm')">delete</button>
 			</div>
 		</div>
 

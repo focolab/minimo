@@ -247,6 +247,10 @@ infinite;
 	transform: skew(5deg) rotate(5deg);
 } 
 
+.box > div {
+	overflow:auto;
+} 
+
 .minio_folder_li.selected
 {
 	background-color: lightgreen;
@@ -267,4 +271,75 @@ infinite;
 
 .flexbox-container > footer > #footer-right {
 	position: unset;
+} 
+
+#update-password > div {
+	overflow: auto;
+} 
+
+#metadata_entries > div {
+	overflow: auto;
+} 
+
+#embedded-content {
+	flex-grow: 1;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+#minio-browser {
+	height: 100%;
+	width: 100%;
+}
+
+.hidden {
+	display:none;
+} 
+
+.myform-red {
+	background-color:#FF5733;
+} 
+
+#metadata_form_label {
+	position: relative;
+	left: 30px;
+	margin: 0 auto;
+	width: 500px;
+} 
+
+#bucket-selector-container {
+	height: 600px;
+	width: 600px;
+	position: relative;
+	left: 30px;
+	margin: 0 auto;
+	background-color: #fff;
+} 
+
+#folder-selector-container {
+	height: 600px;
+	width: 600px;
+	position: relative;
+	left: 30px;
+	margin: 0 auto;
+	text-align: center;
+	background-color: #fff;
+} 
+
+#selector {
+	margin-top: 10px;
+} 
+
+#selected_files {
+	display: grid;
+} 
+
+.submit-form-button {
+	float: right;
+} 
+
+.minio_folder_li, .minio_object {
+	float: none;
+	padding-left: 15px;
 } 
