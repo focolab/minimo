@@ -277,10 +277,6 @@ infinite;
 	overflow: auto;
 } 
 
-#metadata_entries > div {
-	overflow: auto;
-} 
-
 #embedded-content {
 	flex-grow: 1;
 	border: none;
