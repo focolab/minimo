@@ -84,14 +84,14 @@
 		
 		// append hidden items
 		// for filelist
-		totalhtml += "<div name=\"hidden\"><input name=\"filelist\" id=\"filelist\" type=\"text\"></div>"
+		totalhtml += "<div class=\"hidden\"><input name=\"filelist\" id=\"filelist\" type=\"text\"></div>"
 
 		// hidden item for num exprs
-		totalhtml += "<div name=\"hidden\"><input name=\"expr num\" type=\"text\" value=\"" + String(numExprs) + "\"></div>"
+		totalhtml += "<div class=\"hidden\"><input name=\"expr num\" type=\"text\" value=\"" + String(numExprs) + "\"></div>"
 
 		// hidden item for username
 		var user = "<%- username %>"
-		totalhtml += "<div name=\"hidden\"><input name=\"username\" type=\"text\" value=\"" + String(user) + "\"></div>"
+		totalhtml += "<div class=\"hidden\"><input name=\"username\" type=\"text\" value=\"" + String(user) + "\"></div>"
 
 		// hidden item for date uploaded
 		d = new Date()
