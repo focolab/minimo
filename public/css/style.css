@@ -305,7 +305,13 @@ infinite;
 	float: right;
 } 
 
-.minio_folder_li, .minio_object {
+.minio_folder_li {
+	float: none;
+	padding-left: 15px;
+	cursor: pointer;
+} 
+
+.minio_object {
 	float: none;
 	padding-left: 15px;
 } 
