@@ -97,7 +97,7 @@
 		
 p {
   color: black; 
-  margin: 5px 0 0 10px;
+  margin: 0 0 10px 0;
 }
 
 p.anim{
@@ -304,4 +304,8 @@ infinite;
 .minio_object {
 	float: none;
 	padding-left: 15px;
+} 
+
+.faq-question {
+	font-weight: bold;
 } 
