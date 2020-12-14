@@ -20,9 +20,9 @@
 
                 var value = obj[key]
                 if (key === "folderID") {
-                  totalhtml += "<strong><u>" + String(key) + "</strong></u>: <a href='https://<%= hostName %>/minio/data/" + String(value) + "/'>" + String(value) + "</a><br>"
+                  totalhtml += "<strong>" + String(key) + "</strong>: <a href='https://<%= hostName %>/minio/data/" + String(value) + "/'>" + String(value) + "</a><br>"
                 } else if (key !== "_id" && obj[key]) {
-                  totalhtml += "<strong><u>" + String(key) + "</strong></u>: " + String(value) + "<br>"
+                  totalhtml += "<strong>" + String(key) + "</strong>: " + String(value) + "<br>"
                 }
               }
         }
