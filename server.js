@@ -20,7 +20,7 @@ const minioClient = new Minio.Client({
   useSSL: false,
   accessKey: process.env.MINIO_ACCESS_KEY,
   secretKey: process.env.MINIO_SECRET_KEY,
-  region: ''
+  region: process.env.MINIO_REGION
 });
 
 // for mongodb

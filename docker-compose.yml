@@ -15,6 +15,7 @@ services:
       HOST_NAME: "${HOST_NAME:-minimo.localhost}"
       MINIO_ACCESS_KEY: "${MINIO_ACCESS_KEY:-minioadmin}"
       MINIO_SECRET_KEY: "${MINIO_SECRET_KEY:-minioadmin}"
+      MINIO_REGION: "${MINIO_REGION:-}"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.web-app-minimo.rule=Host(`${HOST_NAME:-minimo.localhost}`)"
