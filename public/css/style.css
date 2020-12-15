@@ -97,7 +97,7 @@
 		
 p {
   color: black; 
-  margin: 0 0 10px 0;
+  margin: 0 0 5px 0;
 }
 
 p.anim{
@@ -307,5 +307,9 @@ infinite;
 } 
 
 .faq-question {
+	font-weight: bold;
+} 
+
+.form-label {
 	font-weight: bold;
 } 
