@@ -26,21 +26,21 @@ All bundled up for you in a docker container to keep things nice and easy!
 
 Data and and metadata are uploaded through the app's web interface, as shown below. Data are uploaded through a simple folder selector, and metadata are entered through user configurable text or dropdown form fields.
 
-<center>
-<img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_upload.png?raw=true" alt="minimo upload flow" width="75%"/>
-</center>
+<p align="center">
+    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_upload.png?raw=true" alt="minimo upload flow" width="75%"/>
+</p>
 
 Once uploaded, metadata and data can be accessed through the app's embedded browsers. The metadata browser for a fresh instance with only four entries is shown below.
 
-<center>
-<img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_metadata_browser.png?raw=true" alt="minimo metadata browser" width="75%"/>
-</center>
+<p align="center">
+    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_metadata_browser.png?raw=true" alt="minimo metadata browser" width="75%"/>
+</p>
 
 Within the metadata browser, clicking the "folderID" hyperlink for any metadata entry will bring the user to the associated experimental data folder in the MinIO browser. For example, clicking on the "old_recordings" hyperlink in the previous image results in the MinIO browser view below. The data browser may also be accessed directly (without going through the metadata browser).
 
-<center>
-<img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_data_browser.png?raw=true" alt="minimo data browser" width="75%"/>
-</center>
+<p align="center">
+    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_data_browser.png?raw=true" alt="minimo data browser" width="75%"/>
+</p>
 
 # deployment
 
@@ -137,9 +137,9 @@ We've made an effort to be diligent here, but we are not yet comfortable recomme
 
 minimo is really just a lightweight [Node](https://nodejs.org) web server. This server talks to [MinIO](https://min.io/) and [MongoDB](https://www.mongodb.com/) servers, which store experimental data and metadata respectively, and it serves pages which allow upload of data to and access to data on those servers.
 
-<center>
-<img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_minio_diagram.png?raw=true" alt="minimo architecture" width="75%"/>
-</center>
+<p align="center">
+    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_minio_diagram.png?raw=true" alt="minimo architecture" width="75%"/>
+</>
 
 This architecture offers several advantages over other options that we considered:
 
