@@ -4,23 +4,23 @@ minimo is a **linked data & metadata storage system** for small labs. It is simp
 
 All too often we want to revisit data and struggle with a loss of context-- old data is hard to find, hard to understand, hard to fuse. If good hygiene is applied to the initial data commit process, lots of blood, sweat, and tears can be avoided. An ounce of prevention...
 
-minimo encourages good data hygiene by providing a unified interface for storing, linking, and accessing raw experimental data (e.g. microscope video files) and associated human and machine-generated metadata (e.g. apparatus used for recording, experimental trial parameters, and experimenter annotations).
+minimo encourages good data hygiene by providing a unified, customizable interface for storing, linking, and accessing raw experimental data (e.g. microscope video files) and associated human and machine-generated metadata (e.g. apparatus used for recording, experimental trial parameters, and experimenter annotations).
 
-minimo handles large data types, and supports both local and cloud storage.
+minimo handles large data types, and supports both local and cloud storage. Currently, installing minimo requires basic comfort with sys admin / shell commands.
 
 ---
 Raw data and metadata are inseparably linked. This is the central principle of minimo.
 
 ---
 
-In order to simulataneously manage raw data, which are typically LARGE and not a great fit for most database implementations, and metadata, which are typically small but benefit greatly from structure and semantics to allow efficient search and selection, minimo leverages several robust open source tools under the hood. Its components include:
+In order to simultaneously manage raw data, which are typically LARGE and not a great fit for most database implementations, and metadata, which are typically small but benefit greatly from structure and semantics to allow efficient search and selection, minimo leverages several robust open source components under the hood. It includes:
 
 1. A [MinIO](https://min.io/) server for raw data storage. (because big, chunky data should live in object storage)
 2. A [MongoDB](https://www.mongodb.com/) server for metadata storage. (because structured, semantic data should live in a DB)
 3. A [Node](https://nodejs.org) server which provides an interface for uploading and accessing raw data and metadata. (to provide human convenience and enforce human annotation hygiene)
 4. A [Traefik](https://containo.us/traefik/) server which acts as a reverse proxy for the other three components. (because, glue)
 
-All bundled up for you to keep things nice and easy!
+All bundled up for you in a docker container to keep things nice and easy!
 
 # user interface
 
