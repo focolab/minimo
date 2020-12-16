@@ -1,17 +1,19 @@
 # minimo
 
-minimo is a thoughtful data & metadata storage system for small labs. It takes advantage of modern architecture patterns, handles large data types, and supports both local and cloud storage.
+minimo is a **linked data & metadata storage system** for small labs. It is simple, low overhead, and uses modern architecture patterns.
 
 All too often we want to revisit data and struggle with a loss of context-- old data is hard to find, hard to understand, hard to fuse. If good hygiene is applied to the initial data commit process, lots of blood, sweat, and tears can be avoided. An ounce of prevention...
 
-minimo is a low-overhead system which enables good data hygiene by providing a unified interface for storing, linking, and accessing raw experimental data (e.g. microscope video files) and metadata capturing the context in which the data were collected (e.g. apparatus used for recording or treatment applied to recorded subject).
+minimo encourages good data hygiene by providing a unified interface for storing, linking, and accessing raw experimental data (e.g. microscope video files) and metadata capturing the context in which the data were collected (e.g. apparatus used for recording or treatment applied to recorded subject).
+
+minimo handles large data types, and supports both local and cloud storage.
 
 ---
 Raw data and metadata are inseparably linked. This is the central principle of minimo.
 
 ---
 
-In order to simulataneously manage raw data, which are typically LARGE and not a great fit for most database implementations, and metadata, which are typically small but benefit greatly from structure and semantics to allow efficient search and selection, minimo leverages several robust open source tools under the hood. Specifically, its components include:
+In order to simulataneously manage raw data, which are typically LARGE and not a great fit for most database implementations, and metadata, which are typically small but benefit greatly from structure and semantics to allow efficient search and selection, minimo leverages several robust open source tools under the hood. Its components include:
 
 1. A [MinIO](https://min.io/) server for raw data storage. (because big, chunky data should live in object storage)
 2. A [MongoDB](https://www.mongodb.com/) server for metadata storage. (because structured, semantic data should live in a DB)
