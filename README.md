@@ -4,7 +4,7 @@ minimo is a **linked data & metadata storage system** for small labs. It is simp
 
 All too often we want to revisit data and struggle with a loss of context-- old data is hard to find, hard to understand, hard to fuse. If good hygiene is applied to the initial data commit process, lots of blood, sweat, and tears can be avoided. An ounce of prevention...
 
-minimo encourages good data hygiene by providing a unified interface for storing, linking, and accessing raw experimental data (e.g. microscope video files) and metadata capturing the context in which the data were collected (e.g. apparatus used for recording or treatment applied to recorded subject).
+minimo encourages good data hygiene by providing a unified interface for storing, linking, and accessing raw experimental data (e.g. microscope video files) and associated human and machine-generated metadata (e.g. apparatus used for recording, experimental trial parameters, and experimenter annotations).
 
 minimo handles large data types, and supports both local and cloud storage.
 
