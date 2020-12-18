@@ -40,15 +40,13 @@ Once uploaded, metadata and data can be accessed through the app browsers. The m
     <i>minimo metadata browser</i>
 </p>
 
-The data browser may also be accessed directly, without going through the metadata browser.
+The data browser may also be accessed directly, without going through the metadata browser:
 
 <p align="center">
     <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_data_browser.png?raw=true" alt="minimo data browser" width="65%"/>
     <br>
     <i>embedded MinIO data browser</i>
 </p>
-
-The data browser may also be accessed directly, without going through the metadata browser.
 
 
 # deployment
