@@ -142,7 +142,7 @@ We've made an effort to be diligent here, but we are not yet comfortable recomme
 
 # technical details
 
-minimo is a lightweight [Node](https://nodejs.org) web server. This server talks to [MinIO](https://min.io/) and [MongoDB](https://www.mongodb.com/) servers, which store experimental data and metadata respectively, and it serves pages which allow upload of data to and access to data on those servers.
+minimo is a [Node](https://nodejs.org) web server. This server talks to [MinIO](https://min.io/) and [MongoDB](https://www.mongodb.com/) servers, which store experimental data and metadata respectively, and it serves pages which allow upload of data to and access to data on those servers.
 
 <p align="center">
     <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_minio_diagram.png?raw=true" alt="minimo architecture" width="65%"/>
