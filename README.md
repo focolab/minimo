@@ -24,7 +24,7 @@ All bundled up for you in a docker container to keep things nice and easy!
 
 # user interface
 
-Data and and metadata are uploaded through the app's web interface, as shown below. Data are uploaded through a simple folder selector, and metadata are entered through user configurable text or dropdown form fields.
+Data and and metadata are uploaded through the app's web interface, as shown below. Data are uploaded through a folder selector, and metadata are entered through user configurable text or dropdown form fields.
 
 <p align="center">
     <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_upload.png?raw=true" alt="minimo upload flow" width="65%"/>
@@ -32,7 +32,7 @@ Data and and metadata are uploaded through the app's web interface, as shown bel
     <i>minimo data/metadata uploader</i>
 </p>
 
-Once uploaded, metadata and data can be accessed through the app's embedded browsers. The metadata browser for a fresh instance with only four entries is shown below.
+Once uploaded, metadata and data can be accessed through the app browsers. The metadata browser for a fresh instance with only four entries is shown below.
 
 <p align="center">
     <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_metadata_browser.png?raw=true" alt="minimo metadata browser" width="65%"/>
