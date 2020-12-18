@@ -5,7 +5,7 @@ input.myform[type=text] {
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid #777;
     border-radius: 4px;
     box-sizing: border-box;
 }
@@ -13,7 +13,7 @@ input.myform[type=text] {
 select.myform {
     width: 100%;
     padding: 16px 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #777;
     border-radius: 4px;
 }
 
@@ -22,7 +22,7 @@ textarea.myform {
     height: 150px;
     padding: 12px 20px;
     box-sizing: border-box;
-    border: 3px solid #ccc;
+    border: 1px solid #777;
     border-radius: 4px;
     resize: none;
 }
@@ -32,16 +32,6 @@ label.myform {
     display: block;
 }
 label.myform:after { content: ": " }
-
-button.myform {
-    width: 100%;
-    padding: 14px 20px;
-    margin: 8px 0;
-    cursor: pointer;
-}
-
-button.myform:hover {
-}
 
 #metadata_form_div {
     position: relative;

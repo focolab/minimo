@@ -93,8 +93,9 @@
 		pointer-events:none;
 	}
 
-	a { color: #777; }
+	a { color: #000; }
 	a.nav-link {
+		color: #777;
 	    display: block;
 	    padding: 0 1em 3em 1em;
 	    text-decoration: none;
@@ -166,28 +167,12 @@ img.abstractimage{
 {
 	position: relative;
 	width:100%;
-	margin: 0 auto;
-	margin-bottom: 20px;  /* spacing between boxes */
-	border-bottom: solid 1px #000;
-}
-
-.box:before, .box:after
-{
-	position: absolute;
-	width: 40%;
-	height: 10px;
-	content: ' ';
-	z-index: -1;
-}
-
-.box:after
-{
-	left: auto;
-	right: 12px;
+	margin: 0 auto 1em auto;
+	border-bottom: solid 1px #777;
 }
 
 .box > div {
-	overflow:auto;
+	overflow: auto;
 }
 
 .minio_folder_li.selected
@@ -232,7 +217,10 @@ img.abstractimage{
 	display:none;
 }
 
-.myform-red {
+button.myform {
+	width: 25%;
+	margin: 0.5em auto .75em auto;
+	display: block;
 }
 
 #metadata_form_label {
@@ -249,7 +237,7 @@ img.abstractimage{
 	left: 30px;
 	margin: 0 auto;
 	background-color: #fff;
-	border: 1px solid #000
+	border: 1px solid #777
 }
 
 #folder-selector-container {
@@ -260,7 +248,7 @@ img.abstractimage{
 	margin: 0 auto;
 	text-align: center;
 	background-color: #fff;
-	border: 1px solid #000
+	border: 1px solid #777
 }
 
 #selector {
@@ -269,10 +257,6 @@ img.abstractimage{
 
 #selected_files {
 	display: grid;
-}
-
-.submit-form-button {
-	float: right;
 }
 
 .minio_folder_li {
