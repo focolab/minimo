@@ -32,7 +32,7 @@ Data and and metadata are uploaded through the app's web interface, as shown bel
     <i>minimo data/metadata uploader</i>
 </p>
 
-Once uploaded, metadata and data can be accessed through the app browsers. The metadata browser for a fresh instance with only four entries is shown below.
+Once uploaded, metadata and data can be accessed through the app browsers. The metadata browser:
 
 <p align="center">
     <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_metadata_browser.png?raw=true" alt="minimo metadata browser" width="65%"/>
