@@ -36,9 +36,8 @@ body
 	width:min-content;
 	font-family: sans-serif;
 	border-right: solid 1px #000;
-	padding-top: 2.5em;
-	margin-top: -0.5em;
-	margin-bottom: 2.5em;
+	margin-top: 2em;
+	margin-bottom: 2em;
 }
 
 h1 {
