@@ -102,7 +102,10 @@ a.nav-link {
 }
 a.metadata-link { text-decoration: none; }
 a:hover {color: #bbbbbb; text-decoration: none; }
-a.nav-link:hover:not(.active) { background-color: #333; }
+a.nav-link:hover:not(.active) {
+	color: #eee;
+	background-color: mediumaquamarine;
+}
 
 details.nav-collapsible summary {
 	color: #777;
@@ -114,7 +117,10 @@ details.nav-collapsible summary {
 details.nav-collapsible > summary::-webkit-details-marker {
 	display: none;
 }
-details.nav-collapsible > summary:hover:not(.active) { background-color: #333; }
+details.nav-collapsible > summary:hover:not(.active) {
+	color: #eee;
+	background-color: mediumaquamarine;
+}
 details.nav-collapsible > a {
 	margin: 0 1em 0 2em;
 }
