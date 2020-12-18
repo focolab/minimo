@@ -41,6 +41,10 @@ body
 	padding-top: 1em;
 }
 
+.current-nav-item {
+	font-weight: bold;
+}
+
 h1 {
 	margin: 10px;
 }
