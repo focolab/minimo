@@ -1,6 +1,6 @@
 # minimo
 
-minimo is a **linked data & metadata storage system** for small labs. It is simple, low overhead, and uses modern architecture patterns.
+minimo is a **linked data & metadata storage system** for small labs. It is simple, low overhead, and uses modern architecture patterns. It combines **object storage** for large raw data with a **document database** for metadata.
 
 All too often we want to revisit data and struggle with a loss of context-- old data is hard to find, hard to understand, hard to fuse. If good hygiene is applied to the initial data commit process, lots of blood, sweat, and tears can be avoided. An ounce of prevention...
 
