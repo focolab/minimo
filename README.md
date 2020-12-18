@@ -27,7 +27,7 @@ All bundled up for you in a docker container to keep things nice and easy!
 Data and and metadata are uploaded through the app's web interface, as shown below. Data are uploaded through a simple folder selector, and metadata are entered through user configurable text or dropdown form fields.
 
 <p align="center">
-    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_upload.png?raw=true" alt="minimo upload flow" width="75%"/>
+    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_upload.png?raw=true" alt="minimo upload flow" width="65%"/>
     <br>
     <i>minimo data/metadata uploader</i>
 </p>
