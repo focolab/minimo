@@ -23,131 +23,132 @@
 
 	</div>
 
-    <br><br><br><br><br>
+    <div id="content">
+        <div id="content-feed">
+            <div id="bucket-selector-container">
+                <ul id="bucket_browser">
+                </ul>>
+            </div>
 
-    <div id="bucket-selector-container">
-        <ul id="bucket_browser">
-        </ul>>
-    </div>
+            <script type="text/javascript">
+                function retrieveDataObjects(prefix)  {
+                    fetch(`/list-data-objects?prefix=${prefix}`).then((response) => {
+                        response.json().then((data) => {
+                            console.log(data);
 
-    <script type="text/javascript">
-        function retrieveDataObjects(prefix)  {
-            fetch(`/list-data-objects?prefix=${prefix}`).then((response) => {
-                response.json().then((data) => {
-                    console.log(data);
+                            var parent_list = document.getElementById(prefix === "" ? "bucket_browser" : prefix + "_folder");
+                            for (var i = 0; i < data.length; i++) {
+                                // add new ul to parent list
+                                if ("prefix" in data[i]) {
+                                    var fully_qualified_name = data[i]["prefix"]
+                                    var folder_name = fully_qualified_name.slice(prefix.length)
+                                    var child_li = document.createElement("li");
+                                    child_li.appendChild(document.createTextNode(folder_name));
+                                    child_li.setAttribute("id", fully_qualified_name);
+                                    child_li.setAttribute("class", "minio_folder_li");
+                                    var child_ul = document.createElement("ul");
+                                    child_ul.setAttribute("id", fully_qualified_name + "_folder");
+                                    child_ul.setAttribute("class", "minio_folder");
+                                    child_li.appendChild(child_ul)
+                                    parent_list.appendChild(child_li)
+                                }
+                                // add new li to parent ul
+                                if("name" in data[i]) {
+                                    var fully_qualified_name = data[i]["name"]
+                                    var object_name = fully_qualified_name.slice(prefix.length)
+                                    var li = document.createElement("li");
+                                    li.appendChild(document.createTextNode(object_name));
+                                    li.setAttribute("id", fully_qualified_name);
+                                    li.setAttribute("class", "minio_object");
+                                    parent_list.appendChild(li);
+                                }
+                            }
+                        });
+                    }).catch((e) => {
+                        console.error(e);
+                    });
+                }
+            </script>
+            <script type="text/javascript">
+                retrieveDataObjects('');
+            </script>
 
-                    var parent_list = document.getElementById(prefix === "" ? "bucket_browser" : prefix + "_folder");
-                    for (var i = 0; i < data.length; i++) {
-                        // add new ul to parent list
-                        if ("prefix" in data[i]) {
-                            var fully_qualified_name = data[i]["prefix"]
-                            var folder_name = fully_qualified_name.slice(prefix.length)
-                            var child_li = document.createElement("li");
-                            child_li.appendChild(document.createTextNode(folder_name));
-                            child_li.setAttribute("id", fully_qualified_name);
-                            child_li.setAttribute("class", "minio_folder_li");
-                            var child_ul = document.createElement("ul");
-                            child_ul.setAttribute("id", fully_qualified_name + "_folder");
-                            child_ul.setAttribute("class", "minio_folder");
-                            child_li.appendChild(child_ul)
-                            parent_list.appendChild(child_li)
-                        }
-                        // add new li to parent ul
-                        if("name" in data[i]) {
-                            var fully_qualified_name = data[i]["name"]
-                            var object_name = fully_qualified_name.slice(prefix.length)
-                            var li = document.createElement("li");
-                            li.appendChild(document.createTextNode(object_name));
-                            li.setAttribute("id", fully_qualified_name);
-                            li.setAttribute("class", "minio_object");
-                            parent_list.appendChild(li);
-                        }
+            <!-- adapted from https://stackoverflow.com/questions/5116929/get-clicked-li-from-ul-onclick -->
+            <script type="text/javascript">
+                function getEventTarget(e) {
+                    e = e || window.event;
+                    return e.target || e.srcElement; 
+                }
+
+                var ul = document.getElementById('bucket_browser');
+                ul.onclick = function(event) {
+                    var previouslySelected = document.getElementsByClassName("minio_folder_li selected");
+                    if (previouslySelected.length > 0) {
+                        previouslySelected[0].classList.remove("selected");
                     }
-                });
-            }).catch((e) => {
-                console.error(e);
-            });
-        }
-    </script>
-    <script type="text/javascript">
-        retrieveDataObjects('');
-    </script>
+                    var target = getEventTarget(event);
+                    target.classList.add("selected");
+                    if (!target.classList.contains("expanded")) {
+                        retrieveDataObjects(target.id);
+                        target.classList.add("expanded");
+                    }
+                };
+            </script>
 
-    <!-- adapted from https://stackoverflow.com/questions/5116929/get-clicked-li-from-ul-onclick -->
-    <script type="text/javascript">
-        function getEventTarget(e) {
-            e = e || window.event;
-            return e.target || e.srcElement; 
-        }
+            <script type="text/javascript">
 
-        var ul = document.getElementById('bucket_browser');
-        ul.onclick = function(event) {
-            var previouslySelected = document.getElementsByClassName("minio_folder_li selected");
-            if (previouslySelected.length > 0) {
-                previouslySelected[0].classList.remove("selected");
-            }
-            var target = getEventTarget(event);
-            target.classList.add("selected");
-            if (!target.classList.contains("expanded")) {
-                retrieveDataObjects(target.id);
-                target.classList.add("expanded");
-            }
-        };
-    </script>
+                // listener for completed request
+                function submitForm() {
 
-    <script type="text/javascript">
+                    try{
 
-        // listener for completed request
-        function submitForm() {
+                        // grab the data folder id, which is the id of the selected folder 
+                        folderID = document.getElementsByClassName("minio_folder_li selected")[0].id.slice(0, -1);
 
-            try{
+                        // folder choser doesn't return subfiles, so just store id
+                        var fl = '{ "fl" : ["linked"], "folderID":"' + folderID + '"}'
 
-                // grab the data folder id, which is the id of the selected folder 
-                folderID = document.getElementsByClassName("minio_folder_li selected")[0].id.slice(0, -1);
+                        // take the filelist (data from event) and append to form
+                        document.getElementById('metadata_form').filelist.value = fl
 
-                // folder choser doesn't return subfiles, so just store id
-                var fl = '{ "fl" : ["linked"], "folderID":"' + folderID + '"}'
+                        // submit the form
+                        document.getElementById('metadata_form').submit()
 
-                // take the filelist (data from event) and append to form
-                document.getElementById('metadata_form').filelist.value = fl
+                    }
 
-                // submit the form
-                document.getElementById('metadata_form').submit()
+                    catch(e){
 
-            }
+                        console.log('Error during upload: ' + e)
 
-            catch(e){
+                    }
+                }
+                
+            </script>
 
-                console.log('Error during upload: ' + e)
+            <br><br>
 
-            }
-        }
-        
-    </script>
+            <div id="metadata_form_label">
+            
+                <p>
+                    Use the selector above to select the data folder to which you would like to link new metadata.
+                </p>
+                <p>
+                    Then, complete the form below to specify the number of experiments for which you would like to link new metadata and the metadata for each such experiment.
+                </p>
+                <p>
+                    When you have completed these steps, click the "submit" button to begin your upload. You will be redirected to the "manage data" page when the upload is complete.
+                </p>
 
-    <br><br>
+            </div>
 
-    <div id="metadata_form_label">
-    
-        <p>
-            Use the selector above to select the data folder to which you would like to link new metadata.
-        </p>
-        <p>
-            Then, complete the form below to specify the number of experiments for which you would like to link new metadata and the metadata for each such experiment.
-        </p>
-        <p>
-            When you have completed these steps, click the "submit" button to begin your upload. You will be redirected to the "manage data" page when the upload is complete.
-        </p>
+            <br><br>
 
+            <% include ../partials/metadata-form-mongo %>
+
+            <button class="submit-form-button" onclick="submitForm()">submit</button>
+
+        </div>
     </div>
-
-    <br><br>
-
-    <% include ../partials/metadata-form-mongo %>
-
-    <button class="submit-form-button" onclick="submitForm()">submit</button>
-
-    <br><br><br><br>
 
 	<footer>
 		

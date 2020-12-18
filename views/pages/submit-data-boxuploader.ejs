@@ -23,158 +23,162 @@
 
 	</div>
 
-    <br><br><br><br><br>
-    <div id="folder-selector-container" class="container">
-    
-        <!-- based on https://docs.min.io/docs/upload-files-from-browser-using-pre-signed-urls.html and https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory -->
-        <input type="file" id="selector" webkitdirectory multiple>
-        <ul id="selected_files">Select a data folder for upload.</ul>
+    <div id="content">
+        <div id="content-feed">
 
-        <script type="text/javascript">
-            // display selected filenames when selection is made (from https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory)
-            document.getElementById("selector").addEventListener("change", function(event) {
-                let selection_list = document.getElementById("selected_files");
-                selection_list.innerHTML = "";
-                let selected_files = event.target.files;
+            <div id="folder-selector-container" class="container">
+            
+                <!-- based on https://docs.min.io/docs/upload-files-from-browser-using-pre-signed-urls.html and https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory -->
+                <input type="file" id="selector" webkitdirectory multiple>
+                <ul id="selected_files">Select a data folder for upload.</ul>
 
-                for (let i=0; i < selected_files.length; i++) {
-                    let item = document.createElement("li");
-                    item.innerHTML = selected_files[i].webkitRelativePath;
-                    selection_list.appendChild(item);
-                };
-            }, false);
+                <script type="text/javascript">
+                    // display selected filenames when selection is made (from https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory)
+                    document.getElementById("selector").addEventListener("change", function(event) {
+                        let selection_list = document.getElementById("selected_files");
+                        selection_list.innerHTML = "";
+                        let selected_files = event.target.files;
 
-            // first iterate through all selected files and invoke a helper function called `retrieveNewURL` to upload them to MinIO
-            // then iterate through all selected files again to populate relevant metadata form fields and upload to MongoDB
-            function upload() {
-                // Get selected files from the input element.
-                var promises = [];
-                var files = document.querySelector("#selector").files;
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i];
-                    // Retrieve a URL from our server.
-                    promises.push(
-                        retrieveNewURL(file, (file, url, resolve) => {
-                            // Upload the file to the server.
+                        for (let i=0; i < selected_files.length; i++) {
+                            let item = document.createElement("li");
+                            item.innerHTML = selected_files[i].webkitRelativePath;
+                            selection_list.appendChild(item);
+                        };
+                    }, false);
 
-                            selected_files_li = Array.from(document.querySelectorAll("#selected_files li")).find(li => li.textContent === file.webkitRelativePath)
-                            selected_files_li.innerText += ` uploading...`;
-                            uploadFile(file, url, resolve);
-                            selected_files_li.innerText = file.webkitRelativePath + ' uploaded.'
-                    }));
-                }
-                Promise.all(promises).then(() => {
-                    submitMetadataForm();
-                })
-            }
+                    // first iterate through all selected files and invoke a helper function called `retrieveNewURL` to upload them to MinIO
+                    // then iterate through all selected files again to populate relevant metadata form fields and upload to MongoDB
+                    function upload() {
+                        // Get selected files from the input element.
+                        var promises = [];
+                        var files = document.querySelector("#selector").files;
+                        for (var i = 0; i < files.length; i++) {
+                            var file = files[i];
+                            // Retrieve a URL from our server.
+                            promises.push(
+                                retrieveNewURL(file, (file, url, resolve) => {
+                                    // Upload the file to the server.
 
-            // `retrieveNewURL` accepts the name of the current file and invokes the `/presigned-url` endpoint to
-            // generate a pre-signed URL for use in uploading that file
-            function retrieveNewURL(file, cb) {
-                return new Promise((resolve) => {
-                    fetch(`/presigned-url?name=${file.webkitRelativePath}`).then((response) => {
-                        response.text().then((url) => {
-                            cb(file, url.replace("http:", "https:"), resolve);
-                        });
-                })
-                }).catch((e) => {
-                    console.error(e);
-                });
-            }
-
-            // ``uploadFile` accepts the current filename and the pre-signed URL. It then uses `Fetch API`
-            // to upload this file to MinIO using the URL
-            function uploadFile(file, url, resolve) {
-                fetch(url, {
-                    method: 'PUT',
-                    body: file
-                }).then(() => {
-                    resolve();
-                }).catch((e) => {
-                    console.error(e);
-                });
-            }
-
-            function submitMetadataForm() {
-
-                // Get selected files from the input element.
-                var files = document.querySelector("#selector").files;
-
-                try{
-
-                var fl = '{ "fl" : ['
-
-                // grab file name and parent folder of every file
-                for(i=0; i < files.length;  i++){
-
-                    // holder var
-                    var file = files[i];
-
-                    // continue on undefined
-                    if (typeof(file) == 'undefined'){
-                        continue
+                                    selected_files_li = Array.from(document.querySelectorAll("#selected_files li")).find(li => li.textContent === file.webkitRelativePath)
+                                    selected_files_li.innerText += ` uploading...`;
+                                    uploadFile(file, url, resolve);
+                                    selected_files_li.innerText = file.webkitRelativePath + ' uploaded.'
+                            }));
+                        }
+                        Promise.all(promises).then(() => {
+                            submitMetadataForm();
+                        })
                     }
 
-                    // grab file attributes
-                    var filepath = file.webkitRelativePath
-                    var filesize = file.size
-                    var filename = file.name
-                    var content_created_at = file.lastModified
+                    // `retrieveNewURL` accepts the name of the current file and invokes the `/presigned-url` endpoint to
+                    // generate a pre-signed URL for use in uploading that file
+                    function retrieveNewURL(file, cb) {
+                        return new Promise((resolve) => {
+                            fetch(`/presigned-url?name=${file.webkitRelativePath}`).then((response) => {
+                                response.text().then((url) => {
+                                    cb(file, url.replace("http:", "https:"), resolve);
+                                });
+                        })
+                        }).catch((e) => {
+                            console.error(e);
+                        });
+                    }
 
-                    fl = fl + '{"filename":"' + filename + '"'
-                    + ', "filesize":"' + String(filesize) + '"'
-                    + ', "filepath":"' + filepath + '"'
-                    + ', "content_created_at":"' + content_created_at + '"'
-                    + '},'
+                    // ``uploadFile` accepts the current filename and the pre-signed URL. It then uses `Fetch API`
+                    // to upload this file to MinIO using the URL
+                    function uploadFile(file, url, resolve) {
+                        fetch(url, {
+                            method: 'PUT',
+                            body: file
+                        }).then(() => {
+                            resolve();
+                        }).catch((e) => {
+                            console.error(e);
+                        });
+                    }
 
-                }
+                    function submitMetadataForm() {
 
-                // remove the trailing comma (god dammit json)
-                fl = fl.slice(0, fl.length - 1)
+                        // Get selected files from the input element.
+                        var files = document.querySelector("#selector").files;
 
-                // append the end of the array, including folderID
-                fl = fl + '],',
-                fl = fl + ' "folderID":"' + filepath.split("/")[0] + '",'
-                fl = fl + ' "bucket":"data"}'
+                        try{
 
-                // take the filelist (data from event) and append to form
-                document.getElementById('metadata_form').filelist.value = fl
-                var mdf = document.getElementById('metadata_form');
+                        var fl = '{ "fl" : ['
 
-                // submit the form
-                document.getElementById('metadata_form').submit()
+                        // grab file name and parent folder of every file
+                        for(i=0; i < files.length;  i++){
 
-                } catch(e){
+                            // holder var
+                            var file = files[i];
 
-                console.log('Error during upload: ' + e)
+                            // continue on undefined
+                            if (typeof(file) == 'undefined'){
+                                continue
+                            }
 
-                }
-                
-            }
+                            // grab file attributes
+                            var filepath = file.webkitRelativePath
+                            var filesize = file.size
+                            var filename = file.name
+                            var content_created_at = file.lastModified
 
-        </script>
-    </div> 
+                            fl = fl + '{"filename":"' + filename + '"'
+                            + ', "filesize":"' + String(filesize) + '"'
+                            + ', "filepath":"' + filepath + '"'
+                            + ', "content_created_at":"' + content_created_at + '"'
+                            + '},'
 
-    <br><br>
+                        }
 
-    <div id="metadata_form_label">
-    
-        <p>
-            Use the selector above to select the data folder you would like to upload. Note that the folder name will be used to identify your upload, so you should not reuse a folder from which you have uploaded previously.
-        </p>
-        <p>
-            Then, complete the form below to specify the number of experiments associated with your data and the metadata for each associated experiment.
-        </p>
-        <p>
-            When you have completed these steps, click the "submit" button to begin your upload. You will be redirected to the "manage data" page when the upload is complete.
-        </p>
+                        // remove the trailing comma (god dammit json)
+                        fl = fl.slice(0, fl.length - 1)
+
+                        // append the end of the array, including folderID
+                        fl = fl + '],',
+                        fl = fl + ' "folderID":"' + filepath.split("/")[0] + '",'
+                        fl = fl + ' "bucket":"data"}'
+
+                        // take the filelist (data from event) and append to form
+                        document.getElementById('metadata_form').filelist.value = fl
+                        var mdf = document.getElementById('metadata_form');
+
+                        // submit the form
+                        document.getElementById('metadata_form').submit()
+
+                        } catch(e){
+
+                        console.log('Error during upload: ' + e)
+
+                        }
+                        
+                    }
+
+                </script>
+            </div> 
+
+            <br><br>
+
+            <div id="metadata_form_label">
+            
+                <p>
+                    Use the selector above to select the data folder you would like to upload. Note that the folder name will be used to identify your upload, so you should not reuse a folder from which you have uploaded previously.
+                </p>
+                <p>
+                    Then, complete the form below to specify the number of experiments associated with your data and the metadata for each associated experiment.
+                </p>
+                <p>
+                    When you have completed these steps, click the "submit" button to begin your upload. You will be redirected to the "manage data" page when the upload is complete.
+                </p>
+            </div>
+
+            <br><br>
+
+            <% include ../partials/metadata-form-mongo %>
+
+            <button class="submit-form-button" onclick="upload()">submit</button>
+        </div>
     </div>
-
-    <br><br>
-
-    <% include ../partials/metadata-form-mongo %>
-
-    <button class="submit-form-button" onclick="upload()">submit</button>
 
 	<footer>
 		

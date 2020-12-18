@@ -17,58 +17,60 @@
 
 	</div>
 
-	<div id="content"><br><br>
+	<div id="content">
+		<div id="content-feed">
 
-		<!-- update -->
-		<% include ../partials/update-password-form %>
+			<!-- update -->
+			<% include ../partials/update-password-form %>
 
-		<!-- add -->
-		<div id="add" class="box">
-			<div>
+			<!-- add -->
+			<div id="add" class="box">
+				<div>
 
-				<p class="form-label">ADD a new user.</p>
+					<p class="form-label">ADD a new user.</p>
 
-				<form action="/add-user" method="post" id="addUserForm">
-                    <input name="username" id="usernameAdd" type="text", placeholder="username">
-                    <input name="password" id="passwordAdd" type="password", placeholder="password">
-				</form>
-				
-				<!-- Include a submit form field -->
-				<button class="myform" type="submit" form="addUserForm">add user</button>
+					<form action="/add-user" method="post" id="addUserForm">
+						<input name="username" id="usernameAdd" type="text", placeholder="username">
+						<input name="password" id="passwordAdd" type="password", placeholder="password">
+					</form>
+					
+					<!-- Include a submit form field -->
+					<button class="myform" type="submit" form="addUserForm">add user</button>
+				</div>
 			</div>
-		</div>
 
-		<!-- remove -->
-		<div id="remove" class="box">
-			<div>
+			<!-- remove -->
+			<div id="remove" class="box">
+				<div>
 
-				<p class="form-label">REMOVE a user.</p>
+					<p class="form-label">REMOVE a user.</p>
 
-				<form action="/remove-user" method="post" id="removeUserForm">
-                    <input name="username" id="usernameRemove" type="text", placeholder="username">
-				</form>
-				
-				<!-- Include a submit form field -->
-				<button class="myform myform-red" type="submit" form="removeUserForm">remove user</button>
+					<form action="/remove-user" method="post" id="removeUserForm">
+						<input name="username" id="usernameRemove" type="text", placeholder="username">
+					</form>
+					
+					<!-- Include a submit form field -->
+					<button class="myform myform-red" type="submit" form="removeUserForm">remove user</button>
+				</div>
 			</div>
-		</div>
 
-		<!-- toggle admin -->
-		<div id="admin" class="box">
-			<div>
+			<!-- toggle admin -->
+			<div id="admin" class="box">
+				<div>
 
-				<p class="form-label">toggle user ADMIN status.</p>
+					<p class="form-label">toggle user ADMIN status.</p>
 
-				<form action="/toggle-admin" method="post" id="toggleAdminForm">
-                    <input name="username" id="usernameToggleAdmin" type="text", placeholder="username">
-				</form>
-				
-				<!-- Include a submit form field -->
-				<button class="myform" type="submit" form="toggleAdminForm">toggle admin</button>
+					<form action="/toggle-admin" method="post" id="toggleAdminForm">
+						<input name="username" id="usernameToggleAdmin" type="text", placeholder="username">
+					</form>
+					
+					<!-- Include a submit form field -->
+					<button class="myform" type="submit" form="toggleAdminForm">toggle admin</button>
+				</div>
 			</div>
-		</div>
 
-		<div id="userTable" class="box"></div>
+			<div id="userTable" class="box"></div>
+		</div>
 	</div>
 
 	<script>

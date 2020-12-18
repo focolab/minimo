@@ -16,27 +16,29 @@
 	</div>
 
 	<div id="content"><br><br>
+		<div id="content-feed">
 
-		<div class="box">
-			<div>
-				<p>
-					Welcome <%= username%> to the data metadata browser page!
-				</p>
-        <p>
-          Here you can scroll through existing lab metadata entries.
-        </p>
+			<div class="box">
+				<div>
+					<p>
+						Welcome <%= username%> to the data metadata browser page!
+					</p>
+			<p>
+			Here you can scroll through existing lab metadata entries.
+			</p>
+				</div>
 			</div>
-		</div>
 
 
-		<div id="metadata_entries">
-			<div>
-				<p>
-          If you are seeing this, metadata did not populate correctly whoops...
-				</p>
+			<div id="metadata_entries">
+				<div>
+					<p>
+			If you are seeing this, metadata did not populate correctly whoops...
+					</p>
+				</div>
 			</div>
-		</div>
 
+		</div>
 	</div>
 
 	<% include ../partials/draw-metadata-entries-mongo %>

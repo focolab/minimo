@@ -9,19 +9,18 @@
 
     <body>
 
-        <div class="flexbox-container">
             <div id="header">
 
                 <% include ../partials/header %>
 
             </div>
 
-            <div id="embedded-content">
+            <div id="content">
 
                 <% var minioBrowserUrl = "https://" + hostName + "/minio/data"; %>
                 <iframe id="minio-browser" src=<%= minioBrowserUrl %> onload="checkMinioBrowserLoaded();"></iframe>
 
-            </div>
+            </div>>
 
             <footer>
 

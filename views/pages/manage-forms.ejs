@@ -18,68 +18,67 @@
 	</div>
 
 	<div id="content"><br><br>
+		<div id="content-feed">
+			<div class="box">
+				<div>
+					<p>
+						Welcome <%= username%> to the metadata form modification page!
+					</p>
+					<p>
+						First, please select what you want to do.
+					</p>
+				</div>
+			</div>
 
-		<div class="box">
-			<div>
-				<p>
-					Welcome <%= username%> to the metadata form modification page!
-				</p>
-				<p>
-					First, please select what you want to do.
-				</p>
+			<!-- create -->
+			<div id="create" class="box">
+				<div>
+					<p class="form-label">
+						<a href="./edit-form-entry">CREATE a new metadata form entry.</a>
+					</p>
+				</div>
+			</div>
+
+			<!-- edit -->
+			<div id="edit" class="box">
+				<div>
+
+					<p class="form-label">UPDATE an existing metadata form entry.</p>
+
+					<form action="/edit-form-entry" method="get" id="editForm">
+						<select class="myform" id="editSelect" name="editSelect">
+						</select>
+					
+					</form>
+					
+					<!-- Include a submit form field -->
+					<button class="myform" onclick="submitForm('editForm')">edit</button>
+
+				</div>
+			</div>
+
+			<!-- delete -->
+			<div id="delete" class="box">
+				<div>
+
+					<p class="form-label">DELETE a metadata form entry.</p>
+
+					<form action="/delete-form-entry" method="post" id="deleteForm">
+						<select class="myform" id="deleteSelect" name="deleteSelect">
+						</select>
+
+						<!-- Hidden text form for uid -->
+						<div class="hidden">
+							<input name="uid" id="uidDelete" type="text">
+						</div>
+
+					</form>
+					
+					<!-- Include a submit form field -->
+					<button class="myform myform-red" onclick="submitForm('deleteForm')">delete</button>
+				</div>
 			</div>
 		</div>
-
-		<!-- create -->
-		<div id="create" class="box">
-			<div>
-				<p class="form-label">
-					<a href="./edit-form-entry">CREATE a new metadata form entry.</a>
-				</p>
-			</div>
-		</div>
-
-		<!-- edit -->
-		<div id="edit" class="box">
-			<div>
-
-				<p class="form-label">UPDATE an existing metadata form entry.</p>
-
-				<form action="/edit-form-entry" method="get" id="editForm">
-					<select class="myform" id="editSelect" name="editSelect">
-					</select>
-				
-				</form>
-				
-				<!-- Include a submit form field -->
-				<button class="myform" onclick="submitForm('editForm')">edit</button>
-
-			</div>
-		</div>
-
-		<!-- delete -->
-		<div id="delete" class="box">
-			<div>
-
-				<p class="form-label">DELETE a metadata form entry.</p>
-
-				<form action="/delete-form-entry" method="post" id="deleteForm">
-					<select class="myform" id="deleteSelect" name="deleteSelect">
-					</select>
-
-				    <!-- Hidden text form for uid -->
-				    <div class="hidden">
-				        <input name="uid" id="uidDelete" type="text">
-				    </div>
-
-				</form>
-				
-				<!-- Include a submit form field -->
-				<button class="myform myform-red" onclick="submitForm('deleteForm')">delete</button>
-			</div>
-		</div>
-
-
 	</div>
 
 	<script>

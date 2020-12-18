@@ -17,78 +17,79 @@
 	</div>
 
 	<div id="content"><br><br>
+		<div id="content-feed">
 
-		<div class="box">
-			<div>
-				<p>
-					Let's edit our metadata forms! Please don't do this unless it's necessary.
-				</p>
+			<div class="box">
+				<div>
+					<p>
+						Let's edit our metadata forms! Please don't do this unless it's necessary.
+					</p>
+				</div>
 			</div>
-		</div>
 
-		<!-- Instructions -->
-		<div class="box">
-			<div>
-				<p>
-					Instructions:
-					Fill out the text box below according to the correct format. If it's not formatted right, everything will explode.
+			<!-- Instructions -->
+			<div class="box">
+				<div>
+					<p>
+						Instructions:
+						Fill out the text box below according to the correct format. If it's not formatted right, everything will explode.
 
-					Please have the relevant form text on separate lines according to this format:<br>
-					<b>form name</b> <font size="-1">(what you'll use to search)</font><br>
-					<b>prompt</b> <font size="-1">(what you see when filling out the form) </font><br>
-					<b>type</b> <font size="-1">(either "dropdown", "text", or "textbox" (big text box))</font><br>
-					<b>option 1</b> <font size="-1">(only fill out if you select "dropdown") </font><br>
-					<b>option 2...</b><br>
+						Please have the relevant form text on separate lines according to this format:<br>
+						<b>form name</b> <font size="-1">(what you'll use to search)</font><br>
+						<b>prompt</b> <font size="-1">(what you see when filling out the form) </font><br>
+						<b>type</b> <font size="-1">(either "dropdown", "text", or "textbox" (big text box))</font><br>
+						<b>option 1</b> <font size="-1">(only fill out if you select "dropdown") </font><br>
+						<b>option 2...</b><br>
+						
+						<br>
+						Please note that you cannot update the form name. If you need to do that, delete this form and make a new one.
+					</p>
+				</div>
+			</div>
+
+			<!-- example -->
+			<div class="box" id="textbox">
+				<div>
+					<p>
+						Example: A form called "apparatus" with user prompt "Data acquisition apparatus" of type "dropdown" with several options. 
+
+					<!-- example form -->
+					<form>
+
+						<textarea class="myform" id="exampleTextbox" readonly rows="20" cols="60"></textarea>
+						<script> document.getElementById('exampleTextbox').value = "apparatus\nData acquisition apparatus\ndropdown\nNIC high-speed spinning disk\nParnassus Torsten1.0 confocal\nLCA core spectral confocal\nFLIR blackfly s\nL'Etoile lab injection room GigE\n"</script>
+						<br>
 					
-					<br>
-					Please note that you cannot update the form name. If you need to do that, delete this form and make a new one.
-				</p>
+					</form>
+
+				</div>
 			</div>
-		</div>
 
-		<!-- example -->
-		<div class="box" id="textbox">
-			<div>
-				<p>
-					Example: A form called "apparatus" with user prompt "Data acquisition apparatus" of type "dropdown" with several options. 
+			<!-- Text box for editing-->
+			<div class="box" id="textbox">
+				<div>
 
-				<!-- example form -->
-				<form>
+					<!-- form -->
+					<form action="/edit-form-entry" method="post" id="editForm">
 
-					<textarea class="myform" id="exampleTextbox" readonly rows="20" cols="60"></textarea>
-					<script> document.getElementById('exampleTextbox').value = "apparatus\nData acquisition apparatus\ndropdown\nNIC high-speed spinning disk\nParnassus Torsten1.0 confocal\nLCA core spectral confocal\nFLIR blackfly s\nL'Etoile lab injection room GigE\n"</script>
-					<br>
-				
-				</form>
+						<label class="myform" for="editFormBox">Fill out your new or edited form here</label>
+						<textarea class="myform" name="editFormBox" id="editFormBox" rows="20" cols="60"></textarea>
+						<br>
+						
+						<!-- Hidden text form for uid -->
+						<div class="hidden">
+							<input name="uid" id="uid" type="text">
+						</div>
+					
+					</form>
 
+					<!-- submit button -->
+					<button class="myform" onclick="submitForm('editForm')">submit form</button>
+
+				</div>
 			</div>
+
 		</div>
-
-		<!-- Text box for editing-->
-		<div class="box" id="textbox">
-			<div>
-
-				<!-- form -->
-				<form action="/edit-form-entry" method="post" id="editForm">
-
-					<label class="myform" for="editFormBox">Fill out your new or edited form here</label>
-					<textarea class="myform" name="editFormBox" id="editFormBox" rows="20" cols="60"></textarea>
-					<br>
-				    
-				    <!-- Hidden text form for uid -->
-				    <div class="hidden">
-				        <input name="uid" id="uid" type="text">
-				    </div>
-				
-				</form>
-
-				<!-- submit button -->
-				<button class="myform" onclick="submitForm('editForm')">submit form</button>
-
-			</div>
-		</div>
-
-
 	</div>
 
 	<script>

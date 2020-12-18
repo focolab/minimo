@@ -3,6 +3,7 @@
 	html {
 		height:100%;
 		font-family: Helvetica;
+		font-size: 1.5em;
 	}
 	
 	body  
@@ -10,23 +11,33 @@
 		padding:0;
 		margin:0;
 		height:100%;
-		background: linear-gradient(gray,white);
+		width: 100%;
+		background-color: #eee;
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		background-size: cover;
-
+		display: flex;
 	}
 
+	#content {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	#content-feed {
+		padding-top: 5em;
+		width: 80%;
+	}
 
 	#header {
-		background-color:#777;
-		height:50px;
-		position:fixed;
-		top:0px;
-		z-index:100000;
-		width:100%;
-		min-width:600px;
+		width:min-content;
 		font-family: sans-serif;
+		border-right: solid 1px #777;
+		padding-top: 2.5em;
+		margin-top: 2.5em;
+		margin-bottom: 2.5em;
 	}
 
 	h1 {
@@ -57,7 +68,7 @@
 	}
 
 	li {
-	    float: right;
+		white-space: nowrap;
 	}
 
 	.active {
@@ -69,7 +80,6 @@
 		position:fixed;
 		bottom:0;
 		left:0;
-		padding:10px;
 		pointer-events:none;
 	}
 		
@@ -78,8 +88,6 @@
 		position:fixed;
 		bottom:0;
 		left:-30px;
-		padding:25px;
-		padding-right:40px;
 		float: right;
 		pointer-events:none;
 	}
@@ -87,8 +95,7 @@
 	a { color: #000000; }
 	a.nav-link {
 	    display: block;
-	    text-align: center;
-	    padding: 13px 24px;
+	    padding: 0 1em 3em 1em;
 	    text-decoration: none;
 	}
 	a.metadata-link { text-decoration: none; }
@@ -97,7 +104,7 @@
 		
 p {
   color: black; 
-  margin: 0 0 5px 0;
+  margin: 0 0 1em 0;
 }
 
 p.anim{
@@ -136,23 +143,15 @@ img.abstractimage{
 	clear:both;
 }
 
-/*
-span{
-  animation: blink 1s 
-infinite;
-}
-*/
-
-
 @keyframes type{ 
-  from { width: 0; } 
-} 
+  from { width: 0; }
+}
 
 @keyframes type2{
   0%{width: 0;}
   50%{width: 0;}
-  100%{ width: 100; } 
-} 
+  100%{ width: 100; }
+}
 
 @keyframes blink{
   to{opacity: .0;}
@@ -165,16 +164,10 @@ infinite;
 .box
 {
 	position: relative;
-	width:700px;
-	padding: 10px;
-	background-color: #eee;
+	width:100%;
 	margin: 0 auto;
-	margin-top:40px;
 	margin-bottom: 20px;  /* spacing between boxes */
-	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-	border-radius: 4px;
+	border-bottom: solid 1px #777;
 }
 
 .box:before, .box:after
@@ -183,39 +176,23 @@ infinite;
 	width: 40%;
 	height: 10px;
 	content: ' ';
-	left: 12px;
-	bottom: 12px;
-	background: transparent;
-	-webkit-transform: skew(-5deg) rotate(-5deg);
-	-moz-transform: skew(-5deg) rotate(-5deg);
-	-ms-transform: skew(-5deg) rotate(-5deg);
-	-o-transform: skew(-5deg) rotate(-5deg);
-	transform: skew(-5deg) rotate(-5deg);
-	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-	-moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 	z-index: -1;
-} 
+}
 
 .box:after
 {
 	left: auto;
 	right: 12px;
-	-webkit-transform: skew(5deg) rotate(5deg);
-	-moz-transform: skew(5deg) rotate(5deg);
-	-ms-transform: skew(5deg) rotate(5deg);
-	-o-transform: skew(5deg) rotate(5deg);
-	transform: skew(5deg) rotate(5deg);
-} 
+}
 
 .box > div {
 	overflow:auto;
-} 
+}
 
 .minio_folder_li.selected
 {
 	background-color: lightgreen;
-} 
+}
 
 .flexbox-container
 {
@@ -224,19 +201,19 @@ infinite;
 	height: 100%;
 	flex-direction: column;
 	overflow-x: hidden;
-} 
+}
 
 .flexbox-container > #header {
 	position: unset;
-} 
+}
 
 .flexbox-container > footer > #footer-right {
 	position: unset;
-} 
+}
 
 #update-password > div {
 	overflow: auto;
-} 
+}
 
 #embedded-content {
 	flex-grow: 1;
@@ -252,17 +229,17 @@ infinite;
 
 .hidden {
 	display:none;
-} 
+}
 
 .myform-red {
-} 
+}
 
 #metadata_form_label {
 	position: relative;
 	left: 30px;
 	margin: 0 auto;
 	width: 500px;
-} 
+}
 
 #bucket-selector-container {
 	height: 600px;
@@ -270,8 +247,9 @@ infinite;
 	position: relative;
 	left: 30px;
 	margin: 0 auto;
-	background-color: #eee;
-} 
+	background-color: #fff;
+	border: 1px solid #777
+}
 
 #folder-selector-container {
 	height: 600px;
@@ -280,36 +258,41 @@ infinite;
 	left: 30px;
 	margin: 0 auto;
 	text-align: center;
-	background-color: #eee;
-} 
+	background-color: #fff;
+	border: 1px solid #777
+}
 
 #selector {
 	margin-top: 10px;
-} 
+}
 
 #selected_files {
 	display: grid;
-} 
+}
 
 .submit-form-button {
 	float: right;
-} 
+}
 
 .minio_folder_li {
 	float: none;
 	padding-left: 15px;
 	cursor: pointer;
-} 
+}
 
 .minio_object {
 	float: none;
 	padding-left: 15px;
-} 
+}
 
 .faq-question {
 	font-weight: bold;
-} 
+}
 
 .form-label {
 	font-weight: bold;
-} 
+}
+
+.greeting {
+	font-weight: bold;
+}
