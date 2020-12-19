@@ -1,46 +1,53 @@
 # minimo
 
-minimo is a thoughtful data & metadata storage system for small labs. 
+minimo is a **linked data & metadata storage system** for small labs. It is simple, low overhead, and uses modern architecture patterns. It combines **object storage** for large raw data with a **document database** for metadata. It handles large data types and supports both local and cloud storage.
 
-All too often we want to revisit data and struggle with a loss of context-- old data is hard to find, hard to understand, hard to fuse. If hygiene is applied to the initial data commit process, lots of blood, sweat, and tears can be avoided. An ounce of prevention...
+All too often we want to revisit data and struggle with a loss of context-- old data is hard to find, hard to understand, hard to fuse. If good hygiene is applied to the initial data commit process, lots of blood, sweat, and tears can be avoided. An ounce of prevention...
+
+minimo encourages good data hygiene by providing a customizable interface for storing, linking, and accessing raw experimental data (e.g. microscope video files) and associated human and machine-generated metadata (e.g. apparatus used for recording, experimental trial parameters, and experimenter annotations).
 
 ---
 Raw data and metadata are inseparably linked. This is the central principle of minimo.
 
 ---
 
-However, raw data are typically LARGE and not a great fit for most database implementations. Metadata, on the other hand, are typically small but benefit greatly from structure and semantics to allow efficient search and selection.
-
-minimo is a lightweight web app that facilitates storage of experimental data (e.g. microscope video files) and associated metadata (e.g. apparatus used for recording or treatment applied to recorded subject). It takes advantage of current modern architecture patterns, handles large data types, and supports both local and cloud storage.
-
-App components are:
+In order to simultaneously manage raw data, which are typically LARGE and not a great fit for most database implementations, and metadata, which are typically small but benefit greatly from structure and semantics to allow efficient search and selection, minimo leverages several robust open source components under the hood. It includes:
 
 1. A [MinIO](https://min.io/) server for raw data storage. (because big, chunky data should live in object storage)
 2. A [MongoDB](https://www.mongodb.com/) server for metadata storage. (because structured, semantic data should live in a DB)
 3. A [Node](https://nodejs.org) server which provides an interface for uploading and accessing raw data and metadata. (to provide human convenience and enforce human annotation hygiene)
 4. A [Traefik](https://containo.us/traefik/) server which acts as a reverse proxy for the other three components. (because, glue)
 
-All bundled up for you to keep things nice and easy!
+All bundled up for you in a docker container to keep things nice and easy!
 
+Currently, installing minimo requires basic comfort with sys admin / shell commands.
 
+# user interface
 
-Data and and metadata are uploaded through the app's web interface, as shown below. Data are uploaded through a simple folder selector, and metadata are entered through user configurable text or dropdown form fields.
+Data and and metadata are uploaded through the app's web interface, as shown below. Data are uploaded through a folder selector, and metadata are entered through user configurable text or dropdown form fields.
 
-| <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_upload.png?raw=true" alt="minimo upload flow" width="75%"/> | 
-|:--:| 
-| *minimo data/metadata uploader* |
+<p align="center">
+    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_upload.png?raw=true" alt="minimo upload flow" width="65%"/>
+    <br>
+    <i>minimo data/metadata uploader</i>
+</p>
 
-Once uploaded, metadata and data can be accessed through the app's embedded browsers. The metadata browser for a fresh instance with only four entries is shown below.
+Once uploaded, metadata and data can be accessed through the app browsers. The metadata browser:
 
-| <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_metadata_browser.png?raw=true" alt="minimo metadata browser" width="75%"/> | 
-|:--:| 
-| *minimo metadata browser* |
+<p align="center">
+    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_metadata_browser.png?raw=true" alt="minimo metadata browser" width="65%"/>
+    <br>
+    <i>minimo metadata browser</i>
+</p>
 
-Within the metadata browser, clicking the "folderID" hyperlink for any metadata entry will bring the user to the associated experimental data folder in the MinIO browser. For example, clicking on the "20200629_JMB" hyperlink in the previous image results in the MinIO browser view below. The data browser may also be accessed directly (without going through the metadata browser).
+The data browser may also be accessed directly, without going through the metadata browser:
 
-| <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_data_browser.png?raw=true" alt="minimo data browser" width="75%"/> | 
-|:--:| 
-| *embedded MinIO data browser* |
+<p align="center">
+    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_data_browser.png?raw=true" alt="minimo data browser" width="65%"/>
+    <br>
+    <i>embedded MinIO data browser</i>
+</p>
+
 
 # deployment
 
@@ -65,7 +72,7 @@ The app should now be accessible at `http://minimo.localhost`. By default, the u
 
 Note that because minimo uses self-generated TLS certificates, you will probably need to acknowledge a security warning in your browser when loading the web app for the first time and periodically thereafter.
 
-# use
+# adding metadata forms
 
 Before uploading data and metadata, you will need to create some metadata forms to represent the fields you'd like associated with your data. As an example, you can create a simple "Comments" field as follows:
 
@@ -86,7 +93,7 @@ Now, your comments field will be available for all new data submissions! You can
 2. Click "SUBMIT lab data and metadata."
 3. Within the file browser on this page, select the folder which contains your experimental data.
 4. In the "Number of experiments" dropdown, select "1."
-5. In the "Experiment number 1" form, enter your comments afte the "Comments?" prompt.
+5. In the "Experiment number 1" form, enter your comments after the "Comments?" prompt.
 6. Click "submit."
 
 Now, you should be able to see your metadata in the metadata browser and its associated experimental data in the data browser!
@@ -135,15 +142,13 @@ We've made an effort to be diligent here, but we are not yet comfortable recomme
 
 # technical details
 
-minimo is really just a lightweight [Node](https://nodejs.org) web server. This server talks to [MinIO](https://min.io/) and [MongoDB](https://www.mongodb.com/) servers, which store experimental data and metadata respectively, and it serves pages which allow upload of data to and access to data on those servers.
+minimo is a [Node](https://nodejs.org) web server. This server talks to [MinIO](https://min.io/) and [MongoDB](https://www.mongodb.com/) servers, which store experimental data and metadata respectively, and it serves pages which allow upload of data to and access to data on those servers.
 
-<center>
-
-| <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_minio_diagram.png?raw=true" alt="minimo architecture" width="75%"/> | 
-|:--:| 
-| *minimo architecture* |
-
-</center>
+<p align="center">
+    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_minio_diagram.png?raw=true" alt="minimo architecture" width="65%"/>
+    <br>
+    <i>minimo architecture</i>
+</>
 
 This architecture offers several advantages over other options that we considered:
 
@@ -164,4 +169,4 @@ You may also want to change some infrastructure for your deployment. For example
 
 # contact us
 
-minimo was put together by members of UCSF's [Foundations of Cognition Lab](http://saulkato.com/focolab/team.htm). Please feel free to contact us through the Issues section of this repository if you run into problems or have suggestions for improvements. We're happy to hear your input!
+minimo was developed by members of UCSF's [Foundations of Cognition Lab](http://saulkato.com/focolab/team.htm). Please feel free to contact us through the Issues section of this repository if you run into problems or have suggestions for improvements. We're happy to hear your input!
