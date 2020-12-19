@@ -1,12 +1,10 @@
 # minimo
 
-minimo is a **linked data & metadata storage system** for small labs. It is simple, low overhead, and uses modern architecture patterns. It combines **object storage** for large raw data with a **document database** for metadata.
+minimo is a **linked data & metadata storage system** for small labs. It is simple, low overhead, and uses modern architecture patterns. It combines **object storage** for large raw data with a **document database** for metadata. It handles large data types and supports both local and cloud storage.
 
 All too often we want to revisit data and struggle with a loss of context-- old data is hard to find, hard to understand, hard to fuse. If good hygiene is applied to the initial data commit process, lots of blood, sweat, and tears can be avoided. An ounce of prevention...
 
 minimo encourages good data hygiene by providing a customizable interface for storing, linking, and accessing raw experimental data (e.g. microscope video files) and associated human and machine-generated metadata (e.g. apparatus used for recording, experimental trial parameters, and experimenter annotations).
-
-minimo handles large data types, and supports both local and cloud storage. Currently, installing minimo requires basic comfort with sys admin / shell commands.
 
 ---
 Raw data and metadata are inseparably linked. This is the central principle of minimo.
@@ -21,6 +19,8 @@ In order to simultaneously manage raw data, which are typically LARGE and not a 
 4. A [Traefik](https://containo.us/traefik/) server which acts as a reverse proxy for the other three components. (because, glue)
 
 All bundled up for you in a docker container to keep things nice and easy!
+
+Currently, installing minimo requires basic comfort with sys admin / shell commands.
 
 # user interface
 
