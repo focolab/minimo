@@ -27,9 +27,11 @@
   <li>
     <a href="./faq" class="nav-link" id="faq-nav-item">FAQ</a>
   </li>
-  <li>
-    <a href="./logout" class="nav-link" id="logout-nav-item">LOGOUT</a>
-  </li>
+  <% if (locals.loggedIn) { %>
+    <li>
+      <a href="./logout" class="nav-link" id="logout-nav-item">LOG OUT</a>
+    </li>
+  <% } %>
 </ul>
 
 <script type="text/javascript">

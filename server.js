@@ -64,10 +64,6 @@ app.locals.DB = new DB();
 //set domain name
 app.locals.hostName = process.env.HOST_NAME;
 
-// general get requests
-app.get('/', (req, res) => res.render('pages/faq'));
-app.get('/faq', (req, res) => res.render('pages/faq'));
-
 // middleware function to bypass authorization
 const skipAuth = (req, res, next) => {
   console.log('Checking authorization...');
@@ -177,8 +173,12 @@ function handleError(req, res, err, errmsg) {
   res.render('pages/error');
 }
 
+// general get requests
+app.get('/', skipAuth, (req, res) => res.render('pages/faq'));
+app.get('/faq', skipAuth, (req, res) => res.render('pages/faq'));
+
 // login page
-app.get('/login', (req, res) => {
+app.get('/login', skipAuth, (req, res) => {
   res.render('pages/login', { user : req.user });
 });
 
