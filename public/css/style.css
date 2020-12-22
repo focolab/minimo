@@ -90,6 +90,9 @@ a.nav-link {
 	padding: 1em 1em 0 1em;
 	text-decoration: none;
 }
+a.nav-link.extra-spacing {
+	padding-bottom: 1em;
+}
 /* this rule keeps the nav bar from expanding on hover */
 /* taken from https://stackoverflow.com/questions/556153/inline-elements-shifting-when-made-bold-on-hover */
 a.nav-link::before, details.nav-collapsible summary::before {
