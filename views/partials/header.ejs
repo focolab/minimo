@@ -1,39 +1,41 @@
 
 <img src="images/minimo-logo.png" id="minimo-logo">
 <div id="nav-bar">
-  <ul>
-    <li>
-      <details class="nav-collapsible">
-        <summary id="manage-data-nav-item" data-text="MANAGE DATA">MANAGE DATA</summary>
-        <a href="./submit-data-boxuploader" class="nav-link" data-text="submit lab data and metadata">submit lab data and metadata</a>
-        <a href="./link-metadata-to-data" class="nav-link" data-text="link existing data with a new metadata entry">link existing data with a new metadata entry</a>
-      </details>
-    </li>
-    <li>
-      <details class="nav-collapsible">
-        <summary id="manage-forms-nav-item" data-text="MANAGE FORMS">MANAGE FORMS</summary>
-        <a href="./edit-form-entry" class="nav-link" data-text="create new metadata form">create new metadata form</a>
-        <a href="./manage-forms" class="nav-link" data-text="edit existing metadata form">edit existing metadata form</a>
-      </details>
-    </li>
-    <li>
-      <a href="./manage-users" class="nav-link extra-spacing" id="manage-users-nav-item" data-text="MANAGE USERS">MANAGE USERS</a>
-    </li>
-    <li>
-      <a href="./browse-datametadata" class="nav-link" id="browse-metadata-nav-item" data-text="BROWSE METADATA">BROWSE METADATA</a>
-    </li>
-    <li>
-      <a href="./browse-data" class="nav-link extra-spacing" id="browse-data-nav-item" data-text="BROWSE DATA">BROWSE DATA</a>
-    </li>
-    <li>
-      <a href="./faq" class="nav-link" id="faq-nav-item" data-text="FAQ">FAQ</a>
-    </li>
-    <% if (locals.loggedIn) { %>
+  <div id="nav-bar-text">
+    <ul>
       <li>
-        <a href="./logout" class="nav-link" id="logout-nav-item" data-text="LOG OUT">LOG OUT</a>
+        <details class="nav-collapsible">
+          <summary id="manage-data-nav-item" data-text="MANAGE DATA">MANAGE DATA</summary>
+          <a href="./submit-data-boxuploader" class="nav-link" data-text="submit lab data and metadata">submit lab data and metadata</a>
+          <a href="./link-metadata-to-data" class="nav-link" data-text="link existing data with a new metadata entry">link existing data with a new metadata entry</a>
+        </details>
       </li>
-    <% } %>
-  </ul>
+      <li>
+        <details class="nav-collapsible">
+          <summary id="manage-forms-nav-item" data-text="MANAGE FORMS">MANAGE FORMS</summary>
+          <a href="./edit-form-entry" class="nav-link" data-text="create new metadata form">create new metadata form</a>
+          <a href="./manage-forms" class="nav-link" data-text="edit existing metadata form">edit existing metadata form</a>
+        </details>
+      </li>
+      <li>
+        <a href="./manage-users" class="nav-link separator" id="manage-users-nav-item" data-text="MANAGE USERS">MANAGE USERS</a>
+      </li>
+      <li>
+        <a href="./browse-datametadata" class="nav-link" id="browse-metadata-nav-item" data-text="BROWSE METADATA">BROWSE METADATA</a>
+      </li>
+      <li>
+        <a href="./browse-data" class="nav-link separator" id="browse-data-nav-item" data-text="BROWSE DATA">BROWSE DATA</a>
+      </li>
+      <li>
+        <a href="./faq" class="nav-link" id="faq-nav-item" data-text="FAQ">FAQ</a>
+      </li>
+      <% if (locals.loggedIn) { %>
+        <li>
+          <a href="./logout" class="nav-link" id="logout-nav-item" data-text="LOG OUT">LOG OUT</a>
+        </li>
+      <% } %>
+    </ul>
+  </div>
 </div>
 
 <script type="text/javascript">
