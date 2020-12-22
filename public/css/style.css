@@ -282,3 +282,7 @@ button.myform {
 .greeting {
 	font-weight: bold;
 }
+
+.username {
+	color: #777;
+}
