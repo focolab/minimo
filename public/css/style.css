@@ -313,3 +313,7 @@ button.myform {
 .username {
 	color: #777;
 }
+
+#userTable > table > tbody > tr > th {
+	padding-right: 7.5em;
+}
