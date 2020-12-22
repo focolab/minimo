@@ -30,13 +30,13 @@
 
 					<p class="form-label">ADD a new user</p>
 
-					<form action="/add-user" method="post" id="addUserForm">
+					<form action="/add-user" method="post" id="addUserForm" class="manage-users-form">
 						<input name="username" id="usernameAdd" type="text", placeholder="username">
 						<input name="password" id="passwordAdd" type="password", placeholder="password">
 					</form>
 					
 					<!-- Include a submit form field -->
-					<button class="myform" type="submit" form="addUserForm">add user</button>
+					<button class="manage-users-button" type="submit" form="addUserForm">add user</button>
 				</div>
 			</div>
 
@@ -46,12 +46,12 @@
 
 					<p class="form-label">REMOVE a user</p>
 
-					<form action="/remove-user" method="post" id="removeUserForm">
+					<form action="/remove-user" method="post" id="removeUserForm" class="manage-users-form">
 						<input name="username" id="usernameRemove" type="text", placeholder="username">
 					</form>
 					
 					<!-- Include a submit form field -->
-					<button class="myform myform-red" type="submit" form="removeUserForm">remove user</button>
+					<button class="manage-users-button" type="submit" form="removeUserForm">remove user</button>
 				</div>
 			</div>
 
@@ -61,12 +61,12 @@
 
 					<p class="form-label">toggle user ADMIN status</p>
 
-					<form action="/toggle-admin" method="post" id="toggleAdminForm">
+					<form action="/toggle-admin" method="post" id="toggleAdminForm" class="manage-users-form">
 						<input name="username" id="usernameToggleAdmin" type="text", placeholder="username">
 					</form>
 					
 					<!-- Include a submit form field -->
-					<button class="myform" type="submit" form="toggleAdminForm">toggle admin</button>
+					<button class="manage-users-button" type="submit" form="toggleAdminForm">toggle admin</button>
 				</div>
 			</div>
 

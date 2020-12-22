@@ -232,10 +232,23 @@ img.abstractimage{
 	display:none;
 }
 
+label.myform {
+	margin-bottom: 1em;
+}
+
 button.myform {
-	width: 25%;
-	margin: 0.5em auto .75em auto;
+	margin: 1em auto 1em auto;
 	display: block;
+}
+
+.manage-users-form {
+	margin: auto auto 1em auto;
+	display: inline-block;
+}
+
+.manage-users-button {
+	margin: auto auto 1em auto;
+	display: inline-block;
 }
 
 #metadata_form_label {
