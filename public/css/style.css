@@ -90,6 +90,16 @@ a.nav-link {
 	padding: 1em 1em 0 1em;
 	text-decoration: none;
 }
+/* this rule keeps the nav bar from expanding on hover */
+/* taken from https://stackoverflow.com/questions/556153/inline-elements-shifting-when-made-bold-on-hover */
+a.nav-link::before, details.nav-collapsible summary::before {
+    display: block;
+    content: attr(data-text);
+    font-weight: bold;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
 a.metadata-link { text-decoration: none; }
 a.nav-link:hover {
 	font-weight: bold;
@@ -109,7 +119,8 @@ details.nav-collapsible > summary:hover {
 	font-weight: bold;
 }
 details.nav-collapsible > a {
-	margin: 0 1em 0 2em;
+	margin: 0 0em 0 1em;
+	white-space: initial;
 }
 		
 p {
