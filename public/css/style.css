@@ -80,23 +80,6 @@ li {
 	background-color: #4CAF50;
 }
 
-#footer {
-	width:60%;
-	position:fixed;
-	bottom:0;
-	left:0;
-	pointer-events:none;
-}
-	
-#footer-right {
-	width:100%;
-	position:fixed;
-	bottom:0;
-	left:-30px;
-	float: right;
-	pointer-events:none;
-}
-
 a { color: #000; }
 a.nav-link {
 	color: #777;
@@ -212,10 +195,6 @@ img.abstractimage{
 }
 
 .flexbox-container > #header {
-	position: unset;
-}
-
-.flexbox-container > footer > #footer-right {
 	position: unset;
 }
 
