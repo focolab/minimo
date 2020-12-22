@@ -29,8 +29,8 @@
 			<div class="box">
 				<div>
 					<p class="faq-question">What is this app?</p>
-					<p>
-						This app grew out of an effort to standardize and simplify raw data storage for FOCO lab members. Above all it is meant as a productivity tool to facilitate storage, retrieval, and sharing of experimental data.
+					<p class="faq-answer">
+						minimo is a “linked data & metadata storage system” for small labs. It grew out of our own needs as a small lab to enforce the entry and linking of metadata. It includes a web app for uploading data and metadata.
 					</p>
 
 				</div>
@@ -39,7 +39,7 @@
 			<div class="box">
 				<div>
 					<p class="faq-question">Requirements?</p>
-					<p>
+					<p class="faq-answer">
 						This app is primarily tested on the Firefox and Chrome browsers, so you should use one of them.
 					</p>
 
@@ -49,13 +49,13 @@
 			<div class="box">
 				<div>
 					<p class="faq-question">What do I do if something goes wrong?</p>
-					<p>
-						If something goes wrong, what you have to do depends on what you were doing when you ran into an issue.
+					<p class="faq-answer">
+						This is betaware. Try to document the steps leading up to your problem and send to us.
 					</p>
-					<p>
-						If you clicked anything that says "upload" or "submit" or anything like that, then you need to separately check if the data was only partially uploaded. For example, say you were uploading some raw data and you got an error during the upload. If the upload was successful, then the metadata should have been triggered to upload. So you'll want to check if that got uploaded as well. Same thing if you were editing forms, metadata, or anything. Best err on the side of caution with this. If in doubt, ask us!
+					<p class="faq-answer">
+						If you were trying to upload data and the app timed out, then you should check if the data was only partially uploaded. Same thing if you were editing forms, metadata, or anything. Best err on the side of caution with this.
 					</p>
-					<p>
+					<p class="faq-answer">
 						Whatever the case, log out and log back in and try to do it again. If you get an error again, contact us for help debugging.
 					</p>
 
@@ -65,14 +65,14 @@
 			<div class="box">
 				<div>
 					<p class="faq-question">How do I use this app?</p>
-					<p>
-						This app is used to upload raw lab data to a storage server. While doing that, you will fill out metadata fields which are stored and which you can search later.
+					<p class="faq-answer">
+						This app is used to upload raw data to your lab server and encourages you to add metadata.
 					</p>
-					<p>
-						Go to "MANAGE DATA," click "SUBMIT," and follow the instructions there. In brief, you will upload a SINGLE folder (with a specific naming convention, YYYMMDD_INITIALS).
+					<p class="faq-answer">
+						Go to “MANAGE DATA,” click “SUBMIT,” and follow the instructions there. In brief, you will upload a SINGLE folder.
 					</p>
-					<p>
-						If the data is already on MinIO and you want to associate it with new metadata, go to "MANAGE DATA," click "LINK," select your data's MinIO folder, and fill out the metadata form as usual.
+					<p class="faq-answer">
+						If the data is already on MinIO and you want to associate it with new metadata, go to “MANAGE DATA,” click “LINK,” select your data’s MinIO folder, and fill out the metadata form as usual.
 					</p>
 				</div>
 			</div>
@@ -80,27 +80,8 @@
 			<div class="box">
 				<div>
 					<p class="faq-question">What if the metadata isn't detailed enough for my experiments?</p>
-					<p>	
-						We're glad you asked! You can edit the metadata forms in "MANAGE FORMS". Here you can add new fields or edit existing fields.
-					</p>
-					<p>
-						For example say you get a new microscope. You'll want to edit the "apparatus" field and add in a new name for that microscope. Please try to be detailed but succinct and follow the instructions on that part of the app.
-					</p>
-					<p>
-						Remember that these forms will be filled out by everyone in the lab. So exercise some careful thought on what you put in. It's a good idea to ask around. And you should rarely be deleting metadata form fields or entries unless they were added by mistake.
-					</p>
-
-				</div>
-			</div>
-
-			<div class="box">
-				<div>
-					<p class="faq-question">What kinds of data do I use this app to store?</p>
-					<p>
-						This app is meant for the cumbersome raw data that we acquire as part of experiments in the lab. These can be neural imaging time series, movies of behavioral data, immunohistochemistry data, electrical recordings, and more. This is meant to be all inclusive for data, but isn't a great place to store PDFs of papers you've read.
-					</p>
-					<p>
-						The major benefits this app provides are the association of raw data with metadata (which you submit when you upload data) and programmatic access to your data (through the app's MinIO server).
+					<p class="faq-answer">	
+						You can edit the metadata forms in “MANAGE FORMS”. Here you can add new fields or edit existing fields . Exercise thought before adding fields and creating unnecessary scribing work.
 					</p>
 				</div>
 			</div>

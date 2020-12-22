@@ -323,6 +323,10 @@ button.myform {
 	font-weight: bold;
 }
 
+.faq-answer {
+	text-align: justify;
+}
+
 .form-label {
 	font-weight: bold;
 }
