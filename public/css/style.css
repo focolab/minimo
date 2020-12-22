@@ -84,7 +84,7 @@ a { color: #000; }
 a.nav-link {
 	color: #777;
 	display: block;
-	padding: 2em 1em 0 1em;
+	padding: 1em 1em 0 1em;
 	text-decoration: none;
 }
 a.metadata-link { text-decoration: none; }
@@ -95,7 +95,7 @@ a.nav-link:hover {
 details.nav-collapsible summary {
 	color: #777;
 	display: block;
-	padding: 2em 1em 0 1em;
+	padding: 1em 1em 0 1em;
 	list-style: none;
 	cursor: pointer;
 }
