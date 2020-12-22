@@ -1,38 +1,40 @@
 
-
-<ul>
-  <li>
-    <details class="nav-collapsible">
-      <summary id="manage-data-nav-item">MANAGE DATA</summary>
-      <a href="./submit-data-boxuploader" class="nav-link">submit lab data and metadata</a>
-      <a href="./link-metadata-to-data" class="nav-link">link existing data with a new metadata entry</a>
-    </details>
-  </li>
-  <li>
-    <details class="nav-collapsible">
-      <summary id="manage-forms-nav-item">MANAGE FORMS</summary>
-      <a href="./edit-form-entry" class="nav-link">create new metadata form</a>
-      <a href="./manage-forms" class="nav-link">edit existing metadata form</a>
-    </details>
-  </li>
-  <li>
-    <a href="./browse-datametadata" class="nav-link" id="browse-metadata-nav-item">BROWSE METADATA</a>
-  </li>
-  <li>
-    <a href="./browse-data" class="nav-link" id="browse-data-nav-item">BROWSE DATA</a>
-  </li>
-  <li>
-    <a href="./faq" class="nav-link" id="faq-nav-item">FAQ</a>
-  </li>
-  <li>
-    <a href="./manage-users" class="nav-link" id="manage-users-nav-item">MANAGE USERS</a>
-  </li>
-  <% if (locals.loggedIn) { %>
+<img src="images/minimo-logo.svg" id="minimo-logo">
+<div id="nav-bar">
+  <ul>
     <li>
-      <a href="./logout" class="nav-link" id="logout-nav-item">LOG OUT</a>
+      <details class="nav-collapsible">
+        <summary id="manage-data-nav-item">MANAGE DATA</summary>
+        <a href="./submit-data-boxuploader" class="nav-link">submit lab data and metadata</a>
+        <a href="./link-metadata-to-data" class="nav-link">link existing data with a new metadata entry</a>
+      </details>
     </li>
-  <% } %>
-</ul>
+    <li>
+      <details class="nav-collapsible">
+        <summary id="manage-forms-nav-item">MANAGE FORMS</summary>
+        <a href="./edit-form-entry" class="nav-link">create new metadata form</a>
+        <a href="./manage-forms" class="nav-link">edit existing metadata form</a>
+      </details>
+    </li>
+    <li>
+      <a href="./browse-datametadata" class="nav-link" id="browse-metadata-nav-item">BROWSE METADATA</a>
+    </li>
+    <li>
+      <a href="./browse-data" class="nav-link" id="browse-data-nav-item">BROWSE DATA</a>
+    </li>
+    <li>
+      <a href="./faq" class="nav-link" id="faq-nav-item">FAQ</a>
+    </li>
+    <li>
+      <a href="./manage-users" class="nav-link" id="manage-users-nav-item">MANAGE USERS</a>
+    </li>
+    <% if (locals.loggedIn) { %>
+      <li>
+        <a href="./logout" class="nav-link" id="logout-nav-item">LOG OUT</a>
+      </li>
+    <% } %>
+  </ul>
+</div>
 
 <script type="text/javascript">
   document.getElementById("<%= currentNavItem %>").classList.add("current-nav-item");

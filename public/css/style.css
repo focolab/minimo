@@ -28,16 +28,19 @@ body
 }
 
 #content-feed {
-	padding-top: 5em;
+	padding-top: 4em;
 	width: 80%;
 }
 
 #header {
 	width:min-content;
-	font-family: sans-serif;
-	border-right: solid 1px #000;
 	margin-top: 2em;
 	margin-bottom: 2em;
+	border-right: solid 1px #000;
+}
+
+#nav-bar {
+	font-family: sans-serif;
 	padding-top: 1em;
 }
 
