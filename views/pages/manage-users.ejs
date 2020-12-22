@@ -80,15 +80,19 @@
 
 			var userAccounts = <%- accounts %>;
 
+			if (userAccounts.length > 0) {
 			// get account attributes and append to table
-			tableHtml = "<table><tr><th>username</th><th>admin?</th></tr>"
-			for(i=0; i < userAccounts.length; i++){
-				account = userAccounts[i]
-				tableHtml += "<tr><td>" + String(account['username']) + "</td><td>"  + String(account['administrator']) + "</td></tr>"
-			}
-			tableHtml += "</table"
+				tableHtml = "<table><tr><th>username</th><th>admin?</th></tr>"
+				for(i=0; i < userAccounts.length; i++){
+					account = userAccounts[i]
+					tableHtml += "<tr><td>" + String(account['username']) + "</td><td>"  + String(account['administrator']) + "</td></tr>"
+				}
+				tableHtml += "</table>"
 
-			document.getElementById('userTable').innerHTML = tableHtml
+				document.getElementById("userTable").innerHTML = tableHtml
+			} else {
+				document.getElementById("userTable").classList.replace("box", "hidden");
+			}
 		}
 
 	</script>
