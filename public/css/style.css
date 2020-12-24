@@ -148,6 +148,7 @@ details.nav-collapsible > a {
 p {
   color: #000; 
   margin: 0 0 1em 0;
+  text-align: justify;
 }
 
 p.anim{
