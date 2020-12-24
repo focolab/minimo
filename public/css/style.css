@@ -276,6 +276,10 @@ button.myform {
 	width: 500px;
 }
 
+#metadata-entries > div.box {
+	padding-bottom: 0.5em;
+}
+
 #bucket-selector-container {
 	height: 600px;
 	width: 600px;
