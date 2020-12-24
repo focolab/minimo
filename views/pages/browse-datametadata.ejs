@@ -11,41 +11,38 @@
 
 	<div id="header">
 
+		<% var currentNavItem= "browse-metadata-nav-item"; %>
 		<% include ../partials/header %>
 
 	</div>
 
-	<div id="content"><br><br>
+	<div id="content">
+		<div id="content-feed">
 
-		<div class="box">
-			<div style="overflow:auto;">
-				<p>
-					Welcome <%= username%> to the data metadata browser page!
-				</p>
-        <p>
-          Here you can scroll through existing lab metadata entries.
-        </p>
+			<div class="box">
+				<div class="greeting">
+					<p>
+						Welcome <span class="username"><%= username%></span> to the data metadata browser page!
+					</p>
+					<p>
+						Here you can scroll through existing lab metadata entries.
+					</p>
+				</div>
 			</div>
-		</div>
 
 
-		<div id="metadata entries">
-			<div style="overflow:auto;">
-				<p>
-          If you are seeing this, metadata did not populate correctly whoops...
-				</p>
+			<div id="metadata-entries">
+				<div>
+					<p>
+			If you are seeing this, metadata did not populate correctly whoops...
+					</p>
+				</div>
 			</div>
-		</div>
 
+		</div>
 	</div>
 
 	<% include ../partials/draw-metadata-entries-mongo %>
-
-  <footer>
-
-  	<% include ../partials/footer %>
-
-  </footer>
 
 
 </body>

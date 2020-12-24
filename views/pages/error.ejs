@@ -11,14 +11,15 @@
 
 	<div id="header">
 
+		<% var currentNavItem= "faq-nav-item"; %>
 		<% include ../partials/header %>
 
 	</div>
 
-	<div id="content"><br><br>
+	<div id="content">
 
 		<div class="box">
-			<div style="overflow:auto;">
+			<div>
 			<p>
 		   		Oh no! Something went wrong. If this keeps happening please let the webdev know.
 			</p>
@@ -26,7 +27,7 @@
 		</div>
 
 		<div class="box">
-			<div style="overflow:auto;">
+			<div>
 			
 				<p>
 					Error is: <%= errmsg %>;
@@ -36,13 +37,6 @@
 		</div>
 
 	</div>
-
-
-<footer>
-
-	<% include ../partials/footer %>
-
-</footer>
 
 </body>
 </html>

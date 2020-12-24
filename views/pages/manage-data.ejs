@@ -13,53 +13,43 @@
 
 	<div id="header">
 
+		<% var currentNavItem= "manage-data-nav-item"; %>
 		<% include ../partials/header %>
 
 	</div>
 
-	<div id="content"><br><br>
+	<div id="content">
+		<div id="content-feed">
+			<div class="box">
+				<div class="greeting">
+					<p>
+						Welcome <span class="username"><%= username%></span> to the data management page!
+					</p>
+					<p>
+						First, please select what you want to do.
+					</p>
+				</div>
+			</div>
 
-		<div class="box">
-			<div style="overflow:auto;">
-				<p>
-					Welcome <%= username%> to the data management page!
-				</p>
-				<p>
-					First, please select what you want to do.
-				</p>
+
+			<div class="box">
+				<div>
+					<p class="form-label">
+						<a href="./submit-data-boxuploader">SUBMIT lab data and metadata.</a>
+					</p>
+				</div>
+			</div>
+
+
+			<div id="create" class="box">
+				<div>
+					<p class="form-label">
+						<a href="./link-metadata-to-data">LINK existing data with a new metadata entry.</a>
+					</p>
+				</div>
 			</div>
 		</div>
-
-
-		<div class="box">
-			<div style="overflow:auto;">
-				<p>
-					<a href="./submit-data-boxuploader">SUBMIT lab data and metadata.</a>
-				</p>
-			</div>
-		</div>
-
-
-		<div id="create" class="box">
-			<div style="overflow:auto;">
-				<p>
-				<a href="./link-metadata-to-data">LINK existing data with a new metadata entry.</a>
-				</p>
-			</div>
-		</div>
-
-
-
-
 	</div>
-
-
-
-<footer>
-
-	<% include ../partials/footer %>
-
-</footer>
 
 
 </body>

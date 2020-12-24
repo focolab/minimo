@@ -9,25 +9,18 @@
 
     <body>
 
-        <div class="flexbox-container">
             <div id="header">
-
+                <% var currentNavItem= "browse-data-nav-item"; %>
                 <% include ../partials/header %>
 
             </div>
 
-            <div id="content" style="flex-grow: 1; border: none; margin: 0; padding: 0;">
+            <div id="content">
 
                 <% var minioBrowserUrl = "https://" + hostName + "/minio/data"; %>
-                <iframe id="minio-browser" src=<%= minioBrowserUrl %> style="height: 100%; width: 100%;" onload="checkMinioBrowserLoaded();"></iframe>
+                <iframe id="minio-browser" src=<%= minioBrowserUrl %> onload="checkMinioBrowserLoaded();"></iframe>
 
-            </div>
-
-            <footer>
-
-                <% include ../partials/footer %>
-
-            </footer>
+            </div>>
         </div>
 
         <script type="text/javascript">

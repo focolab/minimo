@@ -1,141 +1,158 @@
 	
 
-	html {
-		height:100%;	
-		background-color=purple;
-	}
+html {
+	height:100%;
+	font-family: Helvetica;
+	font-size: 1.5em;
+}
+
+body  
+{
+	padding:0;
+	margin:0;
+	height:100%;
+	width: 100%;
+	background-color: #eee;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	display: flex;
+}
+
+#content {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	overflow-y: scroll
+}
+
+#content-feed {
+	padding-top: 4em;
+	width: 80%;
+}
+
+#header {
+	width:min-content;
+	margin-top: 2em;
+	margin-bottom: 2em;
+	border-right: solid 1px #000;
+}
+
+#minimo-logo {
+	max-width: 100%;
+}
+
+#nav-bar-text {
+	margin: 0em 1em 0 1em;
+}
+
+#nav-bar {
+	font-family: sans-serif;
+	padding-top: 1em;
+}
+
+.current-nav-item {
+	font-weight: bold;
+}
+
+h1 {
+	margin: 10px;
+}
+
+h2 {
+	margin: 10px;
+}
+
+h3 {
+	margin: 10px ;
 	
-	body  
-	{
-		background-color=orange;
-		padding:0;
-		margin:0;
-		height:100%;
-		background: linear-gradient(gray,white);
-		background-repeat: no-repeat;
-		background-attachment: fixed;
-		background-size: cover;
+}
 
-	}
-
-
-	#header {
-		background-color:#666;
-		height:50px;
-		font-family: Oswald, sans-serif;
-		position:fixed;
-		top:0px;
-		z-index:100000;
-		width:100%;
-		min-width:600px;
-	}
-
-	h1 {
-		font-family: Oswald, sans-serif;
-		font-size: 26px;
-		margin: 10px;
-		font-weight:400;
-	}
-
-	h2 {
-		font-family: Oswald, sans-serif;
-		font-size: 17px;
-		margin: 10px;
-		font-weight:400;
-	}
-
-	h3 {
-		font-family: Lato, sans-serif;
-		font-size:15px;
-		margin: 10px ;
-		font-weight:300;
-		
-	}
-
-	h4 {
-		font-family: Oswald, sans-serif;
-		font-size:16px;
-		margin: 5px;
-		font-weight:100;
-	}
+h4 {
+	margin: 5px;
+}
 
 
 
-	ul {
-	    list-style-type: none;
-	    margin: 0;
-	    padding: 0;
-	    overflow: hidden;
-	    background-color: transparent;
-	}
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: transparent;
+}
 
-	li {
-	    float: right;
-	}
+li {
+	white-space: nowrap;
+}
 
-	li a {
-	    display: block;
-	    color: blue;
-	    text-align: center;
-	    padding: 13px 24px;
-	    text-decoration: none;
-	}
+.active {
+	background-color: #4CAF50;
+}
 
-	li a:hover:not(.active) {
-	    background-color: #333;
-	}
+a { color: #000; }
+a.nav-link {
+	color: #777;
+	display: block;
+	padding: 1em 0em 0 0em;
+	text-decoration: none;
+}
+a.nav-link.separator {
+	padding-bottom: 1em;
+	margin-bottom: 0.5em;
+	border-bottom: 1px solid #777;
+}
+/* this rule keeps the nav bar from expanding on hover */
+/* taken from https://stackoverflow.com/questions/556153/inline-elements-shifting-when-made-bold-on-hover */
+a.nav-link::before, details.nav-collapsible summary::before {
+    display: block;
+    content: attr(data-text);
+    font-weight: bold;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+a.metadata-link { text-decoration: none; }
+a.nav-link:hover {
+	font-weight: bold;
+}
 
-	.active {
-	    background-color: #4CAF50;
-	}
-
-
-	.content {
-		background-color:#777;
-		padding-top:100px;   /* Height of the footer element */	
-		height:100%;
-		margin:0;
-        padding:100px;
-        margin-bottom: 20px;
-
-
-	}
-	#footer {
-		width:60%;
-		position:fixed;
-		bottom:0;
-		left:0;
-		padding:10px;
-		pointer-events:none;
-	}
-		
-	#footer-right {
-		width:100%;
-		position:fixed;
-		bottom:0;
-		left:-30px;
-		padding:25px;
-		padding-right:40px;
-		float: right;
-		pointer-events:none;
-	}
-
-	a:link {color: #000000; text-decoration: underline; }
-	a:active {color: #0000ff; text-decoration: underline; }
-	a:visited {color: #000000; text-decoration: underline; }
-	a:hover {color: #bbbbbb; text-decoration: none; }
+details.nav-collapsible summary {
+	color: #777;
+	display: block;
+	padding: 1em 0em 0 0em;
+	cursor: pointer;
+	list-style: none;
+}
+/* position details arrow on right of details */
+/* from https://stackoverflow.com/questions/56758098/how-to-position-detail-marker-to-come-after-summary */
+details.nav-collapsible summary::-webkit-details-marker {
+	display: none;
+}
+details.nav-collapsible summary::after {
+	content: "▸";
+	float: right;
+}
+details.nav-collapsible[open] summary:after {
+	content: "▾";
+}
+details.nav-collapsible > summary:hover {
+	font-weight: bold;
+}
+details.nav-collapsible > a {
+	margin: 0 0em 0 1em;
+	white-space: initial;
+}
 		
 p {
-  color: black; 
-  font-family: "Oswald";
-  font-size: 20px;
-  margin: 5px 0 0 10px;
+  color: #000; 
+  margin: 0 0 1em 0;
+  text-align: justify;
 }
 
 p.anim{
   color: black; 
-  font-family: "Oswald";
-  font-size: 20px;
   margin: 5px 0 0 10px;
   white-space: nowrap;
   overflow: hidden;
@@ -154,13 +171,9 @@ p.anim a{
 }
 
 p.authorlist{
-  font-family: "Oswald";
-  font-size: 16px;	
 }
 
 p.abstracttext{
-  font-family: Lato, sans-serif;
-  font-size: 13px;	
   max-height: 100%
   overflow:auto;
   clear:both;
@@ -174,83 +187,40 @@ img.abstractimage{
 	clear:both;
 }
 
-/*
-span{
-  animation: blink 1s 
-infinite;
-}
-*/
-
-
 @keyframes type{ 
-  from { width: 0; } 
-} 
+  from { width: 0; }
+}
 
 @keyframes type2{
   0%{width: 0;}
   50%{width: 0;}
-  100%{ width: 100; } 
-} 
+  100%{ width: 100; }
+}
 
 @keyframes blink{
   to{opacity: .0;}
 }
 
 ::selection{
-  background: black;
+  background: mediumaquamarine;
 }
 
 .box
 {
-	font-family: Oswald, sans-serif;
 	position: relative;
-	width:700px;
-	padding: 10px;
-	background-color: #fff;
-	margin: 0 auto;
-	margin-top:40px;
-	margin-bottom: 20px;  /* spacing between boxes */
-	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), inset 0 0 50px rgba(0, 0, 0, 0.1);
-	
+	width:100%;
+	margin: 0 auto 1em auto;
+	border-bottom: solid 1px #777;
 }
 
-.box:before, .box:after
-{
-	position: absolute;
-	width: 40%;
-	height: 10px;
-	content: ' ';
-	left: 12px;
-	bottom: 12px;
-	background: transparent;
-	-webkit-transform: skew(-5deg) rotate(-5deg);
-	-moz-transform: skew(-5deg) rotate(-5deg);
-	-ms-transform: skew(-5deg) rotate(-5deg);
-	-o-transform: skew(-5deg) rotate(-5deg);
-	transform: skew(-5deg) rotate(-5deg);
-	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-	-moz-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-	z-index: -1;
-} 
-
-.box:after
-{
-	left: auto;
-	right: 12px;
-	-webkit-transform: skew(5deg) rotate(5deg);
-	-moz-transform: skew(5deg) rotate(5deg);
-	-ms-transform: skew(5deg) rotate(5deg);
-	-o-transform: skew(5deg) rotate(5deg);
-	transform: skew(5deg) rotate(5deg);
-} 
+.box > div {
+	overflow: auto;
+}
 
 .minio_folder_li.selected
 {
 	background-color: lightgreen;
-} 
+}
 
 .flexbox-container
 {
@@ -259,12 +229,118 @@ infinite;
 	height: 100%;
 	flex-direction: column;
 	overflow-x: hidden;
-} 
+}
 
 .flexbox-container > #header {
 	position: unset;
-} 
+}
 
-.flexbox-container > footer > #footer-right {
-	position: unset;
-} 
+#update-password > div {
+	overflow: auto;
+}
+
+#embedded-content {
+	flex-grow: 1;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+#minio-browser {
+	height: 100%;
+	width: 100%;
+}
+
+.hidden {
+	display:none;
+}
+
+button.myform {
+	margin: 1em auto 1em auto;
+	display: block;
+}
+
+.manage-users-form {
+	margin: auto auto 1em auto;
+	display: inline-block;
+}
+
+.manage-users-button {
+	margin: auto auto 1em auto;
+	display: inline-block;
+}
+
+#metadata_form_label {
+	position: relative;
+	left: 30px;
+	margin: 0 auto;
+	width: 500px;
+}
+
+#metadata-entries > div.box {
+	padding-bottom: 0.5em;
+}
+
+#bucket-selector-container {
+	height: 600px;
+	width: 600px;
+	position: relative;
+	left: 30px;
+	margin: 0 auto;
+	background-color: #fff;
+	border: 1px solid #777
+}
+
+#folder-selector-container {
+	height: 600px;
+	width: 600px;
+	position: relative;
+	left: 30px;
+	margin: 0 auto;
+	text-align: center;
+	background-color: #fff;
+	border: 1px solid #777
+}
+
+#selector {
+	margin-top: 10px;
+}
+
+#selected_files {
+	display: grid;
+}
+
+.minio_folder_li {
+	float: none;
+	padding-left: 15px;
+	cursor: pointer;
+}
+
+.minio_object {
+	float: none;
+	padding-left: 15px;
+}
+
+.faq-question {
+	font-weight: bold;
+}
+
+.faq-answer {
+	text-align: justify;
+}
+
+.form-label {
+	font-weight: bold;
+}
+
+.greeting {
+	font-weight: bold;
+}
+
+.username {
+	color: #777;
+}
+
+#userTable > table > tbody > tr > th {
+	padding-right: 7.5em;
+}
