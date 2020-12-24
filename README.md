@@ -27,7 +27,7 @@ Currently, installing minimo requires basic comfort with sys admin / shell comma
 Data and and metadata are uploaded through the app's web interface, as shown below. Data are uploaded through a folder selector, and metadata are entered through user configurable text or dropdown form fields.
 
 <p align="center">
-    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_upload.png?raw=true" alt="minimo upload flow" width="65%"/>
+    <img src="public/images/readme/uploader.png" alt="minimo upload flow" width="65%"/>
     <br>
     <i>minimo data/metadata uploader</i>
 </p>
@@ -35,7 +35,7 @@ Data and and metadata are uploaded through the app's web interface, as shown bel
 Once uploaded, metadata and data can be accessed through the app browsers. The metadata browser:
 
 <p align="center">
-    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_metadata_browser.png?raw=true" alt="minimo metadata browser" width="65%"/>
+    <img src="public/images/readme/metadata-browser.png" alt="minimo metadata browser" width="65%"/>
     <br>
     <i>minimo metadata browser</i>
 </p>
@@ -43,7 +43,7 @@ Once uploaded, metadata and data can be accessed through the app browsers. The m
 The data browser may also be accessed directly, without going through the metadata browser:
 
 <p align="center">
-    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_data_browser.png?raw=true" alt="minimo data browser" width="65%"/>
+    <img src="public/images/readme/data-browser.png" alt="minimo data browser" width="65%"/>
     <br>
     <i>embedded MinIO data browser</i>
 </p>
@@ -145,7 +145,7 @@ We've made an effort to be diligent here, but we are not yet comfortable recomme
 minimo is a [Node](https://nodejs.org) web server. This server talks to [MinIO](https://min.io/) and [MongoDB](https://www.mongodb.com/) servers, which store experimental data and metadata respectively, and it serves pages which allow upload of data to and access to data on those servers.
 
 <p align="center">
-    <img src="https://github.com/Borchardt/image_hosting/blob/master/foco_db_minio_diagram.png?raw=true" alt="minimo architecture" width="65%"/>
+    <img src="public/images/readme/architecture.png" alt="minimo architecture" width="65%"/>
     <br>
     <i>minimo architecture</i>
 </>
