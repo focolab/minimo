@@ -128,13 +128,14 @@ details.nav-collapsible summary {
 /* position details arrow on right of details */
 /* from https://stackoverflow.com/questions/56758098/how-to-position-detail-marker-to-come-after-summary */
 details.nav-collapsible summary::-webkit-details-marker {
-display: none
+	display: none;
 }
 details.nav-collapsible summary::after {
-content: " ►";
+	content: "▸";
+	float: right;
 }
 details.nav-collapsible[open] summary:after {
-content: " ▼";
+	content: "▾";
 }
 details.nav-collapsible > summary:hover {
 	font-weight: bold;
