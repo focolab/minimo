@@ -56,7 +56,7 @@ We use this in our lab [@Bubnis:2019] and share it to support reproducible and c
 
 # Acknowledgements
 
-We thank the UCSF Weill Institute For Neurosciences for providing funding and support for this project.
+We thank the UCSF Weill Institute for Neurosciences for providing funding and support for this project.
 
 This work was supported by NIH/NINDS grant NS115572 (R.L.D).
 
