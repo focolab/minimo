@@ -573,6 +573,9 @@ app.get('/browse-data', checkAuth, (req, res) => {
     res.locals.accessKey = process.env.MINIO_ACCESS_KEY;
     res.locals.secretKey = process.env.MINIO_SECRET_KEY;
 
+    // add prefix from querystring to locals
+    res.locals.prefix = (req.query && req.query.prefix ? req.query.prefix : '');
+
     // render browse data page
     res.render('pages/browse-data');
   } catch (err) {

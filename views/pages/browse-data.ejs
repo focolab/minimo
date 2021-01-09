@@ -17,7 +17,7 @@
 
             <div id="content">
 
-                <% var minioBrowserUrl = "https://" + hostName + "/minio/data"; %>
+                <% var minioBrowserUrl = "https://" + hostName + "/minio/data" + prefix; %>
                 <iframe id="minio-browser" src=<%= minioBrowserUrl %> onload="checkMinioBrowserLoaded();"></iframe>
 
             </div>>
