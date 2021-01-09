@@ -40,35 +40,37 @@
 				</div>
 			</div>
 
-			<!-- remove -->
-			<div id="remove" class="box">
-				<div>
+			<% if ( locals.loggedIn ) { %>
+				<!-- remove -->
+				<div id="remove" class="box">
+					<div>
 
-					<p class="form-label">REMOVE a user</p>
+						<p class="form-label">REMOVE a user</p>
 
-					<form action="/remove-user" method="post" id="removeUserForm" class="manage-users-form">
-						<input name="username" id="usernameRemove" type="text", placeholder="username">
-					</form>
-					
-					<!-- Include a submit form field -->
-					<button class="manage-users-button" type="submit" form="removeUserForm">remove user</button>
+						<form action="/remove-user" method="post" id="removeUserForm" class="manage-users-form">
+							<input name="username" id="usernameRemove" type="text", placeholder="username">
+						</form>
+						
+						<!-- Include a submit form field -->
+						<button class="manage-users-button" type="submit" form="removeUserForm">remove user</button>
+					</div>
 				</div>
-			</div>
 
-			<!-- toggle admin -->
-			<div id="admin" class="box">
-				<div>
+				<!-- toggle admin -->
+				<div id="admin" class="box">
+					<div>
 
-					<p class="form-label">toggle user ADMIN status</p>
+						<p class="form-label">toggle user ADMIN status</p>
 
-					<form action="/toggle-admin" method="post" id="toggleAdminForm" class="manage-users-form">
-						<input name="username" id="usernameToggleAdmin" type="text", placeholder="username">
-					</form>
-					
-					<!-- Include a submit form field -->
-					<button class="manage-users-button" type="submit" form="toggleAdminForm">toggle admin</button>
+						<form action="/toggle-admin" method="post" id="toggleAdminForm" class="manage-users-form">
+							<input name="username" id="usernameToggleAdmin" type="text", placeholder="username">
+						</form>
+						
+						<!-- Include a submit form field -->
+						<button class="manage-users-button" type="submit" form="toggleAdminForm">toggle admin</button>
+					</div>
 				</div>
-			</div>
+			<% } %>
 
 			<div id="userTable" class="box"></div>
 		</div>
