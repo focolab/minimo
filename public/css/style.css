@@ -288,7 +288,8 @@ button.myform {
 	left: 30px;
 	margin: 0 auto;
 	background-color: #fff;
-	border: 1px solid #777
+	border: 1px solid #777;
+	overflow: scroll;
 }
 
 #folder-selector-container {
@@ -299,7 +300,8 @@ button.myform {
 	margin: 0 auto;
 	text-align: center;
 	background-color: #fff;
-	border: 1px solid #777
+	border: 1px solid #777;
+	overflow: scroll;
 }
 
 #selector {
