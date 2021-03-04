@@ -8,11 +8,12 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the app
         run: HOST_NAME=localhost docker-compose up -d --build --force-recreate
-      - name: Test connection to web app
-        id: test-connection
+      - name: Connect to web app
+        id: connect
         run: docker run --network container:minimo_reverse-proxy_1 appropriate/curl -s --retry 10 --retry-connrefused --insecure https://localhost
-      - uses: nick-invision@assert-action@v1
+      - name: Check landing page content
+        uses: nick-invision@assert-action@v1
         with:
           expected: Welcome to the minimo FAQ!
-          actual: ${{ steps.test-connection.outputs.value }}
+          actual: ${{ steps.connect.outputs.value }}
           comparison: contains
