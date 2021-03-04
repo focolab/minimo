@@ -8,8 +8,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the app
         run: HOST_NAME=localhost docker-compose up -d --build --force-recreate
-      - name: Connect to web app
-        id: connect
-        run: echo "::set-output name=landing_page_content::$(docker run --network container:minimo_reverse-proxy_1 appropriate/curl -s --retry 10 --retry-connrefused --insecure https://localhost)"
+      - name: Get landing page content
+        id: curl-landing-page
+        run: echo "::set-output name=landing-page-content::$(docker run --network container:minimo_reverse-proxy_1 appropriate/curl -s --retry 10 --retry-connrefused --insecure https://localhost)"
       - name: Check landing page content
-        run: echo ""
+        run: echo "${{ steps.curl-landing-page.outputs.landing-page-content }}"
