@@ -7,8 +7,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the app
-        run: HOST_NAME=localhost docker-compose up -d --build --force-recreate
-        ports:
-          - 443:443
+        run: HOST_NAME=localhost docker-compose up -d -p 127.0.0.1:443:443 --build --force-recreate
       - name: Test connection to web app
         run: docker run --network host appropriate/curl -s --retry 10 --retry-connrefused --insecure https://localhost
