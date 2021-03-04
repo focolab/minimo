@@ -9,4 +9,4 @@ jobs:
       - name: Build the app
         run: docker-compose up -d --build --force-recreate
       - name: Test connection to web app
-        run: docker run --network minimo appropriate/curl -s --retry 10 --retry-connrefused http://minimo.localhost/
+        run: docker run --network minimo_net appropriate/curl -s --retry 10 --retry-connrefused http://minimo.localhost/
