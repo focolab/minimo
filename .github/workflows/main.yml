@@ -12,4 +12,7 @@ jobs:
         id: curl-landing-page
         run: echo "::set-output name=landing-page-content::"$(docker run --network container:minimo_reverse-proxy_1 appropriate/curl -s --retry 10 --retry-connrefused --insecure https://localhost)""
       - name: Check landing page content
-        run: echo "${{ steps.curl-landing-page.outputs.landing-page-content }}"
+        if: contains("${{ steps.curl-landing-page.outputs.landing-page-content }}", FAQ)
+        run: echo "Found welcome header"
+        if: !contains("${{ steps.curl-landing-page.outputs.landing-page-content }}", FAQ)
+        run: echo "Landing page does not contain expected content" && exit 1
