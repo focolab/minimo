@@ -1,0 +1,12 @@
+# from https://github.com/peter-evans/docker-compose-actions-workflow
+name: Docker Compose Actions Workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the app
+        run: docker-compose up -d --build --force-recreate
+      - name: Test connection to web app
+        run: docker run --network minimo appropriate/curl -s --retry 10 --retry-connrefused http://minimo.localhost/
