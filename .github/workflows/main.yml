@@ -14,6 +14,6 @@ jobs:
       - name: Check landing page content
         uses: nick-invision@assert-action@v1
         with:
-          expected: Welcome to the minimo FAQ!
+          expected: FAQ
           actual: ${{ steps.connect.outputs.value }}
           comparison: contains
