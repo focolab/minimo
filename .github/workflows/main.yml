@@ -15,6 +15,8 @@ jobs:
           echo 'LANDING_PAGE_HTML<<EOF' >> $GITHUB_ENV
           docker run --network container:minimo_reverse-proxy_1 appropriate/curl -s --retry 10 --retry-connrefused --insecure https://localhost >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
-      - name: Print html
+      - name: Validate landing page
+        if: "!contains($LANDING_PAGE_HTML, 'Welcome to the minimo FAQ!')"
         run: |
-          echo -e "The string is: $LANDING_PAGE_HTML"
+          echo -e "\nExpected landing page content not found. Actual content was:\n\n$LANDING_PAGE_HTML"
+          exit 1
