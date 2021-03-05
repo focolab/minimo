@@ -13,8 +13,8 @@ jobs:
         run: echo '::set-output name=landing-page-content::"$(docker run --network container:minimo_reverse-proxy_1 appropriate/curl -s --retry 10 --retry-connrefused --insecure https://localhost)"'
       - name: Find welcome header
         id: find-welcome-header
-        run: echo '::set-output name=welcome-header-count::"$(grep 'Welcome to the minimo FAQ!' <<< ${{ steps.curl-landing-page.outputs.landing-page-content }} | wc -l)"'
+        run: echo '::set-output name=welcome-header-count::"$(grep 'Welcome to the minimo FAQ!' <<< "${{ steps.curl-landing-page.outputs.landing-page-content }}" | wc -l)"'
       - name: Validate header count
         if: ${{ steps.find-welcome-header.outputs.welcome-header-count != '1' }}
-        run: echo -e "Expected landing page content not found. Instead, landing page content was:\n ${{ steps.curl-landing-page.outputs.landing-page-content }}" && exit 1
+        run: echo -e "WC was {{ steps.find-welcome-header.outputs.welcome-header-count }} Expected landing page content not found. Instead, landing page content was:\n ${{ steps.curl-landing-page.outputs.landing-page-content }}" && exit 1
         
