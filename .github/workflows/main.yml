@@ -1,0 +1,22 @@
+# from https://github.com/peter-evans/docker-compose-actions-workflow
+name: Docker Compose Actions Workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the app
+        run: HOST_NAME=localhost docker-compose up -d --build --force-recreate
+      - name: Get landing page content
+        id: curl-landing-page
+        # multiline strings require special handling in actions. see https://trstringer.com/github-actions-multiline-strings/ and https://github.com/actions/toolkit/blob/main/docs/commands.md#set-an-environment-variable
+        run: |
+          echo 'LANDING_PAGE_HTML<<EOF' >> $GITHUB_ENV
+          docker run --network container:minimo_reverse-proxy_1 appropriate/curl -s --retry 10 --retry-connrefused --insecure https://localhost >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
+      - name: Validate landing page
+        if: "!contains(env.LANDING_PAGE_HTML, 'Welcome to the minimo FAQ!')"
+        run: |
+          echo -e "\nExpected landing page content not found. Actual content was:\n\n$LANDING_PAGE_HTML"
+          exit 1
