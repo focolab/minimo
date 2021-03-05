@@ -13,7 +13,7 @@ jobs:
         # multiline strings require special handling in actions. see https://trstringer.com/github-actions-multiline-strings/ and https://github.com/actions/toolkit/blob/main/docs/commands.md#set-an-environment-variable
         run: |
           echo 'LANDING_PAGE_HTML<<EOF' >> $GITHUB_ENV
-          curl -s --retry 10 --retry-connrefused --insecure https://localhost >> $GITHUB_ENV
+          docker run --network container:minimo_reverse-proxy_1 appropriate/curl -s --retry 10 --retry-connrefused --insecure https://localhost >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
       - name: Print html
         run: |
