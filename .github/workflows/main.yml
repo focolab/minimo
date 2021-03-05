@@ -10,7 +10,7 @@ jobs:
         run: HOST_NAME=localhost docker-compose up -d --build --force-recreate
       - name: Get landing page content
         id: curl-landing-page
-        run: echo "::set-output name=landing-page-content::'$(docker run --network container:minimo_reverse-proxy_1 appropriate/curl -s --retry 10 --retry-connrefused --insecure https://localhost)'"
+        run: echo '::set-output name=landing-page-content::"$(docker run --network container:minimo_reverse-proxy_1 appropriate/curl -s --retry 10 --retry-connrefused --insecure https://localhost)"'
       - name: Check landing page content
         if: "!contains(steps.curl-landing-page.outputs.landing-page-content, 'unexpected string')"
         run: echo "Expected landing page content not found. Instead, landing page content was:\n" && echo "${{ steps.curl-landing-page.outputs.landing-page-content }}" && exit 1
