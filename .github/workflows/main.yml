@@ -17,4 +17,4 @@ jobs:
           echo 'EOF' >> $GITHUB_ENV
       - name: Print html
         run: |
-          echo -e "The string is: ${{ env.LANDING_PAGE_HTML }}"
+          echo -e "The string is: $LANDING_PAGE_HTML"
