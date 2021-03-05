@@ -14,5 +14,5 @@ jobs:
       - name: Check landing page content
         if: contains(steps.curl-landing-page.outputs.landing-page-content, 'Welcome to the minimo FAQ!')
         run: echo "Found welcome header"
-        if: !contains(steps.curl-landing-page.outputs.landing-page-content, 'Welcome to the minimo FAQ!')
+        if: "!contains(steps.curl-landing-page.outputs.landing-page-content, 'Welcome to the minimo FAQ!')"
         run: echo "Expected landing page content not found" && exit 1
