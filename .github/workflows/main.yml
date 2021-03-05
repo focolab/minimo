@@ -11,6 +11,10 @@ jobs:
       - name: Get landing page content
         id: curl-landing-page
         # multiline strings require special handling in actions. see https://trstringer.com/github-actions-multiline-strings/ and https://github.com/actions/toolkit/blob/main/docs/commands.md#set-an-environment-variable
-        run: echo 'LANDING_PAGE_HTML<<EOF' >> $GITHUB_ENV && curl -s --retry 10 --retry-connrefused --insecure https://localhost >> $GITHUB_ENV && echo 'EOF' >> $GITHUB_ENV
+        run: |
+          echo 'LANDING_PAGE_HTML<<EOF' >> $GITHUB_ENV
+          curl -s --retry 10 --retry-connrefused --insecure https://localhost >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
       - name: Print html
-        run: echo "HTML is: ${{ env.LANDING_PAGE_HTML }}"
+        run: |
+          echo "The string is: ${{ env.LANDING_PAGE_HTML }}"
