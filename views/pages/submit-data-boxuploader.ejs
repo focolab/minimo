@@ -34,17 +34,26 @@
                 <ul id="selected_files">Select a data folder for upload.</ul>
 
                 <script type="text/javascript">
+                    const valid_object_name = <%- valid_object_name %>;
                     // display selected filenames when selection is made (from https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory)
                     document.getElementById("selector").addEventListener("change", function(event) {
+                        document.getElementById("invalid-object-name-error-message").classList.add("hidden");
                         let selection_list = document.getElementById("selected_files");
                         selection_list.innerHTML = "";
                         let selected_files = event.target.files;
-
+                        let all_object_names_valid = true;
                         for (let i=0; i < selected_files.length; i++) {
                             let item = document.createElement("li");
-                            item.innerHTML = selected_files[i].webkitRelativePath;
+                            let relativePath = selected_files[i].webkitRelativePath;
+                            item.innerHTML = relativePath;
+                            if (! valid_object_name.test(relativePath)) {
+                                all_object_names_valid = false;
+                                item.classList.add("illegal-object-name");
+                                document.getElementById("invalid-object-name-error-message").classList.remove("hidden");
+                            }
                             selection_list.appendChild(item);
                         };
+                        document.getElementById("submit-data-submit-button").disabled = ! all_object_names_valid;
                     }, false);
 
                     // first iterate through all selected files and invoke a helper function called `retrieveNewURL` to upload them to MinIO
@@ -68,6 +77,8 @@
                         }
                         Promise.all(promises).then(() => {
                             submitMetadataForm();
+                        }).catch(error => {
+                            console.error(error.message);
                         })
                     }
 
@@ -76,12 +87,14 @@
                     function retrieveNewURL(file, cb) {
                         return new Promise((resolve) => {
                             fetch(`/presigned-url?name=${file.webkitRelativePath}`).then((response) => {
-                                response.text().then((url) => {
-                                    cb(file, url.replace("http:", "https:"), resolve);
-                                });
-                        })
-                        }).catch((e) => {
-                            console.error(e);
+                                if (response.ok) {
+                                    response.text().then((url) => {
+                                        cb(file, url.replace("http:", "https:"), resolve);
+                                    });
+                                } else {
+                                    throw new Error("Error while putting file " + file.webkitRelativePath);
+                                }
+                            })
                         });
                     }
 
@@ -156,7 +169,10 @@
                     }
 
                 </script>
-            </div> 
+            </div>
+            <div id="invalid-object-name-error-message" class="hidden">
+                <p class="error-text"> One of more the objects that you have selected for upload has an invalid filename. Files selected for upload must have names which comprise only alphanumeric characters (a-z, A-Z, and 0-9) and the special characters /!-_.*'(). Additionally, names of files for upload must have lengths of at least 1 character and no more than 1024 characters.</p>
+            </div>
 
             <br><br>
 
@@ -177,7 +193,7 @@
 
             <% include ../partials/metadata-form-mongo %>
 
-            <button class="myform" onclick="upload()">submit</button>
+            <button id="submit-data-submit-button" class="myform" onclick="upload()">submit</button>
         </div>
     </div>
 

@@ -270,6 +270,13 @@ button.myform {
 	display: inline-block;
 }
 
+#invalid-object-name-error-message {
+	position: relative;
+	left: 30px;
+	margin: 0 auto;
+	width: 500px;
+}
+
 #metadata_form_label {
 	position: relative;
 	left: 30px;
@@ -345,4 +352,12 @@ button.myform {
 
 #userTable > table > tbody > tr > th {
 	padding-right: 7.5em;
+}
+
+.illegal-object-name {
+	color: #f00;
+}
+
+.error-text {
+	color: #f00;
 }
