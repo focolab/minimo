@@ -28,6 +28,8 @@ const DB = require('./javascripts/mongo-db');
 const mongoConfig = require('./elements/config-mongo');
 const formElementStrings = require('./javascripts/form-element-strings');
 const formatMetadataEntriesForDisplay = require('./javascripts/format-metadata-entries-display');
+// per https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html
+const valid_object_name = /^[a-z0-9\/!\-_\.\*'\(\)]{1,1024}$/i;
 
 // javascripts
 const validateMetadataForm = require('./javascripts/validate-metadata-form');
@@ -170,6 +172,7 @@ function handleError(req, res, err, errmsg) {
   res.locals.errmsg = errmsg;
 
   // render error page
+  res.status(500);
   res.render('pages/error');
 }
 
@@ -293,6 +296,7 @@ app.get('/submit-data-boxuploader', checkAuth, (req, res) => {
         console.log(JSON.stringify(docs));
         res.locals.docs = JSON.stringify(docs);
         res.locals.username = getUsername(req);
+        res.locals.valid_object_name = valid_object_name;
 
         // render data page
         res.render('pages/submit-data-boxuploader');
@@ -306,14 +310,21 @@ app.get('/submit-data-boxuploader', checkAuth, (req, res) => {
 
 // taken from https://docs.min.io/docs/upload-files-from-browser-using-pre-signed-urls.html
 app.get('/presigned-url', checkAuth, (req, res) => {
-  minioClient.presignedPutObject('data', req.query.name, (err, url) => {
-    if (err) {
-      errmsg = `Error while trying to put object. \n`;
-      handleError(req, res, err, errmsg);
-    } else {
-      res.end(url);
-    }
-  });
+  if (valid_object_name.test(req.query.name)) {
+
+    minioClient.presignedPutObject('data', req.query.name, (err, url) => {
+      if (err) {
+        errmsg = `Error while trying to put object. \n`;
+        handleError(req, res, err, errmsg);
+      } else {
+        res.end(url);
+      }
+    });
+
+  } else {
+    errmsg = `Attempted to upload object with invalid name. Only alphanumeric characters (a-z, A-Z, and 0-9) and the special characters /, !, -, _, ., *, ', (, and ) are permitted in object names. Object names must consist of at least 1 character and no more than 1024 characters.\n`;
+    handleError(req, res, null, errmsg);
+  }
 });
 
 app.get('/list-data-objects', checkAuth, (req, res) => {
