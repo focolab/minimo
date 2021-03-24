@@ -134,6 +134,15 @@ By default, all accounts are created with administrator status set to false. If 
 
 If all user accounts are removed, your instance will revert to its default behavior of not requiring authentication. Similarly, if administrator access toggles for all accounts are set to false, your instance will revert to its default behavior of granting administrator access to all users.
 
+In case of forgotten passwords, an administrator (or registered user if there are no designated administrators) should simply delete and then recreate the affected user accounts. In the case that all administrator or registered user account passwords have been forgotten, any user with the ability to run Docker commands on the host machine can use the command sequence below to clear the user accounts table and return insance authentication to its default open state.
+
+```
+docker exec -it minimo_mongo_1 mongo
+use mongoose
+db.accounts.remove({})
+exit
+```
+
 # security
 
 minimo uses [Passport](http://www.passportjs.org/) for user authentication. It exposes its Node and MinIO servers through a [Traefik](https://containo.us/traefik/) reverse proxy which is configured to route all requests through HTTPS.
