@@ -1,7 +1,7 @@
 <div id="num_experiments_div">
 
 	Number of experiments:
-	<select class="myform" onload="drawExperimentForms(this)" onchange="drawExperimentForms(this)">
+	<select id="num_experiments_selector" class="myform" onchange="drawExperimentForms(this.value)">
 		<option value="1">1</option>
 		<option value="2">2</option>
 		<option value="3">3</option>
@@ -23,3 +23,5 @@
 	<% include ../partials/draw-experiment-forms-mongo %>
 
 </div>
+
+<script>drawExperimentForms(document.getElementById("num_experiments_selector").value)</script>
