@@ -311,11 +311,22 @@ label.myform:after { content: ": " }
     width: 500px;
 }
 
+#num_experiments_div {
+    position: relative;
+    left: 30px;
+    margin: 0 auto;
+    width: 500px;
+}
+
 #metadata_form_label {
 	position: relative;
 	left: 30px;
 	margin: 0 auto;
 	width: 500px;
+}
+
+#metadata_form_label > p:last-child {
+	margin-bottom: 0;
 }
 
 #metadata-entries > div.box {
@@ -401,4 +412,5 @@ label.myform:after { content: ": " }
 
 .error-text {
 	color: #f00;
+	margin-bottom: 0;
 }
