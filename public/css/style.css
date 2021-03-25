@@ -270,11 +270,52 @@ button.myform {
 	display: inline-block;
 }
 
-#invalid-object-name-error-message {
-	position: relative;
-	left: 30px;
-	margin: 0 auto;
-	width: 500px;
+input.myform[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #777;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+select.myform {
+    width: 100%;
+    padding: 16px 20px;
+    border: 1px solid #777;
+    border-radius: 4px;
+}
+
+textarea.myform {
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 1px solid #777;
+    border-radius: 4px;
+    resize: none;
+}
+
+label.myform {
+    font-weight: bold;
+    display: block;
+}
+
+label.myform:after { content: ": " }
+
+#metadata_form_div {
+    position: relative;
+    left: 30px;
+    margin: 0 auto;
+    width: 500px;
+}
+
+#num_experiments_div {
+    position: relative;
+    left: 30px;
+    margin: 0 auto;
+    width: 500px;
 }
 
 #metadata_form_label {
@@ -282,6 +323,10 @@ button.myform {
 	left: 30px;
 	margin: 0 auto;
 	width: 500px;
+}
+
+#metadata_form_label > p:last-child {
+	margin-bottom: 0;
 }
 
 #metadata-entries > div.box {
@@ -309,6 +354,13 @@ button.myform {
 	background-color: #fff;
 	border: 1px solid #777;
 	overflow: scroll;
+}
+
+#invalid-object-name-error-message {
+	position: relative;
+	left: 30px;
+	margin: 0 auto;
+	width: 500px;
 }
 
 #selector {
@@ -360,4 +412,5 @@ button.myform {
 
 .error-text {
 	color: #f00;
+	margin-bottom: 0;
 }

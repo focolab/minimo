@@ -1,22 +1,27 @@
+<div id="num_experiments_div">
+
+	Number of experiments:
+	<select id="num_experiments_selector" class="myform" onchange="drawExperimentForms(this.value)">
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+	</select>
+
+</div>
+
+<br><br>
 
 <div id="metadata_form_div">
 
-	<form action="/submitted-metadata" method="post" id="metadata_form">
-
-		Number of experiments:
-		<select class="myform" onchange="drawExperimentForms(this)">
-	        <option value="0">0</option>
-	        <option value="1">1</option>
-	        <option value="2">2</option>
-	        <option value="3">3</option>
-	        <option value="4">4</option>
-	        <option value="5">5</option>
-	        <option value="6">6</option>
-	        <option value="7">7</option>
-	        <option value="8">8</option>
-	    </select>
-
-	</form>
-
+	<form action="/submitted-metadata" method="post" id="metadata_form"></form>
 
 	<% include ../partials/draw-experiment-forms-mongo %>
+
+</div>
+
+<script>drawExperimentForms(document.getElementById("num_experiments_selector").value)</script>
