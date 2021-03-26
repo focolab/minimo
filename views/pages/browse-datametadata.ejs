@@ -20,21 +20,31 @@
 		<div id="content-feed">
 
 			<div class="box">
+
+				<div id="metadata_search">
+					<form action="/browse-datametadata" method="get" class="myform">
+						<input name="search_field" type="text", placeholder="metadata field">
+						<input name="search_term" type="text", placeholder="search term">
+						<input type="submit" value="search">
+					</form>
+				</div>
+
 				<div class="greeting">
 					<p>
 						Welcome <span class="username"><%= username%></span> to the data metadata browser page!
 					</p>
 					<p>
-						Here you can scroll through existing lab metadata entries.
+						Here you can scroll through or search existing metadata entries.
 					</p>
 				</div>
+
 			</div>
 
 
 			<div id="metadata-entries">
 				<div>
 					<p>
-			If you are seeing this, metadata did not populate correctly whoops...
+						If you are seeing this, metadata did not populate correctly. Whoops...
 					</p>
 				</div>
 			</div>

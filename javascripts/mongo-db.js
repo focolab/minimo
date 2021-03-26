@@ -82,44 +82,13 @@ DB.prototype.deleteDocument = function (documentToDelete, myCollection) {
   }));
 };
 
-DB.prototype.getDocuments = function (myCollection, query) {
+DB.prototype.getDocuments = function (myCollection, query, sort) {
   // get documents (adapted from https://stackoverflow.com/questions/21626896/nodejs-mongodb-native-find-all-documents)
   // scoping
   _this = this;
 
-  // if no querystring provided, get all with blank query object
-  if (!query) {
-    queryobject = {};
-  }
-
-  /*
-	// otherwise format querystring as json object
-	else{
-
-		// check query type
-		type = typeof(query)
-
-		// if object use that for query
-		if (type == 'object'){
-			queryobject = query
-		}
-
-		// if query string
-		else if (type == 'string'){
-			queryobject = JSON.parse(query)
-		}
-
-		else{
-			errmsg = "Could not determine type of query for getDocuments"
-			thorw(errmsg)
-		}
-
-	}
-
-	*/
-
-  // we can probably just stick with this
-  queryobject = query;
+  queryObject = ( query ? query : {} );
+  sortObject = ( sort ? sort : {} );
 
   // make a promise
   return new Promise(((resolve, reject) => {
@@ -130,7 +99,7 @@ DB.prototype.getDocuments = function (myCollection, query) {
     __this.connect(mongoConfig.MONGODB_URI)
       .then(() => {
         // get all documents and return as array
-        __this.db.collection(myCollection).find(queryobject).toArray((e, docs) => {
+        __this.db.collection(myCollection).find(queryObject).sort(sortObject).toArray((e, docs) => {
           console.log(`Grabbed ${docs.length} documents from ${myCollection}.`);
           resolve(docs);
         });
