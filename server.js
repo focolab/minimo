@@ -554,7 +554,7 @@ app.get('/browse-datametadata', checkAuth, (req, res) => {
         }
 
         // get all form data
-        docs = app.locals.DB.getDocuments(mongoConfig.metadataCollection, mongo_query)
+        docs = app.locals.DB.getDocuments(mongoConfig.metadataCollection, mongo_query, { 'date uploaded': -1 })
           .then((resolve, reject) => {
             if (reject) throw 'Error, rejected getting datametadata!';
 
