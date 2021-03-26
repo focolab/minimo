@@ -92,33 +92,6 @@ DB.prototype.getDocuments = function (myCollection, query) {
     queryobject = {};
   }
 
-  /*
-	// otherwise format querystring as json object
-	else{
-
-		// check query type
-		type = typeof(query)
-
-		// if object use that for query
-		if (type == 'object'){
-			queryobject = query
-		}
-
-		// if query string
-		else if (type == 'string'){
-			queryobject = JSON.parse(query)
-		}
-
-		else{
-			errmsg = "Could not determine type of query for getDocuments"
-			thorw(errmsg)
-		}
-
-	}
-
-	*/
-
-  // we can probably just stick with this
   queryobject = query;
 
   // make a promise

@@ -548,8 +548,10 @@ app.get('/browse-datametadata', checkAuth, (req, res) => {
           metadata_fields.push(forms[i]['element name']);
         }
 
+        let mongo_query = (req.query && req.query.search_field && req.query.search_term ? {[req.query.search_field]: req.query.search_term} : {});
+
         // get all form data
-        docs = app.locals.DB.getDocuments(mongoConfig.metadataCollection)
+        docs = app.locals.DB.getDocuments(mongoConfig.metadataCollection, mongo_query)
           .then((resolve, reject) => {
             if (reject) throw 'Error, rejected getting datametadata!';
 
