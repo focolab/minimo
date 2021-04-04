@@ -56,62 +56,49 @@
                         document.getElementById("submit-data-submit-button").disabled = ! all_object_names_valid;
                     }, false);
 
-                    // first iterate through all selected files and invoke a helper function called `retrieveNewURL` to upload them to MinIO
+                    // first get presigned URLs for all selected files and upload them to MinIO
                     // then iterate through all selected files again to populate relevant metadata form fields and upload to MongoDB
                     function upload() {
-                        // Get selected files from the input element.
-                        var promises = [];
+                        var filenames = [];
                         var files = document.querySelector("#selector").files;
+                        var prefix;
                         for (var i = 0; i < files.length; i++) {
                             var file = files[i];
-                            // Retrieve a URL from our server.
-                            promises.push(
-                                retrieveNewURL(file, (file, url, resolve) => {
-                                    // Upload the file to the server.
-
-                                    selected_files_li = Array.from(document.querySelectorAll("#selected_files li")).find(li => li.textContent === file.webkitRelativePath)
-                                    selected_files_li.innerText += ` uploading...`;
-                                    uploadFile(file, url, resolve);
-                                    selected_files_li.innerText = file.webkitRelativePath + ' uploaded.'
-                            }));
+                            filenames.push(file.webkitRelativePath);
                         }
-                        Promise.all(promises).then(() => {
-                            submitMetadataForm();
-                        }).catch(error => {
-                            console.error(error.message);
+                        fetch(`/presigned-urls?filenames=${filenames.toString()}`)
+                        .then( response => response.json() )
+                        .then( presignedUrls => {
+                            prefix = presignedUrls.prefix;
+                            return Promise.all(presignedUrls.urls.map( (url, index) => {
+                                url = url.replace("http:", "https:");
+                                let filename = filenames[index];
+                                selected_files_li = Array.from(document.querySelectorAll("#selected_files li")).find(li => li.textContent === filename)
+                                return uploadFile(files[index], url, selected_files_li);
+                            }))
+                        }).then( () => submitMetadataForm(prefix) )
+                        .catch( error => {
+                            console.error(error);
                         })
                     }
 
-                    // `retrieveNewURL` accepts the name of the current file and invokes the `/presigned-url` endpoint to
-                    // generate a pre-signed URL for use in uploading that file
-                    function retrieveNewURL(file, cb) {
-                        return new Promise((resolve) => {
-                            fetch(`/presigned-url?name=${file.webkitRelativePath}`).then((response) => {
-                                if (response.ok) {
-                                    response.text().then((url) => {
-                                        cb(file, url.replace("http:", "https:"), resolve);
-                                    });
-                                } else {
-                                    throw new Error("Error while putting file " + file.webkitRelativePath);
-                                }
-                            })
+                    // put file to MinIO using the presigned URL, and update text in selector to reflect progress
+                    function uploadFile(file, url, file_li) {
+                        return new Promise( resolve => {
+                            file_li.innerText += ` uploading...`;
+                            fetch(url, { method: 'PUT', body: file })
+                            .then( response => {
+                                let resultText = (response.ok ? ' uploaded.' : ' ERROR.');
+                                file_li.innerText = file.webkitRelativePath + resultText;
+                                resolve();
+                            }).catch( error => {
+                                file_li.innerText = file.webkitRelativePath + ' ERROR.';
+                                console.error(error);
+                            });
                         });
                     }
 
-                    // ``uploadFile` accepts the current filename and the pre-signed URL. It then uses `Fetch API`
-                    // to upload this file to MinIO using the URL
-                    function uploadFile(file, url, resolve) {
-                        fetch(url, {
-                            method: 'PUT',
-                            body: file
-                        }).then(() => {
-                            resolve();
-                        }).catch((e) => {
-                            console.error(e);
-                        });
-                    }
-
-                    function submitMetadataForm() {
+                    function submitMetadataForm(prefix) {
 
                         // Get selected files from the input element.
                         var files = document.querySelector("#selector").files;
@@ -150,7 +137,7 @@
 
                         // append the end of the array, including folderID
                         fl = fl + '],',
-                        fl = fl + ' "folderID":"' + filepath.split("/")[0] + '",'
+                        fl = fl + ' "folderID":"' + prefix + '",'
                         fl = fl + ' "bucket":"data"}'
 
                         // take the filelist (data from event) and append to form
@@ -172,7 +159,7 @@
             </div>
             <div id="invalid-object-name-error-message" class="hidden">
                 <br>
-                <p class="error-text"> One of more the objects that you have selected for upload has an invalid filename. Files selected for upload must have names which comprise only alphanumeric characters (a-z, A-Z, and 0-9) and the special characters /!-_.*'(). Additionally, names of files for upload must have lengths of at least 1 character and no more than 1024 characters.</p>
+                <p class="error-text"> One of more the objects that you have selected for upload has an invalid filename. Files selected for upload must have names which comprise only alphanumeric characters (a-z, A-Z, and 0-9) and the special characters /!-_.*'(). Additionally, names of files for upload must have lengths of at least 1 character and no more than 987 characters.</p>
             </div>
 
             <br><br>
