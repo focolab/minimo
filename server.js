@@ -21,8 +21,8 @@ const Minio = require('minio');
 const minioClient = new Minio.Client({
   endPoint: process.env.HOST_NAME,
   useSSL: false,
-  accessKey: process.env.MINIO_ACCESS_KEY,
-  secretKey: process.env.MINIO_SECRET_KEY,
+  accessKey: process.env.MINIO_ADMIN_USERNAME,
+  secretKey: process.env.MINIO_ADMIN_PASSWORD,
   region: process.env.MINIO_REGION
 });
 
@@ -597,8 +597,8 @@ app.get('/browse-data', checkAuth, (req, res) => {
     res.locals.username = getUsername(req);
 
     // passport is source of auth, so add minio access and secret keys to locals for auto login if user is authenticated 
-    res.locals.accessKey = process.env.MINIO_ACCESS_KEY;
-    res.locals.secretKey = process.env.MINIO_SECRET_KEY;
+    res.locals.accessKey = 'minimouser';
+    res.locals.secretKey = process.env.MINIMO_USER_PASSWORD;
 
     // add prefix from querystring to locals
     res.locals.prefix = (req.query && req.query.prefix ? req.query.prefix : '');

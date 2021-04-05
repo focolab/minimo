@@ -61,14 +61,15 @@ Docker makes installation easy. This repo provides a Dockerized version of minim
 For non-default settings, just prepend the command in step 4 above with any of the following user option flags:
 
 1. `HOST_NAME`: Set this to your host's hostname or local IP address if you'd like your minimo instance to be reachable from other machines on your network.
-2. `MINIO_ACCESS_KEY`: Think of this as the administrator username for your MinIO service. Specify a value if you don't want to use the default.
-3. `MINIO_SECREY_KEY`: Think of this as the administrator password for your MinIO service. Specify a value if you don't want to use the default.
-4. `MINIO_DATA_DIRECTORY`: If you would like to use an existing directory on your host for data storage, use this flag to specify the absolute path of that directory.
-5. `MINIO_COMMAND`: If you would like to start MinIO with a command other than `server`, use this flag to specify that command.
+2. `MINIO_ADMIN_USERNAME`: Think of this as the administrator username for your MinIO service. Specify a value if you don't want to use the default.
+3. `MINIO_ADMIN_PASSWORD`: Think of this as the administrator password for your MinIO service. Specify a value if you don't want to use the default.
+4. `MINIMO_USER_PASSWORD`: This is the password that should be used when connecting to your MinIO service for all non-adminstrative tasks. It grants the ability to view and download (but not to write or delete) primary data files. Specify a value if you don't want to use the default.
+5. `MINIO_DATA_DIRECTORY`: If you would like to use an existing directory on your host for data storage, use this flag to specify the absolute path of that directory.
+6. `MINIO_COMMAND`: If you would like to start MinIO with a command other than `server`, use this flag to specify that command.
 
-So, to bring up an instance with all five optional values specified, you would run `MINIO_ACCESS_KEY=youraccesskey MINIO_SECRET_KEY=yoursecretkey HOST_NAME=yourhostname MINIO_DATA_DIRECTORY=/your/directory/path MINIO_COMMAND=gateway\ nas docker-compose up -d --build`. Note that if you have brought up a MinIO service previously, you will need to [rotate its credentials](https://github.com/minio/minio/tree/master/docs/config#rotating-encryption-with-new-credentials) in order to specify a new `MINIO_ACCESS_KEY` or `MINIO_SECRET_KEY`.
+So, to bring up an instance with all six optional values specified, you would run `MINIO_ADMIN_USERNAME=yourusername MINIO_ADMIN_PASSWORD=yourpassword MINIMO_USER_PASSWORD=anotherpassword HOST_NAME=yourhostname MINIO_DATA_DIRECTORY=/your/directory/path MINIO_COMMAND=gateway\ nas docker-compose up -d --build`. Note that if you have brought up a MinIO service previously, you will need to [rotate its credentials](https://github.com/minio/minio/tree/master/docs/config#rotating-encryption-with-new-credentials) in order to specify a new `MINIO_ADMIN_USERNAME` or `MINIO_ADMIN_PASSWORD`.
 
-The app should now be accessible at `http://minimo.localhost`. By default, the username and password for the data browser will both be `minioadmin`.
+The app should now be accessible at `http://minimo.localhost`. By default, the (read-only) username and password for the data browser will both be `minimouser`, and the administrator username and password for your MinIO instance will both be `minioadmin`.
 
 Note that because minimo uses self-generated TLS certificates, you will probably need to acknowledge a security warning in your browser when loading the web app for the first time and periodically thereafter.
 
@@ -113,8 +114,8 @@ Requests to URLs with paths beginning with `/data` are forwarded by Traefik to m
  
  minio_client = Minio(
      'minimo.localhost',
-     access_key='minioadmin',
-     secret_key='minioadmin',
+     access_key='minimouser',
+     secret_key='minimouser',
      secure=True,
      http_client=http,
  )
@@ -125,6 +126,8 @@ Requests to URLs with paths beginning with `/data` are forwarded by Traefik to m
 ```
 
 Note that the endpoint, access key, and secret key used here for client instantiation are minimo's default values for those fields. For endpoints using non-default values, the client constructor call will need to be updated accordingly.
+
+Additionally, note that the access and secret keys used here are those for the `minimouser` account, which is only granted read and list permissions on the underlying data. Though we caution against it, since it may lead to inadvertent data loss, users wishing to grant themselves full readwrite programmatic access may do so by using the administrator account credentials instead.
 
 # user management
 
