@@ -13,8 +13,9 @@ services:
       net:
     environment:
       HOST_NAME: "${HOST_NAME:-minimo.localhost}"
-      MINIO_ACCESS_KEY: "${MINIO_ACCESS_KEY:-minioadmin}"
-      MINIO_SECRET_KEY: "${MINIO_SECRET_KEY:-minioadmin}"
+      MINIO_ADMIN_USERNAME: "${MINIO_ADMIN_USERNAME:-minioadmin}"
+      MINIO_ADMIN_PASSWORD: "${MINIO_ADMIN_PASSWORD:-minioadmin}"
+      MINIMO_USER_PASSWORD: "${MINIMO_USER_PASSWORD:-minimouser}"
       MINIO_REGION: "${MINIO_REGION:-}"
     labels:
       - "traefik.enable=true"
@@ -58,6 +59,21 @@ services:
       - "traefik.http.routers.minio-minimo.tls=true"
       - "traefik.frontend.passHostHeader=true"
     # docker run -p 9000:9000 --name minimo-minio -d minio/minio server /data
+
+  mc:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: sh
+    command: >
+      -c '
+        /usr/bin/mc alias set minimo http://minio:80 ${MINIO_ADMIN_USERNAME:-minioadmin} ${MINIO_ADMIN_PASSWORD:-minioadmin};
+        mc admin user add minimo minimouser ${MINIMO_USER_PASSWORD:-minimouser};
+        mc admin policy add minimo readlist /dev/stdin <<<"{\"Version\": \"2012-10-17\",\"Statement\": [{\"Effect\": \"Allow\",\"Action\": [\"s3:GetBucketLocation\",\"s3:GetObject\",\"s3:ListBucket\"],\"Resource\": [\"arn:aws:s3:::*\"]}]}";
+        mc admin policy set minimo readlist user=minimouser;
+        '
+    networks:
+      net:
 
   reverse-proxy:
     image: traefik:v2.2
