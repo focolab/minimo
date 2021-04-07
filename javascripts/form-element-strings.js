@@ -6,11 +6,6 @@ function formElementObjToString(formJSONObj) {
   prompt = formJSONObj.prompt;
   type = formJSONObj['element type'];
 
-  // console.log('id: ' + id)
-  // console.log('name: ' + name)
-  // console.log('prompt: ' + prompt)
-  // console.log('type: ' + type)
-
   // format string
   // double escape to render properly in html
   formattedString = `${name}\\n${prompt}\\n${type}\\n`;
@@ -68,7 +63,6 @@ function formElementStringToObj(formJSONString) {
 
       // append to options
       if (trimmed.length > 0) {
-        // console.log('trimmed[' + i + ']: ' + trimmed)
         options.push(trimmed);
       }
     }

@@ -100,7 +100,6 @@ DB.prototype.getDocuments = function (myCollection, query, sort) {
       .then(() => {
         // get all documents and return as array
         __this.db.collection(myCollection).find(queryObject).sort(sortObject).toArray((e, docs) => {
-          console.log(`Grabbed ${docs.length} documents from ${myCollection}.`);
           resolve(docs);
         });
       });

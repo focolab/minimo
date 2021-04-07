@@ -27,7 +27,6 @@ function formatMetadataEntriesForDisplay(metadataJSONObj, metadataFields) {
   // newer entries have 'date uploaded',
   // older entries have...?
   // lets look up if we have some useful order objects functions
-  // console.log("Incoming metadata objects: " + JSON.stringify(metadataJSONObj))
 
   // assuming list of object
   objList = [];
@@ -35,7 +34,6 @@ function formatMetadataEntriesForDisplay(metadataJSONObj, metadataFields) {
     // iterate in order through our hardcoded fields
     innerObj = {};
     for (j = 0; j < fields.length; j++) {
-      // console.log("Fields: " + fields[j] + " ; metadataJSONObj[fields[j]]: " + String(metadataJSONObj[fields[j]]))
 
       // if obj has key, append key/obj to formatted obj
       if (metadataJSONObj[i].hasOwnProperty(fields[j])) {
@@ -57,7 +55,6 @@ function formatMetadataEntriesForDisplay(metadataJSONObj, metadataFields) {
   // sort results by date uploaded
   objList.sort((a, b) => parseInt(b['date uploaded']) - parseInt(a['date uploaded']));
 
-  // console.log("formatted metadata object for displaying: " + JSON.stringify(objList))
   return objList;
 }
 
