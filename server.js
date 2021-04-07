@@ -310,7 +310,7 @@ app.get('/submit-data-boxuploader', checkAuth, (req, res) => {
 });
 
 // based on https://docs.min.io/docs/upload-files-from-browser-using-pre-signed-urls.html
-app.get('/presigned-urls', checkAuth, (req, res) => {
+app.get('/presigned-urls', checkAuth, async (req, res) => {
   let presignedUrls = [];
   let filenames = req.query.filenames.split(',');
   let prefix = uuidv1(); // use v1 to guarantee unique prefix
@@ -319,14 +319,13 @@ app.get('/presigned-urls', checkAuth, (req, res) => {
     
     if (valid_object_name.test(filenames[i])) {
       let object_key = prefix + '/' + filenames[i];
-      minioClient.presignedPutObject('data', object_key, (err, url) => {
-        if (err) {
-          errmsg = `Error while trying to put object. \n`;
-          handleError(req, res, err, errmsg);
-        } else {
-          presignedUrls.push(url);
-        }
-      });
+      try {
+        const url = await minioClient.presignedPutObject('data', object_key);
+        presignedUrls.push(url);
+      } catch (err) {
+        errmsg = `Error while trying to put object. \n`;
+        handleError(req, res, err, errmsg);
+      }
 
     } else {
       errmsg = `Attempted to upload object with invalid name. Only alphanumeric characters (a-z, A-Z, and 0-9) and the special characters /, !, -, _, ., *, ', (, and ) are permitted in object names. Object names must consist of at least 1 character and no more than 1024 characters.\n`;
