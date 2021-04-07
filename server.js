@@ -293,10 +293,8 @@ app.get('/submit-data-boxuploader', checkAuth, (req, res) => {
 
         // grab returned docs
         docs = resolve;
-        // console.log('docs0: ' + JSON.stringify(docs[0]))
 
         // add docs to locals
-        console.log(JSON.stringify(docs));
         res.locals.docs = JSON.stringify(docs);
         res.locals.username = getUsername(req);
         res.locals.valid_object_name = valid_object_name;
@@ -378,7 +376,6 @@ app.get('/manage-forms', checkAuth, (req, res) => {
 
         // grab returned docs
         docs = resolve;
-        // console.log('docs0: ' + JSON.stringify(docs[0]))
 
         // add docs to locals
         res.locals.docs = JSON.stringify(docs);
@@ -528,10 +525,8 @@ app.get('/link-metadata-to-data', checkAuth, (req, res) => {
 
         // grab returned docs
         docs = resolve;
-        // console.log('docs0: ' + JSON.stringify(docs[0]))
 
         // add docs to locals
-        console.log(JSON.stringify(docs));
         res.locals.docs = JSON.stringify(docs);
         res.locals.username = getUsername(req);
 
@@ -571,7 +566,6 @@ app.get('/browse-datametadata', checkAuth, (req, res) => {
 
             // grab returned docs
             docs = resolve;
-            console.log(`docs0: ${JSON.stringify(docs[0])}`);
 
             // get formatted docs
             formattedDocs = formatMetadataEntriesForDisplay(docs, metadata_fields);
