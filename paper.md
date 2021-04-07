@@ -50,7 +50,7 @@ Raw data and metadata should be inseparably linked. This is the central principl
 
 For portability and ease of deployment, we've bundled all of these components as a [Docker](https://www.docker.com/) application. This means that ``minimo`` can be deployed on any common operating system (Linux, Windows, or Mac) simply by cloning its code from [GitHub](https://github.com/focolab/minimo), installing Docker and [Docker Compose](https://docs.docker.com/compose/install/), and running a single Docker command.
 
-This architecture offers several key advantages: it supports very large raw data files, provides both easy human access and robust programmatic access to underlying data stores, allows for deployment on both local and cloud hardware, and is lightweight enough to be easily extensible and maintainable.
+This architecture offers several key advantages: it supports very large (up to 5TB) raw data files, provides both easy human access and robust programmatic access to underlying data stores, allows for deployment on both local and cloud hardware, and is lightweight enough to be easily extensible and maintainable.
 
 We use this in our lab [@Bubnis:2019] and share it to support reproducible and convenient data science.
 
