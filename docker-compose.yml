@@ -38,11 +38,14 @@ services:
 
   minio:
     image: minio/minio
+    depends_on:
+      - etcd
     expose:
       - "80"
     environment:
       MINIO_ACCESS_KEY: "${MINIO_ACCESS_KEY:-minioadmin}"
       MINIO_SECRET_KEY: "${MINIO_SECRET_KEY:-minioadmin}"
+      MINIO_ETCD_ENDPOINTS: "http://etcd:2379"
     entrypoint: sh
     command: -c 'mkdir -p /data/data && /usr/bin/minio ${MINIO_COMMAND:-server} --address :80 /data'
     volumes:
@@ -59,6 +62,17 @@ services:
       - "traefik.http.routers.minio-minimo.tls=true"
       - "traefik.frontend.passHostHeader=true"
     # docker run -p 9000:9000 --name minimo-minio -d minio/minio server /data
+
+  etcd:
+    image: 'bitnami/etcd:latest'
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    expose:
+      - "2379"
+      - "2380"
+    networks:
+      net:
 
   mc:
     image: minio/mc
