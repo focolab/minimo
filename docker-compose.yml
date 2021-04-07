@@ -38,6 +38,8 @@ services:
 
   minio:
     image: minio/minio
+    depends_on:
+      - etcd
     expose:
       - "80"
     environment:
