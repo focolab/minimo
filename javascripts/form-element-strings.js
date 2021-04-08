@@ -58,9 +58,11 @@ function formElementStringToObj(formJSONString) {
       throw errmsg;
     }
 
+    element_name = lines[0];
     prompt = lines[1];
 
     let element = {
+      'element name': element_name,
       'element type': element_type,
       prompt
     }
