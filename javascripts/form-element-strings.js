@@ -52,7 +52,7 @@ function formElementStringToObj(formJSONString) {
   for (i = 0; i < elements.length; i++) {
     lines = elements[i].split('\n');
 
-    let element_type = lines[0];
+    let element_type = lines[2];
     if (!(types.indexOf(element_type) > -1)) {
       errmsg = 'Form text box not formatted correctly!';
       throw errmsg;
