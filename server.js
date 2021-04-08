@@ -550,7 +550,13 @@ app.get('/browse-datametadata', checkAuth, (req, res) => {
         forms = resolve;
         const metadata_fields = [];
         for (i = 0; i < forms.length; i++) {
-          metadata_fields.push(forms[i]['element name']);
+          let form_elements = forms[i]['elements']
+          for (j = 0; j < form_elements.length; j++) {
+            let metadata_field = form_elements[j]['element name'];
+            if (metadata_fields.indexOf(metadata_field) === -1) {
+              metadata_fields.push(metadata_field);
+            }
+          }
         }
 
         let mongo_query = {};
