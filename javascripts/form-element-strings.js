@@ -3,21 +3,26 @@ function formElementObjToString(formJSONObj) {
   // assuming one object
   id = formJSONObj._id;
   name = formJSONObj['element name'];
-  prompt = formJSONObj.prompt;
-  type = formJSONObj['element type'];
+  elements = formJSONObj['elements'];;
 
   // format string
   // double escape to render properly in html
-  formattedString = `${name}\\n${prompt}\\n${type}\\n`;
+  formattedString = `${name}\\n`
+  
+  for (i = 0; i < elements.length; i++) {
+    prompt = elements[i].prompt;
+    type = elements[i]['element type'];
+    formattedString += `${prompt}\\n${type}\\n`;
 
-  // append options if it's a select
-  if (type == 'dropdown') {
-    // grab options
-    options = formJSONObj.options;
-
-    // append iteratively
-    for (i = 0; i < options.length; i++) {
-      formattedString = `${formattedString + options[i]}\\n`;
+    // append options if it's a select
+    if (type == 'dropdown') {
+      // grab options
+      options = elements[i].options;
+  
+      // append iteratively
+      for (i = 0; i < options.length; i++) {
+        formattedString = `${formattedString + options[i]}\\n`;
+      }
     }
   }
 
@@ -31,7 +36,6 @@ function formElementStringToObj(formJSONString) {
 
   // replace possible line breaks with regular one
   fmtString = formJSONString.replace(/(\r\n|\r)/gm, '\n');
-
   // split on return
   splitString = fmtString.split('\n');
 
@@ -42,36 +46,45 @@ function formElementStringToObj(formJSONString) {
     throw errmsg;
   }
 
-  // grab fields
   name = splitString[0];
-  prompt = splitString[1];
-  type = splitString[2];
-
-  // build object
+  elements = splitString.slice(1);
   obj = {
     'element name': name,
-    'element type': type,
-    prompt,
+    'elements': [],
   };
 
-  // if dropdown add options
-  if (type == 'dropdown') {
-    options = [];
-    for (i = typeNdx + 1; i < splitString.length; i++) {
-      // remove leading/trailing whitespace
-      trimmed = splitString[i].trim();
+  let i=0;
+  while (i < elements.length) {
+    let element_type = elements[i];
+    if (!(types.indexOf(element_type) > -1)) {
+      errmsg = 'Form text box not formatted correctly!';
+      throw errmsg;
+    }
+    i += 1;
 
-      // append to options
-      if (trimmed.length > 0) {
-        options.push(trimmed);
-      }
+    prompt = elements[i];
+    i += 1;
+
+    let element = {
+      'element type': element_type,
+      prompt
     }
 
-    // update obj
-    obj.options = options;
+    if ('dropdown' === element_type) {
+      let options = [];
+      while (i < elements.length && '' !== elements[i]) {
+        // remove leading/trailing whitespace
+        trimmed = elements[i].trim();
+        if (trimmed.length > 0) {
+          options.push(trimmed);
+        }
+        i += 1;
+      }
+      element.options = options;
+    }
 
-    // insert a blank line option at the first option actually do this on the front end
-    // obj["options"] = obj["options"].splice(0, 0, "")
+    obj.elements.push(element);
+    i += 1;
   }
 
   return obj;
