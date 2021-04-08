@@ -20,56 +20,68 @@
 				obj = docsObject[i]
 
 				// get some params
-				name = obj["element name"]
-				type = obj["element type"]
-				prompt = obj["prompt"]
+				form_name = obj["form name"]
+				elements = obj["elements"]
 
 				// initialize html
 				html = ""
 
-				// write label
-				html += "<label class=\"myform\" for=\"" + name + "\">" + prompt + "</label>"
+				html += "<details class=\"metadata-form-collapsible\">"
 
-				// based on type, do write different html
-				// if it's a text field
-				if (type == "text"){
+				html += "<summary class=\"metadata-form-summary\" data-text=\"" + form_name + "\">" + form_name + "</summary>"
 
-					html += "<input class=\"myform\" name=\"" + name + "\" type=\"text\">"
+				for (j = 0; j < elements.length; j++) {
 
-				}
+					name = elements[j]["element name"]
+					type = elements[j]["element type"]
+					prompt = elements[j]["prompt"]
 
-				// if it's a text area
-				else if (type == "textbox"){
+					// write label
+					html += "<label class=\"metadata-field-label\" for=\"" + name + "\">" + prompt + "</label>"
 
-					html += "<textarea class=\"myform\" name=\"" + name + "\" rows=\"20\" cols=\"60\"></textarea>"
+					// based on type, do write different html
+					// if it's a text field
+					if (type == "text"){
 
-				}
-
-				// if it's a dropdown
-				else if (type == "dropdown"){
-
-					// grab options
-					options = obj["options"]
-
-					// create select
-					html += "<select class=\"myform\" name=\"" + name + "\">"
-
-					// create the default blank option
-					html += "<option value=\"\"></option>"
-
-					// write options
-					for(var j=0; j < options.length; j++){
-
-						html += "<option value=\"" + options[j] + "\">" + options[j] + "</option>" 
+						html += "<input class=\"myform\" name=\"" + name + "\" type=\"text\">"
 
 					}
-					
-					html += "</select>"
+
+					// if it's a text area
+					else if (type == "textbox"){
+
+						html += "<textarea class=\"myform\" name=\"" + name + "\" rows=\"20\" cols=\"60\"></textarea>"
+
+					}
+
+					// if it's a dropdown
+					else if (type == "dropdown"){
+
+						// grab options
+						options = elements[j]["options"]
+
+						// create select
+						html += "<select class=\"myform\" name=\"" + name + "\">"
+
+						// create the default blank option
+						html += "<option value=\"\"></option>"
+
+						// write options
+						for(var j=0; j < options.length; j++){
+
+							html += "<option value=\"" + options[j] + "\">" + options[j] + "</option>" 
+
+						}
+						
+						html += "</select>"
+
+					}
 
 				}
 
-				totalhtml += html
+				html += "</details>"
 
+				totalhtml += html
 
 			}
 

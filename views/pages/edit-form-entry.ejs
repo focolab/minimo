@@ -36,11 +36,16 @@
 						Fill out the text box below according to the correct format. If it's not formatted right, everything will explode.
 
 						Please have the relevant form text on separate lines according to this format:<br><br>
-						<b>form name</b> <font size="-1">(what you'll use to search)</font><br>
-						<b>prompt</b> <font size="-1">(what you see when filling out the form) </font><br>
-						<b>type</b> <font size="-1">(either "dropdown", "text", or "textbox" (big text box))</font><br>
-						<b>option 1</b> <font size="-1">(only fill out if you select "dropdown") </font><br>
-						<b>option 2...</b><br>
+						<b>form name</b> <font size="-1">(what you'll use to identify your form)</font><br><br>
+						<b>name</b> <font size="-1"> for field 1 (what you'll use to search for this field)</font><br>
+						<b>prompt</b> <font size="-1">for field 1 (what you see above this field when filling out the form) </font><br>
+						<b>type</b> <font size="-1">for field 1 (either "dropdown", "text", or "textbox" (big text box))</font><br>
+						<b>option 1</b> <font size="-1"> for field 1 (only fill out if you select "dropdown") </font><br>
+						<b>option 2</b><font size="-1">... for field (only fill out if you select "dropdown")1</font><br><br>
+						<b>name</b> <font size="-1">for field 2</font><br>
+						<b>prompt</b><font size="-1"> for field 2</font><br>
+						<b>type</b><font size="-1"> for field 2</font><br>
+						...<br>
 						
 						<br>
 						Please note that you cannot update the form name. If you need to do that, delete this form and make a new one.
@@ -52,13 +57,13 @@
 			<div class="box" id="textbox">
 				<div>
 					<p>
-						Example: A form called "apparatus" with user prompt "Data acquisition apparatus" of type "dropdown" with several options. 
+						Example: A form called "acquisition conditions." This form consists of two fields: a dropdown with the prompt "Data acquisition apparatus" and a text field with the prompt "Comments." 
 
 					<!-- example form -->
 					<form>
 
 						<textarea class="myform" id="exampleTextbox" readonly rows="20" cols="60"></textarea>
-						<script> document.getElementById('exampleTextbox').value = "apparatus\nData acquisition apparatus\ndropdown\nNIC high-speed spinning disk\nParnassus Torsten1.0 confocal\nLCA core spectral confocal\nFLIR blackfly s\nL'Etoile lab injection room GigE\n"</script>
+						<script> document.getElementById('exampleTextbox').value = "acquisition conditions\n\nacquisition apparatus\nData acquisition apparatus\ndropdown\nNIC high-speed spinning disk\nParnassus Torsten1.0 confocal\nLCA core spectral confocal\nFLIR blackfly s\nL'Etoile lab injection room GigE\n\nacquisition comments\nComments\ntext\n"</script>
 						<br>
 					
 					</form>

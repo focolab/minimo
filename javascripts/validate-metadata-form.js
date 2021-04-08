@@ -20,14 +20,11 @@ validateMetadataForm = function (body, app) {
     if (body.hasOwnProperty(key)) {
       // do something with e.g. req.body[key]
       let value = body[key];
-      // console.log("value: " + value + "; which is of type: " + typeof(value))
 
       // if multiple entries (from multiple expr forms), remove extras...
       if (Array.isArray(value)) {
         // take only the relevant expr from the form
-        // console.log('We found an array attribute!')
         if (value.length > numExprs) {
-          // console.log('Cutting ' + value + ' into ' + value.slice(0, numExprs))
           value = value.slice(0, numExprs);
         }
       }
@@ -35,16 +32,12 @@ validateMetadataForm = function (body, app) {
     }
   }
 
-  // console.log('file list is ' + formattedMetadata["filelist"])
 
   // if metadata has filelist, refactor appropriately
   if (formattedMetadata.filelist != '') {
-    // console.log('parsing file list...: ' + formattedMetadata["filelist"])
 
     // file list was submitted alongside form
     parsedFilelist = JSON.parse(formattedMetadata.filelist);
-
-    // console.log('parsed file list: ' + parsedFilelist)
 
     // store parsed filelist
     formattedMetadata.filelist = parsedFilelist;

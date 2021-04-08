@@ -397,7 +397,7 @@ app.get('/edit-form-entry', checkAuth, (req, res) => {
       console.log('Editing existing form entry.');
 
       // get form info
-      app.locals.DB.getDocuments(mongoConfig.formCollection, { 'element name': formToEdit })
+      app.locals.DB.getDocuments(mongoConfig.formCollection, { 'form name': formToEdit })
         .then((resolve, reject) => {
           if (reject) throw 'Error, rejected while getting form data for edit form entry!';
 
@@ -477,7 +477,7 @@ app.post('/delete-form-entry', checkAuth, (req, res) => {
     formToDelete = reqbody.deleteSelect;
 
     // make sure we get uid of object (DB.deleteDocument wants this)
-    app.locals.DB.getDocuments(mongoConfig.formCollection, { 'element name': formToDelete })
+    app.locals.DB.getDocuments(mongoConfig.formCollection, { 'form name': formToDelete })
       .then((resolve, reject) => {
         if (reject) throw 'Error, rejected while deleting form entry!';
 
@@ -550,7 +550,13 @@ app.get('/browse-datametadata', checkAuth, (req, res) => {
         forms = resolve;
         const metadata_fields = [];
         for (i = 0; i < forms.length; i++) {
-          metadata_fields.push(forms[i]['element name']);
+          let form_elements = forms[i]['elements']
+          for (j = 0; j < form_elements.length; j++) {
+            let metadata_field = form_elements[j]['element name'];
+            if (metadata_fields.indexOf(metadata_field) === -1) {
+              metadata_fields.push(metadata_field);
+            }
+          }
         }
 
         let mongo_query = {};
