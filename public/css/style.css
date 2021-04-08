@@ -318,6 +318,36 @@ label.myform:after { content: ": " }
     width: 500px;
 }
 
+/* match nav tree collapsible styling */
+summary.metadata-form-summary {
+	display: block;
+	padding: 1em 0em 0 0em;
+	cursor: pointer;
+	list-style: none;
+}
+summary.metadata-form-summary::-webkit-details-marker {
+	display: none;
+}
+summary.metadata-form-summary::after {
+	color: #777;
+	content: "▸";
+	float: right;
+}
+details.metadata-form-collapsible[open] summary {
+	font-weight: bold;
+}
+details.metadata-form-collapsible[open] summary:after {
+	content: "▾";
+}
+summary.metadata-form-summary:hover {
+	font-weight: bold;
+}
+
+label.metadata-field-label {
+	display: block;
+	margin-top: 1em;
+}
+
 #metadata_form_label {
 	position: relative;
 	left: 30px;
