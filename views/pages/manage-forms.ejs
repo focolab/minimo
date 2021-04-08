@@ -83,7 +83,7 @@
 
 			// get form information
 			var docsObject = <%- docs %>;
-			var fieldToGrab = "element name"
+			var fieldToGrab = "form name"
 
 			i = 0
 			while (i < docsObject.length){
@@ -91,7 +91,7 @@
 				// get obj
 				obj = docsObject[i]
 
-				// hopefully every object has an element name...
+				// hopefully every object has a form name...
 				if (obj.hasOwnProperty(fieldToGrab)){
 
 					// if so add it to our dropdowns

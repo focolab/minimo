@@ -20,7 +20,7 @@
 				obj = docsObject[i]
 
 				// get some params
-				name = obj["element name"]
+				form_name = obj["form name"]
 				elements = obj["elements"]
 
 				// initialize html
@@ -28,10 +28,11 @@
 
 				html += "<details class=\"metadata-form-collapsible\">"
 
-				html += "<summary class=\"metadata-form-summary\" data-text=\"" + name + "\">" + name + "</summary>"
+				html += "<summary class=\"metadata-form-summary\" data-text=\"" + form_name + "\">" + form_name + "</summary>"
 
 				for (j = 0; j < elements.length; j++) {
 
+					name = elements[j]["element name"]
 					type = elements[j]["element type"]
 					prompt = elements[j]["prompt"]
 

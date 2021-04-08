@@ -45,7 +45,7 @@ DB.prototype.uploadDocument = function (documentToUpload, myCollection, isUpdate
         // grab collection and upload
         if (isUpdate) {
           // filter based on id, will be unique
-          __this.db.collection(myCollection).replaceOne({ 'element name': documentToUpload['element name'] }, documentToUpload)
+          __this.db.collection(myCollection).replaceOne({ 'form name': documentToUpload['form name'] }, documentToUpload)
             .then(() => {
               console.log('Successful document update!');
               resolve();
