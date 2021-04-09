@@ -449,3 +449,16 @@ label.metadata-field-label {
 	color: #f00;
 	margin-bottom: 0;
 }
+
+#confirmDelete {
+	padding-top: 1em;
+}
+
+#confirmDelete > p {
+	display: inline-block;
+}
+
+#confirmButton {
+	display: block;
+	margin: auto;
+}
