@@ -130,6 +130,9 @@
                         document.getElementById('metadata_form').filelist.value = fl
                         var mdf = document.getElementById('metadata_form');
 
+                        // add counts of forms used in submission
+                        document.getElementById('metadata_form')['submitted form counts'].value = countFormUses();
+
                         // submit the form
                         document.getElementById('metadata_form').submit()
 
@@ -166,6 +169,8 @@
             <br><br>
 
             <% include ../partials/metadata-form-mongo %>
+
+            <% include ../partials/count-form-uses %>
 
             <button id="submit-data-submit-button" class="myform" onclick="upload()">submit</button>
         </div>

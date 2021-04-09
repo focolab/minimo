@@ -35,7 +35,6 @@
                 function retrieveDataObjects(prefix)  {
                     fetch(`/list-data-objects?prefix=${prefix}`).then((response) => {
                         response.json().then((data) => {
-                            console.log(data);
 
                             var parent_list = document.getElementById(prefix === "" ? "bucket_browser" : prefix + "_folder");
                             for (var i = 0; i < data.length; i++) {
@@ -110,7 +109,10 @@
                         var fl = '{ "fl" : ["linked"], "folderID":"' + folderID + '"}'
 
                         // take the filelist (data from event) and append to form
-                        document.getElementById('metadata_form').filelist.value = fl
+                        document.getElementById('metadata_form').filelist.value = fl;
+
+                        // add list of forms used in submission
+                        document.getElementById('metadata_form')['submitted form counts'].value = JSON.stringify(countFormUses());
 
                         // submit the form
                         document.getElementById('metadata_form').submit()
@@ -145,6 +147,8 @@
             <br><br>
 
             <% include ../partials/metadata-form-mongo %>
+
+            <% include ../partials/count-form-uses %>
 
             <button class="myform" onclick="submitForm()">submit</button>
 
