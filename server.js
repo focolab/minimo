@@ -347,22 +347,33 @@ app.get('/list-data-objects', checkAuth, (req, res) => {
 app.post('/submitted-metadata', checkAuth, (req, res) => {
   // grab body from request
   reqBody = req.body;
+  let formattedMetadata;
+  let formUseCounts;
 
   try {
     // validate metadata form and/or add extra fields
+    formUseCounts = JSON.parse(reqBody['submitted form counts']);
+    delete reqBody['submitted form counts'];
     formattedMetadata = validateMetadataForm(reqBody);
-
-    // upload
-    app.locals.DB.uploadDocument(formattedMetadata, mongoConfig.metadataCollection)
-      .then(() => {
-        // render new page
-        res.redirect('/manage-data');
-      });
   } catch (err) {
     // craft error message, log
-    errmsg = `Error during metadata submission. Metadata was not submitted, but data may have been submitted. Please notify webdev.\n`;
+    errmsg = `Unable to validate metadata form contents. Please notify web dev.\n`;
     handleError(req, res, err, errmsg);
   }
+
+  // upload
+  app.locals.DB.uploadDocument(formattedMetadata, mongoConfig.metadataCollection)
+  .then( () =>
+    // update form submission counts
+    Promise.all(
+      Object.keys(formUseCounts).map( 
+        formName => app.locals.DB.incrementField({ 'form name': formName }, mongoConfig.formCollection, 'uses', formUseCounts[formName])
+      )
+    )
+  ).then( () =>
+    // render new page
+    res.redirect('/manage-data')
+  ).catch( err => handleError(req, res, err, "Error while updating metadata documents. Please manually check whether your data and metadata uploads succeeded, then notify a web dev.") );
 });
 
 // form edit directory page
@@ -445,11 +456,6 @@ app.post('/edit-form-entry', checkAuth, (req, res) => {
 
     // if a form uid was provided (i.e. we're editing an existing form), update
     if (formuid.length > 0) {
-      // add existing uid
-      // no longer necessary because we do this via the upload
-      // formObj["_id"] = formuid
-
-      // set update flag
       isUpdate = true;
     }
 

@@ -56,7 +56,7 @@
 					<p class="form-label">DELETE a metadata form entry.</p>
 
 					<form action="/delete-form-entry" method="post" id="deleteForm">
-						<select class="myform" id="deleteSelect" name="deleteSelect">
+						<select class="myform" id="deleteSelect" name="deleteSelect" onchange="confirmDelete()">
 						</select>
 
 						<!-- Hidden text form for uid -->
@@ -66,8 +66,13 @@
 
 					</form>
 					
+					<div class="hidden" id="confirmDelete">
+						<p>Clicking "delete" will delete the form "</p><p id="confirmFormName"></p><p>." This form has been used for&nbsp;</p><p id="confirmFormUses"></p><p>&nbsp;metadata submissions. Please confirm that this is what you wish to do.</p>
+						<button id="confirmButton" onclick="enableDelete()">confirm</button>
+					</div>
+
 					<!-- Include a submit form field -->
-					<button class="myform myform-red" onclick="submitForm('deleteForm')">delete</button>
+					<button class="myform myform-red" id="deleteButton" onclick="submitForm('deleteForm')">delete</button>
 				</div>
 			</div>
 		</div>
@@ -84,6 +89,20 @@
 			// get form information
 			var docsObject = <%- docs %>;
 			var fieldToGrab = "form name"
+
+			// create default blank options
+			var option = document.createElement("option")
+			var option2 = document.createElement("option")
+			option.text = 'select form'
+			option2.text = 'select form'
+			option.setAttribute("disabled", true)
+			option2.setAttribute("disabled", true)
+			option.setAttribute("selected", true)
+			option2.setAttribute("selected", true)
+			option.setAttribute("hidden", true)
+			option2.setAttribute("hidden", true)
+			editSelect.add(option)
+			deleteSelect.add(option2)
 
 			i = 0
 			while (i < docsObject.length){
@@ -110,6 +129,27 @@
 				i = i + 1
 
 			}
+		}
+
+		function confirmDelete() {
+			let docsObject = <%- docs %>;
+			let selectedFormName = document.getElementById('deleteSelect').value;
+			for (i = 0; i < docsObject.length; i++) {
+				if (docsObject[i]['form name'] === selectedFormName) {
+					if (docsObject[i]['uses']) {
+						let uses = docsObject[i]['uses'];
+						document.getElementById('deleteButton').disabled = true;
+						document.getElementById('confirmDelete').classList.remove('hidden');
+						document.getElementById('confirmFormName').innerHTML = selectedFormName;
+						document.getElementById('confirmFormUses').innerHTML = uses;
+					}
+					break;
+				}
+			}
+		}
+
+		function enableDelete() {
+			document.getElementById('deleteButton').disabled = false;
 		}
 
 		// helper function to submit form

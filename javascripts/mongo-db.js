@@ -61,6 +61,28 @@ DB.prototype.uploadDocument = function (documentToUpload, myCollection, isUpdate
   }));
 };
 
+DB.prototype.incrementField = function (query, myCollection, fieldToIncrement, amountToIncrement) {
+  // scoping
+  _this = this;
+
+  return new Promise(((resolve, reject) => {
+    // more scoping
+    __this = _this;
+
+    // connect (if not already)
+    __this.connect(mongoConfig.MONGODB_URI)
+    .then( () => {
+      __this.db.collection(myCollection).update(
+        query,
+        { $inc: { [fieldToIncrement]: amountToIncrement } }
+      ).then( () => {
+        console.log('Successful field incrementation!');
+        resolve();
+      });
+    });
+  }));
+};
+
 DB.prototype.deleteDocument = function (documentToDelete, myCollection) {
   // scoping
   _this = this;

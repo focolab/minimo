@@ -1,0 +1,29 @@
+<script>
+    function countFormUses() {
+        let forms_used = {};
+        let form_details = document.getElementsByClassName('metadata-form-collapsible');
+        for (i = 0; i < form_details.length; i++) {
+            let form_elements = form_details[i].children;
+            let form_name;
+            let form_used = false;
+            for (j = 0; j < form_elements.length; j++) {
+                let element = form_elements[j];
+                if (element.tagName === 'SUMMARY') {
+                    form_name = element.getAttribute('data-text');
+                } else if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.tagName === 'SELECT') {
+                    if (element.value) {
+                        form_used = true;
+                    }
+                }
+                if (form_used && form_name) {
+                    if (! (form_name in forms_used) ) {
+                        forms_used[form_name] = 0;
+                    }
+                    forms_used[form_name] += 1;
+                    break;
+                }
+            }
+        }
+        return forms_used;
+    }
+</script>
