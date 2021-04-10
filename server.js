@@ -348,9 +348,12 @@ app.post('/submitted-metadata', checkAuth, (req, res) => {
   // grab body from request
   reqBody = req.body;
   let formattedMetadata;
+  let formUseCounts;
 
   try {
     // validate metadata form and/or add extra fields
+    formUseCounts = JSON.parse(reqBody['submitted form counts']);
+    delete reqBody['submitted form counts'];
     formattedMetadata = validateMetadataForm(reqBody);
   } catch (err) {
     // craft error message, log
@@ -360,15 +363,14 @@ app.post('/submitted-metadata', checkAuth, (req, res) => {
 
   // upload
   app.locals.DB.uploadDocument(formattedMetadata, mongoConfig.metadataCollection)
-  .then( () => {
+  .then( () =>
     // update form submission counts
-    let formUseCounts = JSON.parse(reqBody['submitted form counts']);
-    return Promise.all(
+    Promise.all(
       Object.keys(formUseCounts).map( 
         formName => app.locals.DB.incrementField({ 'form name': formName }, mongoConfig.formCollection, 'uses', formUseCounts[formName])
       )
     )
-  }).then( () =>
+  ).then( () =>
     // render new page
     res.redirect('/manage-data')
   ).catch( err => handleError(req, res, err, "Error while updating metadata documents. Please manually check whether your data and metadata uploads succeeded, then notify a web dev.") );
