@@ -131,7 +131,7 @@
                         var mdf = document.getElementById('metadata_form');
 
                         // add counts of forms used in submission
-                        document.getElementById('metadata_form')['submitted form counts'].value = countFormUses();
+                        document.getElementById('metadata_form')['submitted form counts'].value = JSON.stringify(countFormUses());
 
                         // submit the form
                         document.getElementById('metadata_form').submit()
