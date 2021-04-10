@@ -69,7 +69,7 @@ function formElementStringToObj(formJSONString) {
 
     if ('dropdown' === element_type) {
       let options = [];
-      for (j = 2; j < lines.length; j++) {
+      for (j = 3; j < lines.length; j++) {
         // remove leading/trailing whitespace
         trimmed = lines[j].trim();
         if (trimmed.length > 0) {
