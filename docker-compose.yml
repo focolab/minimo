@@ -37,7 +37,7 @@ services:
     # docker run -it -v /data/db -p 27017:27017 --name minimo-mongo -d mongo
 
   minio:
-    image: minio/minio
+    image: minio/minio:RELEASE.2021-06-17T00-10-46Z
     depends_on:
       - etcd
     expose:
@@ -47,7 +47,7 @@ services:
       MINIO_SECRET_KEY: "${MINIO_SECRET_KEY:-minioadmin}"
       MINIO_ETCD_ENDPOINTS: "http://etcd:2379"
     entrypoint: sh
-    command: -c 'mkdir -p /data/data && /usr/bin/minio ${MINIO_COMMAND:-server} --address :80 /data'
+    command: -c 'mkdir -p /data/data && minio ${MINIO_COMMAND:-server} --address :80 /data'
     volumes:
       - ${MINIO_DATA_DIRECTORY:-minio-data}:/data
     networks:
